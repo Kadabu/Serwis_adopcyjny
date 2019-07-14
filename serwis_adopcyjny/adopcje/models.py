@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 import datetime
 
 
@@ -38,7 +39,7 @@ def validate_age(age):
         raise ValidationError("Podaj wiek w zakresie od 0 do 20 lat")
 
 
-def validate_weight(age):
+def validate_weight(weight):
 
     if weight < 0 or weight > 80:
         raise ValidationError("Podaj wagę w zakresie od 0 do 80 kg")

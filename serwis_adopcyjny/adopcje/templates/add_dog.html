@@ -4,5 +4,8 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Dodaj</button>
+     {{ form.non_field_errors }}
+     {{ form.age.errors }}
+     {{ form.weight.errors }}
   </form>
 {% endblock %}
