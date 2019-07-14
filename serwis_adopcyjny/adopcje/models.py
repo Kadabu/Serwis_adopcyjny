@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 PŁEĆ = (
@@ -32,22 +33,26 @@ WOJEWÓDZTWO = (
 )
 
 def validate_age(age):
+
     if age < 0 or age > 20:
         raise ValidationError("Podaj wiek w zakresie od 0 do 20 lat")
 
+
 def validate_weight(age):
+
     if weight < 0 or weight > 80:
         raise ValidationError("Podaj wagę w zakresie od 0 do 80 kg")
 
 
 class Category(models.Model):
-    nazwa = models.CharField(max_length=64)
 
+    nazwa = models.CharField(max_length=64)
     def __str__(self):
         return self.nazwa
 
 
 class Dog(models.Model):
+
     imię = models.CharField(max_length=64)
     płeć = models.IntegerField(choices=PŁEĆ)
     wiek = models.IntegerField(default=0, validators=[validate_age])
@@ -61,6 +66,8 @@ class Dog(models.Model):
     możliwy_transport = models.BooleanField(default=False)
     adopcja_za_granicę = models.BooleanField(default=False)
     kategorie = models.ManyToManyField(Category)
+    opis = models.TextField()
+    dodany = models.DateField(default=datetime.date.today)
 
 
 

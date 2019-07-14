@@ -9,4 +9,6 @@ from .models import *
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        fields = '__all__'
+        exclude = ['dodany']
+
+ #poprawić kategorie widget = forms.CheckboxSelectMultiple
