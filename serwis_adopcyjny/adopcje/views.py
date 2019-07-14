@@ -15,3 +15,19 @@ class MainView(View):
     def get(self, request):
         return render(request, "base.html")
 
+
+class AddDog(View):
+
+    def get(self, request):
+        form = AddDogForm(request.GET)
+        return render(request, "add_dog.html", {"form": form})
+
+    def post(self, request):
+        form = AddDogForm(request.POST, request.FILES)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect('/')
+        else:
+            form = AddDogForm(request.GET)
+            return render(request, "add_dog.html", {"form": form})
+

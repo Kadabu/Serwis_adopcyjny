@@ -25,4 +25,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MainView.as_view(), name="main-page"),
+    path('dodaj_psa', AddDog.as_view()),
 ]
