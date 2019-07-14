@@ -6,14 +6,9 @@
       {% block header %}
       {% load static %}
       <h1>Radysiaki na tymczasie</h1>
-      <img src="{% static "./logo.png"%}">
+      <img src="{% static "./Misiek.jpg"%}">
       {% endblock %}
       {% block user %}
-      {% if user.is_authenticated %}
-      <p>Użytkownik: {{ user }} (<a href="{% url "logout" %}">Wyloguj</a>)</p>
-      {% else %}
-      <p><a href="{% url "login" %}">Zaloguj</a></p>
-      {% endif %}
       {% endblock %}
       {% block content %}
       {% endblock %}

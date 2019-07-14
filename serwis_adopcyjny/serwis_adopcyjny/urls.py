@@ -17,13 +17,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from exercises.views import *
-from exercises.models import *
-from homework.models import *
-from homework.views import *
+from adopcje.views import *
+from adopcje.models import *
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', MainView.as_view(), name="main-page"),
 ]
