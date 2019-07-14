@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2> {{ dog.imię }}</h2>
+  <img src="/media/{{ dog.zdjęcie }}">
+
+    Płeć: {{ dog.płeć }}</br>
+    Wiek: {{ dog.wiek }}</br>
+    Waga: {{ dog.waga }}</br>
+    Województwo: {{ dog.województwo }}</br>
+    Miejscowość: {{ dog.miejscowość }}</br>
+    Akceptuje koty: {{ dog.akceptuje_koty}}</br>
+    Może zamieszkać z psem: {{ dog.dom_z_psem }}</br>
+    Może zamieszkać z suczką: {{ dog.dom_z_suką }}</br>
+    Dowóz do domu: {{ dog.transport }}</br>
+    Adopcja za granicę: {{ dog.transport }}</br>
+
+<p>{{ dog.opis }}</p>
+<h2>Kategorie:</h2>
+   {{ dog.kategorie }}
+{% endblock %}

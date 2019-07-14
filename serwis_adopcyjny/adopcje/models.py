@@ -1,17 +1,22 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-import datetime
+
 
 
 PŁEĆ = (
-    (1, "samiec"),
-    (2, "samica"),
+    (1, "pies"),
+    (2, "suczka"),
 )
 
 KOTY = (
     (1, "tak"),
     (2, "nie"),
     (3, "do sprawdzenia"),
+)
+
+TAK_NIE = (
+    (1, "tak"),
+    (2, "nie"),
 )
 
 WOJEWÓDZTWO = (
@@ -62,13 +67,14 @@ class Dog(models.Model):
     województwo = models.IntegerField(choices=WOJEWÓDZTWO)
     miejscowość = models.CharField(max_length=64)
     akceptuje_koty = models.IntegerField(choices=KOTY)
-    dom_bez_psów = models.BooleanField(default=False)
-    dom_bez_suczek = models.BooleanField(default=False)
-    możliwy_transport = models.BooleanField(default=False)
-    adopcja_za_granicę = models.BooleanField(default=False)
+    dom_z_psem = models.IntegerField(choices=TAK_NIE, default=1)
+    dom_z_suką = models.IntegerField(choices=TAK_NIE, default=1)
+    możliwy_transport = models.IntegerField(choices=TAK_NIE, default=1)
+    adopcja_za_granicę = models.IntegerField(choices=TAK_NIE, default=1)
     kategorie = models.ManyToManyField(Category)
     opis = models.TextField()
-    dodany = models.DateField(default=datetime.date.today)
+    dodany = models.DateTimeField(auto_now_add=True)
+
 
 
 

@@ -9,7 +9,7 @@ from .models import *
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['dodany', 'kategorie']
+        exclude = ['dodany']
 
 #poprawić kategorie, tak, żeby były wielokrotnego wyboru
 #czy zrobic to ręcznie: każda nowa kategoria dodaje się do Choices???

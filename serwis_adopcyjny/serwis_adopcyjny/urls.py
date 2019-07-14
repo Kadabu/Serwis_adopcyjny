@@ -25,5 +25,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MainView.as_view(), name="main-page"),
+    path('pies/<int:id>', DogView.as_view()),
     path('dodaj_psa', AddDog.as_view()),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

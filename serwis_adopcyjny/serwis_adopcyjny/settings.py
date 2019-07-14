@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
-        'NAME': 'adopcje',
+        'NAME': 'adopcje_db',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'root',
         'PASSWORD': 'coderslab',
