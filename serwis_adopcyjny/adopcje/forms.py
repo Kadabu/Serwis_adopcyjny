@@ -9,7 +9,9 @@ from .models import *
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['dodany']
+        exclude = ['date_added']
 
-#poprawić kategorie, tak, żeby były wielokrotnego wyboru
-#czy zrobic to ręcznie: każda nowa kategoria dodaje się do Choices???
+class DogCategoriesForm(forms.Form):
+    categories = forms.ChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
+
+

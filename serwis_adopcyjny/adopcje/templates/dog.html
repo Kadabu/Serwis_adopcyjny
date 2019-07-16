@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2> {{ dog.imię }}</h2>
-  <img src="/media/{{ dog.zdjęcie }}">
+<h2> {{ dog.name }}</h2>
+  <p></p><img src="/media/{{ dog.picture }}"></p>
 
-    Płeć: {{ dog.płeć }}</br>
-    Wiek: {{ dog.wiek }}</br>
-    Waga: {{ dog.waga }}</br>
-    Województwo: {{ dog.województwo }}</br>
-    Miejscowość: {{ dog.miejscowość }}</br>
-    Akceptuje koty: {{ dog.akceptuje_koty}}</br>
-    Może zamieszkać z psem: {{ dog.dom_z_psem }}</br>
-    Może zamieszkać z suczką: {{ dog.dom_z_suką }}</br>
-    Dowóz do domu: {{ dog.transport }}</br>
-    Adopcja za granicę: {{ dog.transport }}</br>
+    Płeć: {{ dog.get_sex_display }}</br>
+    Wiek: {{ dog.age }}</br>
+    Waga: {{ dog.weight }} kg</br>
+    Województwo: {{ dog.get_region_display }}</br>
+    Miejscowość: {{ dog.town }}</br>
+    Akceptuje koty: {{ dog.get_accepts_cats_display }}</br>
+    Może zamieszkać z psem: {{ dog.get_house_with_male_dog_display }}</br>
+    Może zamieszkać z suczką: {{ dog.get_house_with_female_dog_display }}</br>
+    Dowóz do domu: {{ dog.get_transport_display }}</br>
+    Adopcja za granicę: {{ dog.get_adoption_abroad_display }}</br>
 
-<p>{{ dog.opis }}</p>
-<h2>Kategorie:</h2>
-   {{ dog.kategorie }}
+<p>{{ dog.description }}</p>
+<p>
+   {% for cat in dog.categories.all %}
+   {{ cat.name }}
+   {% endfor %}
+</p>
+
 {% endblock %}
