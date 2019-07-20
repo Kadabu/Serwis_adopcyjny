@@ -24,9 +24,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', MainView.as_view(), name="main-page"),
-    path('pies/<int:id>', DogView.as_view()),
-    path('dodaj_psa', AddDog.as_view()),
+    path('radysiaki/', MainView.as_view(), name="main-page"),
+    path('pies/<int:id>/', DogView.as_view()),
+    path('dodaj/', AddDog.as_view()),
+    path('edytuj/<pk>/', EditDog.as_view()),
 ]
 
 if settings.DEBUG:

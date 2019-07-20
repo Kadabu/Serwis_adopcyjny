@@ -3,7 +3,7 @@
 {% block content %}
 <h2> {{ dog.name }}</h2>
   <p></p><img src="/media/{{ dog.picture }}"></p>
-
+    Numer: {{ dog.pk }}<br>
     Płeć: {{ dog.get_sex_display }}</br>
     Wiek: {{ dog.age }}</br>
     Waga: {{ dog.weight }} kg</br>
@@ -16,9 +16,9 @@
     Adopcja za granicę: {{ dog.get_adoption_abroad_display }}</br>
 
 <p>{{ dog.description }}</p>
-<p>
+<p>Kategoria:
    {% for cat in dog.categories.all %}
-   {{ cat.name }}
+   {{ cat.get_name_display }}
    {% endfor %}
 </p>
 

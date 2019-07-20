@@ -50,6 +50,7 @@ CATEGORIES = (
     (7, "kłapouszki"),
 )
 
+
 def validate_age(age):
 
     if age < 0 or age > 20:
@@ -62,7 +63,9 @@ def validate_weight(weight):
         raise ValidationError("Podaj wagę w zakresie od 0 do 80 kg")
 
 class Category(models.Model):
-    name = models.IntegerField(choices=CATEGORIES)
+    name = models.CharField(max_length=64)
+    def __str__(self):
+        return self.name
 
 class Dog(models.Model):
 
@@ -81,7 +84,6 @@ class Dog(models.Model):
     description = models.TextField()
     categories = models.ManyToManyField(Category, through="DogCategories")
     date_added = models.DateTimeField(auto_now_add=True)
-
 
 
 class DogCategories(models.Model):
