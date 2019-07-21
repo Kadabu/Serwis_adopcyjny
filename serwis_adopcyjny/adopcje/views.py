@@ -87,7 +87,7 @@ class MessagesList(View):
 
 class AdoptionForm(View):
     def get(self, request, id):
-        form = AdoptionForm()
+        form = AdoptDogForm(request.GET)
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "message.html", {"form": form})
 
