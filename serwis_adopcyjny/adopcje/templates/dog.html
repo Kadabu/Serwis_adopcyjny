@@ -18,8 +18,10 @@
 <p>{{ dog.description }}</p>
 <p>Kategoria:
    {% for cat in dog.categories.all %}
-   {{ cat.get_name_display }}
+   {{ cat.name }}
    {% endfor %}
 </p>
+
+<p><a href="/edytuj/{{ dog.pk }}">Edytuj</a></p>
 
 {% endblock %}

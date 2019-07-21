@@ -11,8 +11,10 @@ class AddDogForm(forms.ModelForm):
         model = Dog
         exclude = ['date_added', 'categories']
 
+class AddCategoriesForm(forms.ModelForm):
+    class Meta:
+        model = DogCategories
+        fields = '__all__'
 
-class DogCategoriesForm(forms.Form):
-    categories = forms.ChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
 
 

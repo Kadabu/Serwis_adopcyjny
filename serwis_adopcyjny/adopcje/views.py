@@ -47,4 +47,19 @@ class EditDog(UpdateView):
         success_url = reverse_lazy("main-page")
 
 
+class AddCategories(View):
+
+        def get(self, request, id):
+            form = AddCategoriesForm()
+            dog = get_object_or_404(Dog, pk=id)
+            return render(request, "categories_form.html", {"form": form})
+
+        def post(self, request, id):
+            dog = Dog.objects.get(id=request.POST.get('dog'))
+            category = Category.objects.get(id=request.POST.get('category'))
+            DogCategories.objects.create(dog=dog, category=category)
+
+            return HttpResponseRedirect('/edytuj/{}'.format(request.POST.get('dog')))
+
+
 

@@ -25,8 +25,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('radysiaki/', MainView.as_view(), name="main-page"),
-    path('pies/<int:id>/', DogView.as_view()),
+    path('pies/<int:id>/', DogView.as_view(), name="dog"),
     path('dodaj/', AddDog.as_view()),
+    path('kategorie/<int:id>', AddCategories.as_view()),
     path('edytuj/<pk>/', EditDog.as_view()),
 ]
 

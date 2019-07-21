@@ -84,6 +84,8 @@ class Dog(models.Model):
     description = models.TextField()
     categories = models.ManyToManyField(Category, through="DogCategories")
     date_added = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.name
 
 
 class DogCategories(models.Model):
