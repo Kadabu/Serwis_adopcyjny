@@ -1,14 +1,12 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.models import User
 
 
 SEX = (
     (1, "pies"),
     (2, "suczka"),
 )
-
-
 
 CATS = (
     (1, "tak"),
@@ -94,6 +92,13 @@ class Dog(models.Model):
 class DogCategories(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
+class Message(models.Model):
+    content = models.TextField()
+    e_mail = models.CharField(max_length=64) #dodać walidację mejla
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    date_sent = models.DateField(auto_now_add=True)
 
 
 

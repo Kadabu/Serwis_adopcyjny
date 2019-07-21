@@ -14,7 +14,12 @@ class AddDogForm(forms.ModelForm):
 class AddCategoriesForm(forms.ModelForm):
     class Meta:
         model = DogCategories
-        fields = '__all__'
+        exclude = ['dog']
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        exclude = ['dog', 'date_sent']
 
 
 

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<p>
+    <strong>{{ dog.name }} - wiadomości:</strong></br>
+    {% for message in messages %}
+    {{ message.content }} - z dnia {{ message.date_sent }} od {{ message.e_mail }}</br>
+    {% endfor %}
+    <a href="/pies/{{ dog.id }}">Wróć</a>
+</p>
+{% endblock %}

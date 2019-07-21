@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 <h2> {{ dog.name }}</h2>
   <p></p><img src="/media/{{ dog.picture }}"></p>
@@ -22,6 +21,9 @@
    {% endfor %}
 </p>
 
-<p><a href="/edytuj/{{ dog.pk }}">Edytuj</a></p>
 
+<p><a href="/pytanie/{{ dog.pk }}">Zapytaj o psa</a></p>
+<p><a href="/ankieta/{{ dog.pk }}">Wyślij ankietę adopcyjną</a></p>
+<p><a href="/edytuj/{{ dog.pk }}">Edytuj</a></p>
+<p><a href="/wiadomości/{{ dog.pk }}">Pokaż wiadomości</a></p>
 {% endblock %}
