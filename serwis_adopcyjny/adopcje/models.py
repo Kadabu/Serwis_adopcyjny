@@ -101,5 +101,16 @@ class Message(models.Model):
     date_sent = models.DateField(auto_now_add=True)
 
 
+"""class AdoptionForm(models.Model):
+
+    
+    phone = models.InetegerField()
+    e_mail = models.CharField(max_length=64) #dodać walidację mejla
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    date_sent = models.DateField(auto_now_add=True)"""
+
+
+
+
 
 

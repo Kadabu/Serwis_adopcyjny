@@ -95,7 +95,7 @@ class AdoptionForm(View):
         dog = Dog.objects.get(pk=id)
         """content = request.POST.get('content')
         e_mail = request.POST.get('e_mail')
-        AdoptionForms.objects.create(dog=dog, content=content, e_mail=e_mail)"""
+        AdoptionForm.objects.create(dog=dog, content=content, e_mail=e_mail)"""
 
         return HttpResponseRedirect('/pies/{}'.format(id))
 
