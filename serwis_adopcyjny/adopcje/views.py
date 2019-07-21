@@ -44,7 +44,7 @@ class EditDog(UpdateView):
         fields = ('name', 'sex', 'weight', 'age', 'picture', 'region', 'town', 'accepts_cats', 'house_with_male_dog',
                   'house_with_female_dog', 'transport', 'adoption_abroad', 'description')
         template_name = 'dog_update_form.html'
-        success_url = reverse_lazy("main-page")
+        
 
 
 class AddCategories(View):
