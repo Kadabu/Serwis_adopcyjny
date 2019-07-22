@@ -2,19 +2,17 @@
 {% block content %}
 
 <h2>Wszystkie psy do adopcji</h2>
-<ul>
+<p>
   {% for dog in dogs %}
-  <li><a href="/pies/{{ dog.id }}">{{ dog.imię }}</a>
-
-    {% comment %}
-    {% if perms.adopcje.change_dog %}
-    <a href="/edycja/{{ product.pk }}">edytuj</a> {% endif %}</li>
+  <p><img src="/media/{{ dog.picture }}"></p>
+  <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
   {% endfor %}
-</ul>
+</p>
+{% comment %}
 {% if perms.adopcje.add_dog %}
 <p><a href="/dodaj">Dodaj psa</a></p>
 {% endif %}
 {% endcomment %}
-
-
 {% endblock %}
+
+

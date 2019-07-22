@@ -24,6 +24,9 @@
 
 <p><a href="/pytanie/{{ dog.pk }}">Zapytaj o psa</a></p>
 <p><a href="/ankieta/{{ dog.pk }}">Wyślij ankietę adopcyjną</a></p>
+    {% comment %}
+    {% if perms.adopcje.change_dog %}
+    {% endcomment %}
 <p><a href="/edytuj/{{ dog.pk }}">Edytuj</a></p>
 <p><a href="/wiadomości/{{ dog.pk }}">Pokaż wiadomości</a></p>
 {% endblock %}

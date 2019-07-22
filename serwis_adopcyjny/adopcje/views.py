@@ -14,7 +14,8 @@ from django.shortcuts import render
 class MainView(View):
 
     def get(self, request):
-        return render(request, "base.html")
+        dogs = Dog.objects.all()
+        return render(request, "dogs.html", {"dogs": dogs})
 
 class DogView(View):
 
