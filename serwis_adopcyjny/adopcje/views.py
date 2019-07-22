@@ -16,7 +16,7 @@ from templated_docs.http import FileResponse
 class MainView(View):
 
     def get(self, request):
-        dogs = Dog.objects.all()
+        dogs = Dog.objects.order_by('date_added').reverse()
         return render(request, "dogs.html", {"dogs": dogs})
 
 class DogView(View):
@@ -146,20 +146,14 @@ class AdoptionFormView(View):
                                     field_14=field_14, field_15=field_15, field_16=field_16)
         return HttpResponseRedirect('/radysiaki/')
 
-"""class AddPictures(View):
-
-    def get(self, request):
-        form = AddPicturesForm(request.GET)
-        return render(request, "add_pictures.html", {"form": form})
-
-    def post(self, request):
-        form = AddPicturesForm(request.POST, request.FILES)
-        if form.is_valid:
-            form.save()
-            return HttpResponseRedirect('/radysiaki/')
-        else:
-            form = AddDogForm(request.GET)
-            return render(request, "add_pictures.html", {"form": form})"""
+"""class AdoptionFormsView"""
 
 """class SearchView"""
+
+#powiązać psy z Userami (chyba że będzie tylko 1)
+#usuwanie zdjęć
+#dokumentacja
+#format daty
+#formularz logowania, wylogowywania itd.
+#opcja sortowania listy psów wg użytkownika(np. najnowsze, najstarsze)
 
