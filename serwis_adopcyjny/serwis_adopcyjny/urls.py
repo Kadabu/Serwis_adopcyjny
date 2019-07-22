@@ -31,6 +31,7 @@ urlpatterns = [
     path('kategorie/<int:id>/', Categories.as_view()),
     path('kategorie_usun/<int:d_id>/<int:c_id>/', RemoveCategory.as_view()),
     path('edytuj/<pk>/', EditDog.as_view()),
+    path('usuń/<pk>/', DeleteDog.as_view()),
     path('wiadomości/<int:id>/', MessagesList.as_view()),
     path('pytanie/<int:id>/', MessageView.as_view()),
     path('ankieta/<int:id>/', AdoptionForm.as_view()),

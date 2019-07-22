@@ -71,7 +71,12 @@ class Dog(models.Model):
     sex = models.IntegerField(choices=SEX)
     age = models.IntegerField(default=0, validators=[validate_age])
     weight = models.IntegerField(default=0, validators=[validate_weight])
-    picture = models.ImageField(upload_to="documents/", default=None)
+    picture_1 = models.ImageField(upload_to="documents/", default=None)
+    picture_2 = models.ImageField(upload_to="documents/", default=None, null=True)
+    picture_3 = models.ImageField(upload_to="documents/", default=None, null=True)
+    picture_4 = models.ImageField(upload_to="documents/", default=None, null=True)
+    picture_5 = models.ImageField(upload_to="documents/", default=None, null=True )
+    picture_6 = models.ImageField(upload_to="documents/", default=None, null=True)
     region = models.IntegerField(choices=REGION, default=1)
     town = models.CharField(max_length=64)
     accepts_cats = models.IntegerField(choices=CATS, default=1)
@@ -86,7 +91,7 @@ class Dog(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return "/pies/{}/".format(self.id)
+        return "/radysiaki/"
 
 
 class DogCategories(models.Model):

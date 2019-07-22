@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <h2> {{ dog.name }}</h2>
-  <p></p><img src="/media/{{ dog.picture }}"></p>
+  <p><img src="/media/{{ dog.picture_1 }}"></p>
+<p><img src="/media/{{ dog.picture_2 }}"></p>
+<p><img src="/media/{{ dog.picture_3 }}"></p>
+  <p><img src="/media/{{ dog.picture_4 }}"></p>
+<p><img src="/media/{{ dog.picture_5 }}"></p>
+<p><img src="/media/{{ dog.picture_6 }}"></p>
+<p>
     Numer: {{ dog.pk }}<br>
     Płeć: {{ dog.get_sex_display }}</br>
     Wiek: {{ dog.age }}</br>
@@ -13,20 +19,20 @@
     Może zamieszkać z suczką: {{ dog.get_house_with_female_dog_display }}</br>
     Dowóz do domu: {{ dog.get_transport_display }}</br>
     Adopcja za granicę: {{ dog.get_adoption_abroad_display }}</br>
-
+</p>
 <p>{{ dog.description }}</p>
-<p>Kategoria:
+<p>
+    Kategoria:
    {% for cat in dog.categories.all %}
    {{ cat.name }}
    {% endfor %}
 </p>
-
-
-<p><a href="/pytanie/{{ dog.pk }}">Zapytaj o psa</a></p>
-<p><a href="/ankieta/{{ dog.pk }}">Wyślij ankietę adopcyjną</a></p>
+<a href="/pytanie/{{ dog.pk }}">Zapytaj o psa</a></br>
+<a href="/ankieta/{{ dog.pk }}">Wyślij ankietę adopcyjną</a></br>
     {% comment %}
     {% if perms.adopcje.change_dog %}
     {% endcomment %}
-<p><a href="/edytuj/{{ dog.pk }}">Edytuj</a></p>
-<p><a href="/wiadomości/{{ dog.pk }}">Pokaż wiadomości</a></p>
+
+<a href="/wiadomości/{{ dog.pk }}">Pokaż wiadomości</a></br><a href="/edytuj/{{ dog.pk }}">Edytuj</a></br>
+<a href="/usuń/{{ dog.pk }}">Usuń</a></br>
 {% endblock %}

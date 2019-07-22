@@ -4,7 +4,7 @@
 <h2>Wszystkie psy do adopcji</h2>
 <p>
   {% for dog in dogs %}
-  <p><img src="/media/{{ dog.picture }}"></p>
+  <p><img src="/media/{{ dog.picture_1 }}"></p>
   <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
   {% endfor %}
 </p>

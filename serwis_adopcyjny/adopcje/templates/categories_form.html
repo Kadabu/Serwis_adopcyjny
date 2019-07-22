@@ -5,4 +5,8 @@
     {{ form.as_p }}
   <input type="submit" value="Dodaj">
 </form>
+<p>
+    <a href="/edytuj/{{ dog.pk }}">Wróć do edycji</a>
+    <a href="/radysiaki/">Wróć do strony głównej</a>
+</p>
 {% endblock %}

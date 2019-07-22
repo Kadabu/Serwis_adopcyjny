@@ -3,7 +3,7 @@
  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Dodaj</button>
+    <button type="submit">Dodaj/Edytuj</button>
      {{ form.non_field_errors }}
      {{ form.age.errors }}
      {{ form.weight.errors }}

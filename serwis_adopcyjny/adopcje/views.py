@@ -34,17 +34,25 @@ class AddDog(View):
         form = AddDogForm(request.POST, request.FILES)
         if form.is_valid:
             form.save()
-            return HttpResponseRedirect('/lista/')
+            return HttpResponseRedirect('/radysiaki/')
         else:
             form = AddDogForm(request.GET)
             return render(request, "add_dog.html", {"form": form})
 
 class EditDog(UpdateView):
 
-        model = Dog
-        fields = ('name', 'sex', 'weight', 'age', 'picture', 'region', 'town', 'accepts_cats', 'house_with_male_dog',
-                  'house_with_female_dog', 'transport', 'adoption_abroad', 'description')
-        template_name = 'dog_update_form.html'
+    model = Dog
+    fields = ['name', 'age', 'weight', 'region', 'town', 'accepts_cats', 'house_with_male_dog', 'house_with_female_dog',
+              'transport', 'adoption_abroad', 'description', 'picture_1','picture_2', 'picture_3', 'picture_4',
+              'picture_5', 'picture_6' ]
+    template_name = 'dog_update_form.html'
+
+
+class DeleteDog(DeleteView):
+
+    model = Dog
+    template_name = 'dog_confirm_delete.html'
+    success_url = '/radysiaki'
 
 
 class AddCategory(View):
@@ -52,14 +60,14 @@ class AddCategory(View):
     def get(self, request, id):
         form = AddCategoriesForm()
         dog = get_object_or_404(Dog, pk=id)
-        return render(request, "categories_form.html", {"form": form})
+        return render(request, "categories_form.html", {"form": form, "dog": dog})
 
     def post(self, request, id):
         dog = Dog.objects.get(pk=id)
         category = Category.objects.get(id=request.POST.get('category'))
         DogCategories.objects.create(dog=dog, category=category)
 
-        return HttpResponseRedirect('/edytuj/{}'.format(id))
+        return HttpResponseRedirect('/kategorie_dodaj/{}'.format(id))
 
 class Categories(View):
 
@@ -69,6 +77,7 @@ class Categories(View):
 
 
 class RemoveCategory(View):
+
     def get(self, request, d_id, c_id):
         dog = get_object_or_404(Dog, pk=d_id)
         category = get_object_or_404(Category, pk=c_id)
@@ -103,6 +112,7 @@ class MessagesList(View):
 
 
 class AdoptionForm(View):
+
     def get(self, request, id):
         form = AdoptDogForm(request.GET)
         dog = get_object_or_404(Dog, pk=id)
