@@ -8,7 +8,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import render
+from templated_docs import fill_template
+from templated_docs.http import FileResponse
+
 
 
 class MainView(View):
@@ -45,7 +47,7 @@ class EditDog(UpdateView):
     fields = ['name', 'age', 'weight', 'region', 'town', 'accepts_cats', 'house_with_male_dog', 'house_with_female_dog',
               'transport', 'adoption_abroad', 'description', 'picture_1','picture_2', 'picture_3', 'picture_4',
               'picture_5', 'picture_6']
-    #self.fields['picture_2'].required = False
+
     template_name = 'dog_update_form.html'
 
 
@@ -59,7 +61,7 @@ class DeleteDog(DeleteView):
 class AddCategory(View):
 
     def get(self, request, id):
-        form = AddCategoriesForm()
+        form = AddCategoriesForm(request.GET)
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "categories_form.html", {"form": form, "dog": dog})
 
@@ -91,7 +93,7 @@ class RemoveCategory(View):
 class MessageView(View):
 
     def get(self, request, id):
-        form = MessageForm()
+        form = MessageForm(request.GET)
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "message.html", {"form": form})
 
@@ -112,7 +114,7 @@ class MessagesList(View):
         return render(request, "messages_list.html", {"messages": messages, "dog": dog})
 
 
-class AdoptionForm(View):
+class AdoptionFormView(View):
 
     def get(self, request, id):
         form = AdoptDogForm(request.GET)
@@ -120,11 +122,28 @@ class AdoptionForm(View):
         return render(request, "message.html", {"form": form})
 
     def post(self, request, id):
-        dog = Dog.objects.get(pk=id)
-        """content = request.POST.get('content')
-        e_mail = request.POST.get('e_mail')
-        AdoptionForm.objects.create(dog=dog, content=content, e_mail=e_mail)"""
-
-        return HttpResponseRedirect('/pies/{}'.format(id))
+        form = AddDogForm(request.POST)
+        dog = get_object_or_404(Dog, pk=id)
+        field_1 = request.POST.get('field_1')
+        field_2 = request.POST.get('field_2')
+        field_3 = request.POST.get('field_3')
+        field_4 = request.POST.get('field_4')
+        field_5 = request.POST.get('field_5')
+        field_6 = request.POST.get('field_6')
+        field_7 = request.POST.get('field_7')
+        field_8 = request.POST.get('field_8')
+        field_9 = request.POST.get('field_9')
+        field_10 = request.POST.get('field_10')
+        field_11 = request.POST.get('field_11')
+        field_12 = request.POST.get('field_12')
+        field_13 = request.POST.get('field_13')
+        field_14 = request.POST.get('field_14')
+        field_15 = request.POST.get('field_15')
+        field_16 = request.POST.get('field_16')
+        AdoptionForm.objects.create(dog=dog, field_1=field_1, field_2=field_2, field_3=field_3, field_4=field_4,
+                                    field_5=field_5, field_6=field_6, field_7=field_7, field_8=field_8, field_9=field_9,
+                                    field_10=field_10,  field_11=field_11, field_12=field_12, field_13=field_13,
+                                    field_14=field_14, field_15=field_15, field_16=field_16)
+        return HttpResponseRedirect('/radysiaki/')
 
 

@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
+
 SEX = (
     (1, "pies"),
     (2, "suczka"),
@@ -48,6 +49,24 @@ CATEGORIES = (
     (7, "kłapouszki"),
 )
 
+OWNER = (
+    (1, "dla mnie"),
+    (2, "dla kogoś innego"),
+)
+
+PLACE = (
+    (1, "w domu z ogrodem"),
+    (2, "w bloku/kamienicy"),
+    (2, "w innym miejscu"),
+)
+
+DOGS_PLACE = (
+      (1, "w domu/mieszkaniu"),
+      (2, "w domu/mieszkaniu w klatce kenelowej"),
+      (3, "w ogrodzie"),
+      (4, "w ogrodzie w kojcu"),
+)
+
 
 def validate_age(age):
 
@@ -60,10 +79,12 @@ def validate_weight(weight):
     if weight < 0 or weight > 80:
         raise ValidationError("Podaj wagę w zakresie od 0 do 80 kg")
 
+
 class Category(models.Model):
     name = models.CharField(max_length=64)
     def __str__(self):
         return self.name
+
 
 class Dog(models.Model):
 
@@ -106,13 +127,25 @@ class Message(models.Model):
     date_sent = models.DateField(auto_now_add=True)
 
 
-"""class AdoptionForm(models.Model):
+class AdoptionForm(models.Model):
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE, null=True)
+    field_1 = models.IntegerField(choices=YES_NO)
+    field_2 = models.IntegerField(choices=YES_NO)
+    field_3 = models.IntegerField(choices=PLACE)
+    field_4 = models.CharField(max_length=64)
+    field_5 = models.CharField(max_length=64,null=True, blank=True)
+    field_6 = models.IntegerField(choices=YES_NO, null=True, blank=True)
+    field_7 = models.IntegerField(choices=DOGS_PLACE)
+    field_8 = models.IntegerField()
+    field_9 = models.IntegerField()
+    field_10 = models.TextField()
+    field_11 = models.CharField(max_length=128)
+    field_12 = models.CharField(max_length=128)
+    field_13 = models.TextField()
+    field_14 = models.CharField( max_length=64)
+    field_15 = models.EmailField()  # walidacja
+    field_16 = models.CharField(max_length=32)  # walidacja
 
-    
-    phone = models.InetegerField()
-    e_mail = models.CharField(max_length=64) #dodać walidację mejla
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    date_sent = models.DateField(auto_now_add=True)"""
 
 
 

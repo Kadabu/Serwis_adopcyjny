@@ -10,7 +10,7 @@
 <p>
     Numer: {{ dog.pk }}<br>
     Płeć: {{ dog.get_sex_display }}</br>
-    Wiek: {{ dog.age }}</br>
+    Wiek: {{ dog.age }} lat </br>
     Waga: {{ dog.weight }} kg</br>
     Województwo: {{ dog.get_region_display }}</br>
     Miejscowość: {{ dog.town }}</br>
@@ -34,5 +34,5 @@
     {% endcomment %}
 
 <a href="/wiadomości/{{ dog.pk }}">Pokaż wiadomości</a></br><a href="/edytuj/{{ dog.pk }}">Edytuj</a></br>
-<a href="/usuń/{{ dog.pk }}">Usuń</a></br>
+<a href="/usun/{{ dog.pk }}">Usuń</a></br>
 {% endblock %}
