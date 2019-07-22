@@ -44,7 +44,8 @@ class EditDog(UpdateView):
     model = Dog
     fields = ['name', 'age', 'weight', 'region', 'town', 'accepts_cats', 'house_with_male_dog', 'house_with_female_dog',
               'transport', 'adoption_abroad', 'description', 'picture_1','picture_2', 'picture_3', 'picture_4',
-              'picture_5', 'picture_6' ]
+              'picture_5', 'picture_6']
+    #self.fields['picture_2'].required = False
     template_name = 'dog_update_form.html'
 
 

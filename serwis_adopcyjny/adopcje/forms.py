@@ -26,9 +26,9 @@ DOGS_PLACE = (
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['date_added', 'categories', 'picture_1''picture_2', 'picture_3', 'picture_4', 'picture_5', 'picture_6']
+        exclude = ['date_added', 'categories', 'picture_2', 'picture_3', 'picture_4', 'picture_5', 'picture_6']
 
-    picture_1 = forms.ImageField(required=False)
+
     picture_2 = forms.ImageField(required=False)
     picture_3 = forms.ImageField(required=False)
     picture_4 = forms.ImageField(required=False)
