@@ -9,12 +9,8 @@ from .models import *
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['date_added', 'categories', 'picture_2', 'picture_3', 'picture_4', 'picture_5', 'picture_6']
-    picture_2 = forms.ImageField(required=False)
-    picture_3 = forms.ImageField(required=False)
-    picture_4 = forms.ImageField(required=False)
-    picture_5 = forms.ImageField(required=False)
-    picture_6 = forms.ImageField(required=False)
+        exclude = ['date_added', 'categories']
+
 
 
 class AddCategoriesForm(forms.ModelForm):

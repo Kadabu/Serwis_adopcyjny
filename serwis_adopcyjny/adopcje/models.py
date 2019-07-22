@@ -93,10 +93,10 @@ class Dog(models.Model):
     age = models.IntegerField(default=0, validators=[validate_age])
     weight = models.IntegerField(default=0, validators=[validate_weight])
     picture_1 = models.ImageField(upload_to="documents/", default=None)
-    picture_2 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_3 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_4 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_5 = models.ImageField(upload_to="documents/", null=True, blank=True)
+    picture_2 = models.ImageField(upload_to="documents/", default=None)
+    picture_3 = models.ImageField(upload_to="documents/", default=None)
+    picture_4 = models.ImageField(upload_to="documents/", default=None)
+    picture_5 = models.ImageField(upload_to="documents/", default=None)
     picture_6 = models.ImageField(upload_to="documents/", null=True, blank=True)
     region = models.IntegerField(choices=REGION, default=1)
     town = models.CharField(max_length=64)
@@ -108,6 +108,7 @@ class Dog(models.Model):
     description = models.TextField()
     categories = models.ManyToManyField(Category, through="DogCategories")
     date_added = models.DateTimeField(auto_now_add=True)
+    contact_data = models.CharField(max_length=64)
     def __str__(self):
         return self.name
 

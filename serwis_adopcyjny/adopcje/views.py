@@ -44,19 +44,19 @@ class AddDog(View):
 class EditDog(UpdateView):
 
     model = Dog
-    fields = ['name', 'age', 'weight', 'region', 'town', 'accepts_cats', 'house_with_male_dog', 'house_with_female_dog',
-              'transport', 'adoption_abroad', 'description', 'picture_1','picture_2', 'picture_3', 'picture_4',
-              'picture_5', 'picture_6']
-
+    fields = ('name', 'sex', 'weight', 'age',
+              'region', 'town', 'accepts_cats', 'picture_1', 'picture_2', 'picture_3', 'picture_4', 'picture_5',
+              'picture_6', 'house_with_male_dog', 'house_with_female_dog', 'transport', 'adoption_abroad', 'description',
+              'contact_data')
     template_name = 'dog_update_form.html'
 
 
-class DeleteDog(DeleteView):
+class DeleteDog(View):
 
-    model = Dog
-    template_name = 'dog_confirm_delete.html'
-    success_url = '/radysiaki'
-
+    def get(self, request, id):
+        dog = get_object_or_404(Dog, pk=id)
+        dog.delete()
+        return HttpResponseRedirect('/radysiaki/')
 
 class AddCategory(View):
 
@@ -88,7 +88,7 @@ class RemoveCategory(View):
         for cat in cat_set:
             cat.delete()
 
-        return HttpResponseRedirect('/edytuj/{}'.format(d_id))
+        return HttpResponseRedirect('/pies/{}'.format(d_id))
 
 class MessageView(View):
 
@@ -146,4 +146,20 @@ class AdoptionFormView(View):
                                     field_14=field_14, field_15=field_15, field_16=field_16)
         return HttpResponseRedirect('/radysiaki/')
 
+"""class AddPictures(View):
+
+    def get(self, request):
+        form = AddPicturesForm(request.GET)
+        return render(request, "add_pictures.html", {"form": form})
+
+    def post(self, request):
+        form = AddPicturesForm(request.POST, request.FILES)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect('/radysiaki/')
+        else:
+            form = AddDogForm(request.GET)
+            return render(request, "add_pictures.html", {"form": form})"""
+
+"""class SearchView"""
 
