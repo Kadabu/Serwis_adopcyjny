@@ -33,6 +33,11 @@ class AddCategoriesForm(forms.ModelForm):
         model = DogCategories
         exclude = ['dog']
 
+class DeleteCategoriesForm(forms.Form):
+    class Meta:
+        model = DogCategories
+        exclude = ['dog']
+
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message

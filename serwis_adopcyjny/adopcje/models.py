@@ -90,8 +90,8 @@ class Dog(models.Model):
 
 
 class DogCategories(models.Model):
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
 
 class Message(models.Model):

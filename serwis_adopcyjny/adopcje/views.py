@@ -46,7 +46,7 @@ class EditDog(UpdateView):
         template_name = 'dog_update_form.html'
 
 
-class AddCategories(View):
+class AddCategory(View):
 
     def get(self, request, id):
         form = AddCategoriesForm()
@@ -60,6 +60,22 @@ class AddCategories(View):
 
         return HttpResponseRedirect('/edytuj/{}'.format(id))
 
+class Categories(View):
+
+    def get(self, request, id):
+        dog = get_object_or_404(Dog, pk=id)
+        return render(request, "remove_categories_form.html", {"dog": dog})
+
+
+class RemoveCategory(View):
+    def get(self, request, d_id, c_id):
+        dog = get_object_or_404(Dog, pk=d_id)
+        category = get_object_or_404(Category, pk=c_id)
+        cat_set = DogCategories.objects.filter(dog=dog, category=category)
+        for cat in cat_set:
+            cat.delete()
+
+        return HttpResponseRedirect('/edytuj/{}'.format(d_id))
 
 class MessageView(View):
 
