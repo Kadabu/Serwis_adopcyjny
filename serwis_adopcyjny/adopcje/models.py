@@ -11,8 +11,8 @@ SEX = (
 
 CATS = (
     (1, "tak"),
-    (2, "nie"),
-    (3, "do sprawdzenia"),
+    (2, "do sprawdzenia"),
+    (3, "eksterminator kotów"),
 )
 
 YES_NO = (
@@ -86,6 +86,8 @@ class Category(models.Model):
         return self.name
 
 
+
+
 class Dog(models.Model):
 
     name = models.CharField(max_length=64)
@@ -130,22 +132,22 @@ class Message(models.Model):
 
 class AdoptionForm(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE, null=True)
-    field_1 = models.IntegerField(choices=YES_NO)
-    field_2 = models.IntegerField(choices=YES_NO)
-    field_3 = models.IntegerField(choices=PLACE)
-    field_4 = models.CharField(max_length=64)
-    field_5 = models.CharField(max_length=64,null=True, blank=True)
-    field_6 = models.IntegerField(choices=YES_NO, null=True, blank=True)
-    field_7 = models.IntegerField(choices=DOGS_PLACE)
-    field_8 = models.IntegerField()
-    field_9 = models.IntegerField()
-    field_10 = models.TextField()
-    field_11 = models.CharField(max_length=128)
-    field_12 = models.CharField(max_length=128)
-    field_13 = models.TextField()
-    field_14 = models.CharField( max_length=64)
-    field_15 = models.EmailField()  # walidacja
-    field_16 = models.CharField(max_length=32)  # walidacja
+    dog_owner = models.IntegerField(choices=YES_NO)
+    family_agree = models.IntegerField(choices=YES_NO)
+    place_type = models.IntegerField(choices=PLACE)
+    house_owner = models.CharField(max_length=64)
+    floor = models.CharField(max_length=64,null=True, blank=True)
+    fence = models.IntegerField(choices=YES_NO, null=True, blank=True)
+    dogs_place = models.IntegerField(choices=DOGS_PLACE)
+    time_alone = models.IntegerField()
+    walks = models.IntegerField()
+    beh_problems = models.TextField()
+    children = models.CharField(max_length=128)
+    pets_owned = models.CharField(max_length=128)
+    prev_dogs = models.TextField()
+    location = models.CharField( max_length=64)
+    e_mail = models.EmailField()
+    phone = models.CharField(max_length=32)
 
 
 

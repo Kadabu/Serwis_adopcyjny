@@ -34,7 +34,8 @@ urlpatterns = [
     path('usun/<int:id>/', DeleteDog.as_view()),
     path('wiadomości/<int:id>/', MessagesList.as_view()),
     path('pytanie/<int:id>/', MessageView.as_view()),
-    path('ankieta/<int:id>', AdoptionFormView.as_view()),
+    path('ankieta/<int:id>/', AdoptionFormView.as_view()),
+    path('ankiety/<int:id>/', AdoptionFormList.as_view()),
 
 ]
 

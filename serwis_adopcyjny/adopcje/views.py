@@ -124,36 +124,49 @@ class AdoptionFormView(View):
     def post(self, request, id):
         form = AddDogForm(request.POST)
         dog = get_object_or_404(Dog, pk=id)
-        field_1 = request.POST.get('field_1')
-        field_2 = request.POST.get('field_2')
-        field_3 = request.POST.get('field_3')
-        field_4 = request.POST.get('field_4')
-        field_5 = request.POST.get('field_5')
-        field_6 = request.POST.get('field_6')
-        field_7 = request.POST.get('field_7')
-        field_8 = request.POST.get('field_8')
-        field_9 = request.POST.get('field_9')
-        field_10 = request.POST.get('field_10')
-        field_11 = request.POST.get('field_11')
-        field_12 = request.POST.get('field_12')
-        field_13 = request.POST.get('field_13')
-        field_14 = request.POST.get('field_14')
-        field_15 = request.POST.get('field_15')
-        field_16 = request.POST.get('field_16')
-        AdoptionForm.objects.create(dog=dog, field_1=field_1, field_2=field_2, field_3=field_3, field_4=field_4,
-                                    field_5=field_5, field_6=field_6, field_7=field_7, field_8=field_8, field_9=field_9,
-                                    field_10=field_10,  field_11=field_11, field_12=field_12, field_13=field_13,
-                                    field_14=field_14, field_15=field_15, field_16=field_16)
+        dog_owner = request.POST.get('dog_owner')
+
+        family_agree = request.POST.get('family_agree')
+
+        place_type = request.POST.get('place_type')
+
+        house_owner = request.POST.get('house_owner')
+
+        floor = request.POST.get('floor')
+        fence = request.POST.get('fence')
+        dogs_place = request.POST.get('dogs_place')
+
+        time_alone = request.POST.get('time_alone')
+        walks = request.POST.get('walks')
+        beh_problems = request.POST.get('beh_problems')
+        children = request.POST.get('children')
+        pets_owned = request.POST.get('pets_owned')
+        prev_dogs = request.POST.get('prev_dogs')
+
+        location = request.POST.get('location')
+        e_mail = request.POST.get('e_mail')
+        phone = request.POST.get('phone')
+
+        AdoptionForm.objects.create(dog=dog, dog_owner=dog_owner, family_agree=family_agree, place_type=place_type,\
+                                    house_owner=house_owner,floor=floor, fence=fence, dogs_place=dogs_place,\
+                                    time_alone=time_alone, walks=walks,beh_problems=beh_problems,  children=children,\
+                                    pets_owned=pets_owned, prev_dogs=prev_dogs, location=location, e_mail=e_mail, phone=phone)
         return HttpResponseRedirect('/radysiaki/')
 
-"""class AdoptionFormsView"""
+
+class AdoptionFormList(View):
+
+    def get(self, request, id):
+        dog = get_object_or_404(Dog, pk=id)
+        adoption_forms = AdoptionForm.objects.filter(dog=dog)
+        return render(request, "adoption_form_list.html", {"adoption_forms": adoption_forms, "dog": dog})
 
 """class SearchView"""
 
 #powiązać psy z Userami (chyba że będzie tylko 1)
-#usuwanie zdjęć
 #dokumentacja
 #format daty
 #formularz logowania, wylogowywania itd.
 #opcja sortowania listy psów wg użytkownika(np. najnowsze, najstarsze)
+#dodać opis serwisu na stronie głównej
 

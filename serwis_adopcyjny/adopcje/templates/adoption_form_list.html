@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<p>
+    <strong>{{ dog.name }} - ankiety adopcyjne:</strong></br>
+    {% for adf in adoption_forms %}
+     <p>
+        Czy pies jest dla Ciebie: {{ adf.get_dog_owner_display }}</br>
+        Zgoda domowników: {{ adf.get_family_agree_display }}</br>
+        Dom/blok: {{ adf.get_place_type_display }}</br>
+        Właściciel mieszkania: {{ adf.house_owner }}</br>
+        Piętro/winda: {{ adf.floor }}</br>
+        Ogrodzenie: {{ adf.get_fence_display }}</br>
+        Gdzie będzie zostawał pies: {{ adf.get_dogs_place_display }}</br>
+        Ile godzin pies będzie zostawał sam: {{ adf.time_alone }}</br>
+        Ile spacerów: {{ adf.walks }}</br>
+        Postępowanie w razie problemów: {{ adf.beh_problems }}</br>
+        Dzieci: {{ adf.children }}</br>
+        Zwierzęta w domu: {{ adf.pets_owned }}</br>
+        Poprzednie psy: {{ adf.prev_dogs }}</br>
+        Miejscowość: {{ adf.location }}</br>
+        E-mail: {{ adf.e_mail }}</br>
+        Telefon: {{ adf.phone }}</br>
+      </p>
+    {% endfor %}
+    <a href="/pies/{{ dog.id }}">Wróć</a>
+</p>
+{% endblock %}

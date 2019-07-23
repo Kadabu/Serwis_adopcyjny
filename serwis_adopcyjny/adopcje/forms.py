@@ -32,23 +32,22 @@ class MessageForm(forms.ModelForm):
 
 
 class AdoptDogForm(forms.Form):
-    field_1 = forms.ChoiceField(label="Czy pies, którego chcesz adoptować, to pies dla Ciebie i będzie mieszkał z Tobą?",
+    dog_owner = forms.ChoiceField(label="Czy pies, którego chcesz adoptować, to pies dla Ciebie i będzie mieszkał z Tobą?",
                                 choices=YES_NO)
-    field_2 = forms.ChoiceField(label="Czy wszyscy domownicy zgadzają się na psa?", choices=YES_NO)
-    field_3 = forms.ChoiceField(label="Gdzie mieszkasz?", choices=PLACE)
-    field_4 = forms.CharField(label="Kto jest właścicielem mieszkania lub domu, w którym mieszkasz?", max_length=64)
-    field_5 = forms.CharField(label="Jeżeli mieszkasz w bloku, to na którym piętrze i czy w budynku jest winda?",
+    family_agree = forms.ChoiceField(label="Czy wszyscy domownicy zgadzają się na psa?", choices=YES_NO)
+    place_type = forms.ChoiceField(label="Gdzie mieszkasz?", choices=PLACE)
+    house_owner = forms.CharField(label="Kto jest właścicielem mieszkania lub domu, w którym mieszkasz?", max_length=64)
+    floor = forms.CharField(label="Jeżeli mieszkasz w bloku, to na którym piętrze i czy w budynku jest winda?",
                               max_length=64, required=False)
-    field_6 = forms.ChoiceField(label="Jeżeli mieszkasz w domu, to czy dom jest ogrodzony?", choices=YES_NO, required=False)
-    field_7 = forms.ChoiceField(label="Gdzie będzie przebywał pies podczas Twojej nieobecności?", choices=DOGS_PLACE)
-    field_8 = forms.IntegerField(label="Ile godzin maksymalnie pies będzie zostawał sam?")
-    field_9 = forms.IntegerField(label="Ile razy dziennie pies będzie wychodził na spacer?")
-    field_10 = forms.CharField(label="Jak zamierzasz poradzić sobie w razie problemów behawioralnych (agresja, problemy"
+    fence = forms.ChoiceField(label="Jeżeli mieszkasz w domu, to czy dom jest ogrodzony?", choices=YES_NO, required=False)
+    dogs_place = forms.ChoiceField(label="Gdzie będzie przebywał pies podczas Twojej nieobecności?", choices=DOGS_PLACE)
+    time_alone = forms.IntegerField(label="Ile godzin maksymalnie pies będzie zostawał sam?")
+    walks = forms.IntegerField(label="Ile razy dziennie pies będzie wychodził na spacer?")
+    beh_problems = forms.CharField(label="Jak zamierzasz poradzić sobie w razie problemów behawioralnych (agresja, problemy"
                                      " z zostawaniem samemu - wycie, niszczenie)?", widget=forms.Textarea)
-    field_11 = forms.CharField(label="Czy w domu są dzieci, jeśli tak, to w jaki wieku?", max_length=128)
-    field_12 = forms.CharField(label="Czy w domu są zwierzęta, jeśli tak, to jakie?", max_length=128)
-    field_13 = forms.CharField(label="Czy miałeś wcześniej psa i co się z nim stało?", widget=forms.Textarea)
-    field_14 = forms.CharField(label="W jakiej miejscowości mieszkasz?", max_length=64)
-    field_15 = forms.EmailField(label="Twój e-mail")   #walidacja
-    field_16 = forms.CharField(label="Twój telefon", max_length=64) #walidacja
-
+    children = forms.CharField(label="Czy w domu są dzieci, jeśli tak, to w jakim wieku?", max_length=128)
+    pets_owned = forms.CharField(label="Czy w domu są zwierzęta, jeśli tak, to jakie?", max_length=128)
+    prev_dogs = forms.CharField(label="Czy miałeś wcześniej psa i co się z nim stało?", widget=forms.Textarea)
+    location = forms.CharField(label="W jakiej miejscowości mieszkasz?", max_length=64)
+    e_mail = forms.EmailField(label="Twój e-mail")
+    phone = forms.CharField(label="Twój telefon", max_length=64)
