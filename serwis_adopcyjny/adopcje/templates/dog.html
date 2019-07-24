@@ -29,14 +29,14 @@
 </p>
 <a href="/pytanie/{{ dog.pk }}">Zapytaj o psa</a></br>
 <a href="/ankieta/{{ dog.pk }}">Wyślij ankietę adopcyjną</a></br>
-    {% comment %}
-    {% if perms.adopcje.change_dog %}
-    {% endcomment %}
-
-<a href="/wiadomości/{{ dog.pk }}/">Pokaż wiadomości</a></br>
-<a href="/ankiety/{{ dog.pk }}/">Pokaż ankiety adopcyjne</a></br>
-<a href="/edytuj/{{ dog.pk }}/">Edytuj</a></br>
-<a href="/kategorie_dodaj/{{ dog.pk }}">Dodaj kategorię</a></br>
-<a href="/kategorie/{{ dog.pk }}/">Usuń kategorię</a></br>
-<a href="/usun/{{ dog.pk }}/">Usuń</a></br>
+{% endblock %}
+{% block user %}
+      {% if user.is_authenticated %}
+        <a href="/wiadomości/{{ dog.pk }}/">Pokaż wiadomości</a></br>
+        <a href="/ankiety/{{ dog.pk }}/">Pokaż ankiety adopcyjne</a></br>
+        <a href="/edytuj/{{ dog.pk }}/">Edytuj</a></br>
+        <a href="/kategorie_dodaj/{{ dog.pk }}">Dodaj kategorię</a></br>
+        <a href="/kategorie/{{ dog.pk }}/">Usuń kategorię</a></br>
+        <a href="/usun/{{ dog.pk }}/">Usuń</a></br>
+      {% endif %}
 {% endblock %}

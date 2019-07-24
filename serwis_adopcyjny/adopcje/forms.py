@@ -68,3 +68,43 @@ class SortForm(forms.Form):
         (6, "wagi - malejąco"),
         (7, "losowo")))
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField(strip=True)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email")
+
+
+class AddUserForm(UserForm):
+    password_1 = forms.CharField(widget=forms.PasswordInput)
+    password_2 = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_username(self):
+        if User.objects.filter(username=self.data['username']).exists():
+            self.add_error('username', error='Użytkownik już istnieje w bazie')
+        return self.data['username']
+
+    def clean(self):
+        if self.data['password_1'] != self.data['password_2']:
+            self.add_error(None, error='Hasła nie pasują do siebie')
+        return super().clean()
+
+    def save(self):
+        user_data = self.cleaned_data
+        user = User.objects.create_user(
+            username=user_data['username'],
+            password=user_data['password_1'],
+            first_name=user_data['first_name'],
+            last_name=user_data['last_name'],
+            email=user_data['email'],
+        )
+        return user
+
+    class Meta(UserForm.Meta):
+        fields = UserForm.Meta.fields + ('password_1', 'password_2')
+

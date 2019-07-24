@@ -8,9 +8,19 @@
   <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
   {% endfor %}
 </p>
-<a href="/dodaj">Dodaj psa</a></br>
 <a href="/wyszukaj">Znajdź psa dla siebie</a></br>
 <a href="/sortuj">Sortuj</a></br>
+{% endblock %}
+{% block user %}
+      {% if user.is_authenticated %}
+<p>
+  Użytkownik: {{ user }} <a href="/wyloguj/">Wyloguj</a></br>
+      <a href="/dodaj">Dodaj psa</a></br>
+      {% else %}
+  <a href="/zaloguj/">Zaloguj</a></br>
+      <a href="/dodaj_konto/">Załóż konto</a>
+</p>
+      {% endif %}
 {% endblock %}
 
 

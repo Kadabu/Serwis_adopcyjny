@@ -226,6 +226,44 @@ class SortView(View):
 
 
 
+class Login(View):
+
+    def get(self, request):
+        form = LoginForm()
+        ctx = {"form": form}
+
+        return render(request, "login.html", ctx)
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/radysiaki/')
+
+        else:
+            return HttpResponseRedirect('/zaloguj/')
+
+
+class Logout(View):
+
+    def get(self, request):
+        return render(request, 'logout.html')
+
+    def post(self, request):
+        logout(request)
+        return HttpResponseRedirect('/radysiaki/')
+
+
+class AddUser(CreateView):
+
+    template_name = 'user.html'
+    form_class = AddUserForm
+    success_url = reverse_lazy('login')
+
+
+
 
 
 #powiązać psy z Userami (chyba że będzie tylko 1)
