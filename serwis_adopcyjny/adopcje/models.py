@@ -112,6 +112,8 @@ class Dog(models.Model):
     categories = models.ManyToManyField(Category, through="DogCategories")
     date_added = models.DateTimeField(auto_now_add=True)
     contact_data = models.CharField(max_length=64)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
 

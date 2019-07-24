@@ -35,12 +35,34 @@ class AddDog(View):
 
     def post(self, request):
         form = AddDogForm(request.POST, request.FILES)
-        if form.is_valid:
-            form.save()
-            return HttpResponseRedirect('/radysiaki/')
-        else:
-            form = AddDogForm(request.GET)
-            return render(request, "add_dog.html", {"form": form})
+        name = request.POST.get("name")
+        sex = request.POST.get("sex")
+        age = request.POST.get("age")
+        weight = request.POST.get("age")
+        picture_1 = request.FILES.get("picture_1")
+        picture_2 = request.FILES.get("picture_2")
+        picture_3 = request.FILES.get("picture_3")
+        picture_4 = request.FILES.get("picture_4")
+        picture_5 = request.FILES.get("picture_5")
+        picture_6 = request.FILES.get("picture_6")
+        region = request.POST.get("region")
+        town =request.POST.get("town")
+        accepts_cats = request.POST.get("accepts_cats")
+        house_with_male_dog = request.POST.get("house_with_male_dog")
+        house_with_female_dog = request.POST.get("house_with_female_dog")
+        transport = request.POST.get("transport")
+        adoption_abroad = request.POST.get("adoption_abroad")
+        description = request.POST.get("description")
+        contact_data = request.POST.get("contact_data")
+        user = request.user
+        Dog.objects.create(name=name, sex=sex, age=age, weight=weight, picture_1=picture_1,
+                           picture_2=picture_2, picture_3=picture_3, picture_4=picture_4, picture_5=picture_5,
+                           picture_6=picture_6, region = region, town =town, accepts_cats = accepts_cats,
+                           house_with_male_dog = house_with_male_dog, house_with_female_dog = house_with_female_dog,
+                           transport = transport, adoption_abroad = adoption_abroad, description = description,
+                           contact_data = contact_data, user = user)
+        return HttpResponseRedirect('/radysiaki/')
+
 
 
 class EditDog(UpdateView):

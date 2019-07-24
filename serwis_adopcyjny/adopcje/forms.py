@@ -15,7 +15,7 @@ class AddCategoriesForm(forms.ModelForm):
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['date_added', 'categories']
+        exclude = ['date_added', 'categories', 'user']
 
 
 class AdoptDogForm(forms.Form):
