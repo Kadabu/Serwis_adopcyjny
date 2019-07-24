@@ -59,10 +59,9 @@ class AddDog(View):
                            picture_2=picture_2, picture_3=picture_3, picture_4=picture_4, picture_5=picture_5,
                            picture_6=picture_6, region = region, town =town, accepts_cats = accepts_cats,
                            house_with_male_dog = house_with_male_dog, house_with_female_dog = house_with_female_dog,
-                           transport = transport, adoption_abroad = adoption_abroad, description = description,
-                           contact_data = contact_data, user = user)
+                           transport=transport, adoption_abroad = adoption_abroad, description = description,
+                           contact_data=contact_data, user=user)
         return HttpResponseRedirect('/radysiaki/')
-
 
 
 class EditDog(UpdateView):

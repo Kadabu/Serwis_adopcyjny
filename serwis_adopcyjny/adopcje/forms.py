@@ -86,7 +86,7 @@ class AddUserForm(UserForm):
 
     def clean_username(self):
         if User.objects.filter(username=self.data['username']).exists():
-            self.add_error('username', error='Użytkownik już istnieje w bazie')
+            self.add_error('username', error='Użytkownik już istnieje')
         return self.data['username']
 
     def clean(self):
