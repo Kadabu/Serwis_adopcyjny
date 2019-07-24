@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin
-
+from random import shuffle
 
 
 
@@ -18,12 +18,14 @@ class MainView(View):
         dogs = Dog.objects.order_by('date_added').reverse()
         return render(request, "dogs.html", {"dogs": dogs})
 
+
 class DogView(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         ctx = {"dog": dog}
         return render(request, "dog.html", ctx)
+
 
 class AddDog(View):
 
@@ -39,6 +41,7 @@ class AddDog(View):
         else:
             form = AddDogForm(request.GET)
             return render(request, "add_dog.html", {"form": form})
+
 
 class EditDog(UpdateView):
 
@@ -57,6 +60,7 @@ class DeleteDog(View):
         dog.delete()
         return HttpResponseRedirect('/radysiaki/')
 
+
 class AddCategory(View):
 
     def get(self, request, id):
@@ -70,6 +74,7 @@ class AddCategory(View):
         DogCategories.objects.create(dog=dog, category=category)
 
         return HttpResponseRedirect('/kategorie_dodaj/{}'.format(id))
+
 
 class Categories(View):
 
@@ -88,6 +93,7 @@ class RemoveCategory(View):
             cat.delete()
 
         return HttpResponseRedirect('/pies/{}'.format(d_id))
+
 
 class MessageView(View):
 
@@ -146,9 +152,9 @@ class AdoptionFormView(View):
         e_mail = request.POST.get('e_mail')
         phone = request.POST.get('phone')
 
-        AdoptionForm.objects.create(dog=dog, dog_owner=dog_owner, family_agree=family_agree, place_type=place_type,\
-                                    house_owner=house_owner,floor=floor, fence=fence, dogs_place=dogs_place,\
-                                    time_alone=time_alone, walks=walks,beh_problems=beh_problems,  children=children,\
+        AdoptionForm.objects.create(dog=dog, dog_owner=dog_owner, family_agree=family_agree, place_type=place_type,
+                                    house_owner=house_owner,floor=floor, fence=fence, dogs_place=dogs_place,
+                                    time_alone=time_alone, walks=walks,beh_problems=beh_problems,  children=children,
                                     pets_owned=pets_owned, prev_dogs=prev_dogs, location=location, e_mail=e_mail, phone=phone)
         return HttpResponseRedirect('/radysiaki/')
 
@@ -174,10 +180,40 @@ class SearchView(View):
         return render(request, "search_result.html", {"result": result})
 
 
+class SortView(View):
+
+    def get(self, request):
+        form = SortForm(request.GET)
+        return render(request, "sort_form.html", {"form": form})
+
+    def post(self, request):
+        form = SortForm(request.POST)
+        sort_by = request.POST.get('sort_by')
+        dogs = Dog.objects.all()
+        if sort_by == '1':
+            dogs = dogs.order_by('date_added').reverse()
+        if sort_by == '2':
+            dogs = dogs.order_by('date_added')
+        if sort_by == '3':
+            dogs = dogs.order_by('age')
+        if sort_by == '4':
+            dogs = dogs.order_by('age').reverse()
+        if sort_by == '5':
+            dogs = dogs.order_by('weight')
+        if sort_by == '6':
+            dogs = dogs.order_by('weight').reverse()
+        if sort_by == '7':
+            dogs = dogs.order_by('?')
+
+        return render(request, "dogs.html", {"dogs": dogs})
+
+
+
+
+
 #powiązać psy z Userami (chyba że będzie tylko 1)
 #dokumentacja
 #format daty
 #formularz logowania, wylogowywania itd.
-#opcja sortowania listy psów wg użytkownika(np. najnowsze, najstarsze)
 #dodać opis serwisu na stronie głównej
 
