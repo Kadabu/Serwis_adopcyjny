@@ -1,7 +1,5 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-import re
 from .models import *
 
 
@@ -74,37 +72,12 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class UserForm(forms.ModelForm):
+class AddUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "email")
-
-
-class AddUserForm(UserForm):
+        fields = ("username", "email")
     password_1 = forms.CharField(widget=forms.PasswordInput)
     password_2 = forms.CharField(widget=forms.PasswordInput)
 
-    def clean_username(self):
-        if User.objects.filter(username=self.data['username']).exists():
-            self.add_error('username', error='Użytkownik już istnieje')
-        return self.data['username']
 
-    def clean(self):
-        if self.data['password_1'] != self.data['password_2']:
-            self.add_error(None, error='Hasła nie pasują do siebie')
-        return super().clean()
-
-    def save(self):
-        user_data = self.cleaned_data
-        user = User.objects.create_user(
-            username=user_data['username'],
-            password=user_data['password_1'],
-            first_name=user_data['first_name'],
-            last_name=user_data['last_name'],
-            email=user_data['email'],
-        )
-        return user
-
-    class Meta(UserForm.Meta):
-        fields = UserForm.Meta.fields + ('password_1', 'password_2')
 

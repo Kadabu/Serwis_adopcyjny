@@ -7,6 +7,8 @@
   <p><img src="/media/{{ dog.picture_4 }}"></p>
 <p><img src="/media/{{ dog.picture_5 }}"></p>
 <p><img src="/media/{{ dog.picture_6 }}"></p>
+<p><img src="/media/{{ dog.picture_7 }}"></p>
+<p><img src="/media/{{ dog.picture_8 }}"></p>
 <p>
     Numer: {{ dog.pk }}<br>
     Płeć: {{ dog.get_sex_display }}</br>
@@ -32,7 +34,7 @@
 {% endblock %}
 {% block user %}
       {% if user.is_authenticated%}
-      {% if user == dog.user %}
+      {% if user == dog.user or user.is_superuser %}
         <a href="/wiadomości/{{ dog.pk }}/">Pokaż wiadomości</a></br>
         <a href="/ankiety/{{ dog.pk }}/">Pokaż ankiety adopcyjne</a></br>
         <a href="/edytuj/{{ dog.pk }}/">Edytuj</a></br>

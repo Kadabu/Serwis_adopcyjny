@@ -1,14 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView, CreateView, DeleteView, FormView, UpdateView
+from django.views.generic import UpdateView
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from random import shuffle
 
 
 
@@ -45,8 +43,10 @@ class AddDog(View):
         picture_4 = request.FILES.get("picture_4")
         picture_5 = request.FILES.get("picture_5")
         picture_6 = request.FILES.get("picture_6")
+        picture_7 = request.FILES.get("picture_7")
+        picture_8 = request.FILES.get("picture_8")
         region = request.POST.get("region")
-        town =request.POST.get("town")
+        town = request.POST.get("town")
         accepts_cats = request.POST.get("accepts_cats")
         house_with_male_dog = request.POST.get("house_with_male_dog")
         house_with_female_dog = request.POST.get("house_with_female_dog")
@@ -57,10 +57,10 @@ class AddDog(View):
         user = request.user
         Dog.objects.create(name=name, sex=sex, age=age, weight=weight, picture_1=picture_1,
                            picture_2=picture_2, picture_3=picture_3, picture_4=picture_4, picture_5=picture_5,
-                           picture_6=picture_6, region = region, town =town, accepts_cats = accepts_cats,
-                           house_with_male_dog = house_with_male_dog, house_with_female_dog = house_with_female_dog,
-                           transport=transport, adoption_abroad = adoption_abroad, description = description,
-                           contact_data=contact_data, user=user)
+                           picture_6=picture_6, picture_7=picture_7, picture_8=picture_8, region = region, town=town,
+                           accepts_cats=accepts_cats, house_with_male_dog=house_with_male_dog,
+                           house_with_female_dog=house_with_female_dog, transport=transport, adoption_abroad=adoption_abroad,
+                           description=description, contact_data=contact_data, user=user)
         return HttpResponseRedirect('/radysiaki/')
 
 
@@ -69,8 +69,8 @@ class EditDog(UpdateView):
     model = Dog
     fields = ('name', 'sex', 'weight', 'age',
               'region', 'town', 'accepts_cats', 'picture_1', 'picture_2', 'picture_3', 'picture_4', 'picture_5',
-              'picture_6', 'house_with_male_dog', 'house_with_female_dog', 'transport', 'adoption_abroad', 'description',
-              'contact_data')
+              'picture_6', 'picture_7', 'picture_8', 'house_with_male_dog', 'house_with_female_dog', 'transport',
+              'adoption_abroad', 'description', 'contact_data')
     template_name = 'dog_update_form.html'
 
 
@@ -93,7 +93,6 @@ class AddCategory(View):
         dog = Dog.objects.get(pk=id)
         category = Category.objects.get(id=request.POST.get('category'))
         DogCategories.objects.create(dog=dog, category=category)
-
         return HttpResponseRedirect('/kategorie_dodaj/{}'.format(id))
 
 
@@ -112,7 +111,6 @@ class RemoveCategory(View):
         cat_set = DogCategories.objects.filter(dog=dog, category=category)
         for cat in cat_set:
             cat.delete()
-
         return HttpResponseRedirect('/pies/{}'.format(d_id))
 
 
@@ -128,7 +126,6 @@ class MessageView(View):
         content = request.POST.get('content')
         e_mail = request.POST.get('e_mail')
         Message.objects.create(dog=dog, content=content, e_mail=e_mail)
-
         return HttpResponseRedirect('/pies/{}'.format(id))
 
 
@@ -151,24 +148,18 @@ class AdoptionFormView(View):
         form = AddDogForm(request.POST)
         dog = get_object_or_404(Dog, pk=id)
         dog_owner = request.POST.get('dog_owner')
-
         family_agree = request.POST.get('family_agree')
-
         place_type = request.POST.get('place_type')
-
         house_owner = request.POST.get('house_owner')
-
         floor = request.POST.get('floor')
         fence = request.POST.get('fence')
         dogs_place = request.POST.get('dogs_place')
-
         time_alone = request.POST.get('time_alone')
         walks = request.POST.get('walks')
         beh_problems = request.POST.get('beh_problems')
         children = request.POST.get('children')
         pets_owned = request.POST.get('pets_owned')
         prev_dogs = request.POST.get('prev_dogs')
-
         location = request.POST.get('location')
         e_mail = request.POST.get('e_mail')
         phone = request.POST.get('phone')
@@ -210,7 +201,6 @@ class SearchView(View):
         dogs_by_reg = []
         for reg in region:
             dogs_by_reg += Dog.objects.filter(region=int(reg))
-
         for dog in dogs_by_reg:
             for cat in categories_chosen:
                 if cat in dog.categories.all():
@@ -242,18 +232,14 @@ class SortView(View):
             dogs = dogs.order_by('weight').reverse()
         if sort_by == '7':
             dogs = dogs.order_by('?')
-
         return render(request, "dogs.html", {"dogs": dogs})
-
 
 
 class Login(View):
 
     def get(self, request):
-        form = LoginForm()
-        ctx = {"form": form}
-
-        return render(request, "login.html", ctx)
+        form = LoginForm(request.GET)
+        return render(request, "login.html", {"form": form})
 
     def post(self, request):
         username = request.POST.get('username')
@@ -262,7 +248,6 @@ class Login(View):
         if user is not None:
             login(request, user)
             return HttpResponseRedirect('/radysiaki/')
-
         else:
             return HttpResponseRedirect('/zaloguj/')
 
@@ -277,19 +262,32 @@ class Logout(View):
         return HttpResponseRedirect('/radysiaki/')
 
 
-class AddUser(CreateView):
+class AddUser(View):
 
-    template_name = 'user.html'
-    form_class = AddUserForm
-    success_url = reverse_lazy('login')
+    def get(self, request):
+        form = AddUserForm(request.GET)
+        return render(request, "user_form.html", {"form": form})
+
+    def post(self, request):
+        form = AddUserForm(request.POST)
+        username = request.POST.get('username')
+        password_1 = request.POST.get('password_1')
+        password_2 = request.POST.get('password_2')
+        email = request.POST.get('email')
+        message = ''
+        if User.objects.filter(username=username).exists():
+            message += "Taki użytkownik już istnieje"
+            return render(request, "user_form.html", {"form": form, "message": message})
+        elif password_1 != password_2:
+            message += "Wpisane hasła są niezgodne"
+            return render(request, "user_form.html", {"form": form, "message": message})
+        else:
+            User.objects.create_user(username=username, password=password_1, email=email)
+            return HttpResponseRedirect('/zaloguj/')
 
 
 
-
-
-#powiązać psy z Userami (chyba że będzie tylko 1)
 #dokumentacja
 #format daty
-#formularz logowania, wylogowywania itd.
 #dodać opis serwisu na stronie głównej
 

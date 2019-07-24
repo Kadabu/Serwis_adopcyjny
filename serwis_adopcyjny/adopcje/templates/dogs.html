@@ -13,13 +13,11 @@
 {% endblock %}
 {% block user %}
       {% if user.is_authenticated %}
-<p>
+  <a href="/dodaj">Dodaj psa</a></br>
   Użytkownik: {{ user }} <a href="/wyloguj/">Wyloguj</a></br>
-      <a href="/dodaj">Dodaj psa</a></br>
       {% else %}
   <a href="/zaloguj/">Zaloguj</a></br>
-      <a href="/dodaj_konto/">Załóż konto</a>
-</p>
+  <a href="/dodaj_konto/">Załóż konto</a>
       {% endif %}
 {% endblock %}
 

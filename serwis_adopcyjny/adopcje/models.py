@@ -101,6 +101,8 @@ class Dog(models.Model):
     picture_4 = models.ImageField(upload_to="documents/", null=True, blank=True)
     picture_5 = models.ImageField(upload_to="documents/", null=True, blank=True)
     picture_6 = models.ImageField(upload_to="documents/", null=True, blank=True)
+    picture_7 = models.ImageField(upload_to="documents/", null=True, blank=True)
+    picture_8 = models.ImageField(upload_to="documents/", null=True, blank=True)
     region = models.IntegerField(choices=REGION, default=1)
     town = models.CharField(max_length=64)
     accepts_cats = models.IntegerField(choices=CATS, default=1)
