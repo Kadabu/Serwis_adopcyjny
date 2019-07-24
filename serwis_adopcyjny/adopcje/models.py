@@ -44,9 +44,10 @@ CATEGORIES = (
     (2, "maluchy"),
     (3, "czarnulki"),
     (4, "białaski"),
-    (5, "rudzielce"),
-    (6, "łaciate krówki"),
-    (7, "kłapouszki"),
+    (5, "białaski"),
+    (6, "rudzielce"),
+    (7, "łaciate krówki"),
+    (8, "kłapouszki"),
 )
 
 OWNER = (

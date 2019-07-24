@@ -53,10 +53,9 @@ class MessageForm(forms.ModelForm):
 
 
 
-class SearchForm(forms.ModelForm):
-    class Meta:
-        model = DogCategories
-        exclude = ['dog']
+class SearchForm(forms.Form):
+    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
+    region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
 
 
 class SortForm(forms.Form):

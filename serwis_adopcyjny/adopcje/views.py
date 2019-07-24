@@ -153,8 +153,8 @@ class AdoptionFormView(View):
         phone = request.POST.get('phone')
 
         AdoptionForm.objects.create(dog=dog, dog_owner=dog_owner, family_agree=family_agree, place_type=place_type,
-                                    house_owner=house_owner,floor=floor, fence=fence, dogs_place=dogs_place,
-                                    time_alone=time_alone, walks=walks,beh_problems=beh_problems,  children=children,
+                                    house_owner=house_owner, floor=floor, fence=fence, dogs_place=dogs_place,
+                                    time_alone=time_alone, walks=walks, beh_problems=beh_problems,  children=children,
                                     pets_owned=pets_owned, prev_dogs=prev_dogs, location=location, e_mail=e_mail, phone=phone)
         return HttpResponseRedirect('/radysiaki/')
 
@@ -175,9 +175,26 @@ class SearchView(View):
 
     def post(self, request):
         form = SearchForm(request.POST)
-        category = request.POST.get('category')
-        result = DogCategories.objects.filter(category=category)
-        return render(request, "search_result.html", {"result": result})
+        dogs = []
+        if form.is_valid():
+            category = form.cleaned_data['category']
+            region = form.cleaned_data['region']
+        else:
+            form = SearchForm(request.GET)
+            return render(request, "search_form.html", {"form": form})
+
+        categories_chosen = []
+        for cat in category:
+            categories_chosen += Category.objects.filter(pk=int(cat))
+        dogs_by_reg = []
+        for reg in region:
+            dogs_by_reg += Dog.objects.filter(region=int(reg))
+
+        for dog in dogs_by_reg:
+            for cat in categories_chosen:
+                if cat in dog.categories.all():
+                    dogs.append(dog)
+        return render(request, "search_result.html", {"dogs": dogs})
 
 
 class SortView(View):
