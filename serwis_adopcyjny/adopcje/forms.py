@@ -51,3 +51,9 @@ class AdoptDogForm(forms.Form):
     location = forms.CharField(label="W jakiej miejscowości mieszkasz?", max_length=64)
     e_mail = forms.EmailField(label="Twój e-mail")
     phone = forms.CharField(label="Twój telefon", max_length=64)
+
+
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model = DogCategories
+        exclude = ['dog']

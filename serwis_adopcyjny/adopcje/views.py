@@ -8,8 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from templated_docs import fill_template
-from templated_docs.http import FileResponse
+
 
 
 
@@ -161,7 +160,19 @@ class AdoptionFormList(View):
         adoption_forms = AdoptionForm.objects.filter(dog=dog)
         return render(request, "adoption_form_list.html", {"adoption_forms": adoption_forms, "dog": dog})
 
-"""class SearchView"""
+
+class SearchView(View):
+
+    def get(self, request):
+        form = SearchForm(request.GET)
+        return render(request, "search_form.html", {"form": form})
+
+    def post(self, request):
+        form = SearchForm(request.POST)
+        category = request.POST.get('category')
+        result = DogCategories.objects.filter(category=category)
+        return render(request, "search_result.html", {"result": result})
+
 
 #powiązać psy z Userami (chyba że będzie tylko 1)
 #dokumentacja

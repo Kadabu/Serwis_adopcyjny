@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Psiaki dla Ciebie:</h2>
+<p>
+  {% for res in result %}
+  <p><img src="/media/{{ res.dog.picture_1 }}"></p>
+  <a href="/pies/{{ res.dog.id }}">{{ res.dog.name }}, {{ res.dog.town }}</a>
+  {% endfor %}
+</p>
+{% endblock %}
