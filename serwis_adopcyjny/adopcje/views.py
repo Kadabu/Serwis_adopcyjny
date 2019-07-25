@@ -7,6 +7,7 @@ from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -25,7 +26,7 @@ class DogView(View):
         return render(request, "dog.html", ctx)
 
 
-class AddDog(View):
+class AddDog(View, LoginRequiredMixin):
 
     def get(self, request):
         form = AddDogForm()
@@ -36,7 +37,7 @@ class AddDog(View):
         name = request.POST.get("name")
         sex = request.POST.get("sex")
         age = request.POST.get("age")
-        weight = request.POST.get("age")
+        weight = request.POST.get("weight")
         picture_1 = request.FILES.get("picture_1")
         picture_2 = request.FILES.get("picture_2")
         picture_3 = request.FILES.get("picture_3")
@@ -64,30 +65,72 @@ class AddDog(View):
         return HttpResponseRedirect('/radysiaki/')
 
 
-class EditDog(UpdateView):
-
-    model = Dog
-    fields = ('name', 'sex', 'weight', 'age',
-              'region', 'town', 'accepts_cats', 'picture_1', 'picture_2', 'picture_3', 'picture_4', 'picture_5',
-              'picture_6', 'picture_7', 'picture_8', 'house_with_male_dog', 'house_with_female_dog', 'transport',
-              'adoption_abroad', 'description', 'contact_data')
-    template_name = 'add_dog.html'
-
-
-class DeleteDog(View):
+class EditDog(View, LoginRequiredMixin):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
-        dog.delete()
-        return HttpResponseRedirect('/radysiaki/')
+        form = AddDogForm(instance=dog)
+        if request.user == dog.user or request.user.is_superuser:
+            return render(request, "add_dog.html", {"form": form})
+        else:
+            return HttpResponse("Nie możesz edytować tego ogłoszenia")
+
+    def post(self, request, id):
+        form = AddDogForm(request.POST, request.FILES)
+        dog = get_object_or_404(Dog, pk=id)
+        dog.name = request.POST.get("name")
+        dog.sex = request.POST.get("sex")
+        dog.age = request.POST.get("age")
+        dog.weight = request.POST.get("weight")
+        if request.FILES.get("picture_1") != None:
+            dog.picture_1 = request.FILES.get("picture_1")
+        if request.FILES.get("picture_2") != None:
+            dog.picture_2 = request.FILES.get("picture_2")
+        if request.FILES.get("picture_3") != None:
+            dog.picture_3 = request.FILES.get("picture_3")
+        if request.FILES.get("picture_4") != None:
+            dog.picture_4 = request.FILES.get("picture_4")
+        if request.FILES.get("picture_5") != None:
+            dog.picture_5 = request.FILES.get("picture_5")
+        if request.FILES.get("picture_6") != None:
+            dog.picture_6 = request.FILES.get("picture_6")
+        if request.FILES.get("picture_7") != None:
+            dog.picture_7 = request.FILES.get("picture_7")
+        if request.FILES.get("picture_8") != None:
+            dog.picture_8 = request.FILES.get("picture_8")
+        dog.region = request.POST.get("region")
+        dog.town = request.POST.get("town")
+        dog.accepts_cats = request.POST.get("accepts_cats")
+        dog.house_with_male_dog = request.POST.get("house_with_male_dog")
+        dog.house_with_female_dog = request.POST.get("house_with_female_dog")
+        dog.transport = request.POST.get("transport")
+        dog.adoption_abroad = request.POST.get("adoption_abroad")
+        dog.description = request.POST.get("description")
+        dog.contact_data = request.POST.get("contact_data")
+        dog.save()
+        return HttpResponseRedirect('/pies/{}'.format(dog.id))
 
 
-class AddCategory(View):
+class DeleteDog(View, LoginRequiredMixin):
+
+    def get(self, request, id):
+        dog = get_object_or_404(Dog, pk=id)
+        if request.user == dog.user or request.user.is_superuser:
+            dog.delete()
+            return HttpResponseRedirect('/radysiaki/')
+        else:
+            return HttpResponse("Nie możesz usunąć tego ogłoszenia")
+
+
+class AddCategory(View, LoginRequiredMixin):
 
     def get(self, request, id):
         form = AddCategoriesForm()
         dog = get_object_or_404(Dog, pk=id)
-        return render(request, "categories_form.html", {"form": form, "dog": dog})
+        if request.user == dog.user or request.user.is_superuser:
+            return render(request, "categories_form.html", {"form": form, "dog": dog})
+        else:
+            return HttpResponse("Nie możesz edytować tego ogłoszenia")
 
     def post(self, request, id):
         dog = Dog.objects.get(pk=id)
@@ -96,22 +139,25 @@ class AddCategory(View):
         return HttpResponseRedirect('/kategorie_dodaj/{}'.format(id))
 
 
-class Categories(View):
+class Categories(View, LoginRequiredMixin):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "remove_categories_form.html", {"dog": dog})
 
 
-class RemoveCategory(View):
+class RemoveCategory(View, LoginRequiredMixin):
 
     def get(self, request, d_id, c_id):
         dog = get_object_or_404(Dog, pk=d_id)
         category = get_object_or_404(Category, pk=c_id)
         cat_set = DogCategories.objects.filter(dog=dog, category=category)
-        for cat in cat_set:
-            cat.delete()
-        return HttpResponseRedirect('/pies/{}'.format(d_id))
+        if request.user == dog.user or request.user.is_superuser:
+            for cat in cat_set:
+                cat.delete()
+                return HttpResponseRedirect('/pies/{}'.format(d_id))
+        else:
+            return HttpResponse("Nie możesz edytować tego ogłoszenia")
 
 
 class MessageView(View):
@@ -129,12 +175,15 @@ class MessageView(View):
         return HttpResponseRedirect('/pies/{}'.format(id))
 
 
-class MessagesList(View):
+class MessagesList(View, LoginRequiredMixin):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         messages = Message.objects.filter(dog=dog)
-        return render(request, "messages_list.html", {"messages": messages, "dog": dog})
+        if request.user == dog.user or request.user.is_superuser:
+            return render(request, "messages_list.html", {"messages": messages, "dog": dog})
+        else:
+            return HttpResponse("Nie możesz zobaczyć wiadomości do tego ogłoszenia")
 
 
 class AdoptionFormView(View):
@@ -171,12 +220,15 @@ class AdoptionFormView(View):
         return HttpResponseRedirect('/radysiaki/')
 
 
-class AdoptionFormList(View):
+class AdoptionFormList(View, LoginRequiredMixin):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         adoption_forms = AdoptionForm.objects.filter(dog=dog)
-        return render(request, "adoption_form_list.html", {"adoption_forms": adoption_forms, "dog": dog})
+        if request.user == dog.user or request.user.is_superuser:
+            return render(request, "adoption_form_list.html", {"adoption_forms": adoption_forms, "dog": dog})
+        else:
+            return HttpResponse("Nie możesz zobaczyć ankiet do tego ogłoszenia")
 
 
 class SearchView(View):
@@ -285,9 +337,4 @@ class AddUser(View):
             User.objects.create_user(username=username, password=password_1, email=email)
             return HttpResponseRedirect('/zaloguj/')
 
-
-
-#dokumentacja
-#format daty
-#dodać opis serwisu na stronie głównej
 

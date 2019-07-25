@@ -33,7 +33,7 @@ urlpatterns = [
     path('kategorie_dodaj/<int:id>/', AddCategory.as_view()),
     path('kategorie/<int:id>/', Categories.as_view()),
     path('kategorie_usun/<int:d_id>/<int:c_id>/', RemoveCategory.as_view()),
-    path('edytuj/<pk>/', EditDog.as_view()),
+    path('edytuj/<int:id>/', EditDog.as_view()),
     path('usun/<int:id>/', DeleteDog.as_view()),
     path('wiadomości/<int:id>/', MessagesList.as_view()),
     path('pytanie/<int:id>/', MessageView.as_view()),
