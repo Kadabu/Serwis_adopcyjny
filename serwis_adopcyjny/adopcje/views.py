@@ -1,14 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import UpdateView
-from .models import *
-from .forms import *
-from django.urls import reverse_lazy
+from .models import Category, Dog, DogCategories, Message, AdoptionForm
+from .forms import AddCategoriesForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, MessageForm, SearchForm,\
+    SortForm, LoginForm, AddUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
-
 
 
 class MainView(View):
@@ -64,7 +61,7 @@ class AddDog(View):
         return HttpResponseRedirect('/radysiaki/')
 
 
-class EditDog(View, LoginRequiredMixin):
+class EditDog(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
@@ -82,7 +79,7 @@ class EditDog(View, LoginRequiredMixin):
         return HttpResponseRedirect('/pies/{}'.format(dog.id))
 
 
-class DeleteDog(View, LoginRequiredMixin):
+class DeleteDog(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
@@ -93,7 +90,7 @@ class DeleteDog(View, LoginRequiredMixin):
             return HttpResponse("Nie możesz usunąć tego ogłoszenia")
 
 
-class AddCategory(View, LoginRequiredMixin):
+class AddCategory(View):
 
     def get(self, request, id):
         form = AddCategoriesForm()
@@ -110,14 +107,14 @@ class AddCategory(View, LoginRequiredMixin):
         return HttpResponseRedirect('/kategorie_dodaj/{}'.format(id))
 
 
-class Categories(View, LoginRequiredMixin):
+class Categories(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "remove_categories_form.html", {"dog": dog})
 
 
-class RemoveCategory(View, LoginRequiredMixin):
+class RemoveCategory(View):
 
     def get(self, request, d_id, c_id):
         dog = get_object_or_404(Dog, pk=d_id)
@@ -146,7 +143,7 @@ class MessageView(View):
         return HttpResponseRedirect('/pies/{}'.format(id))
 
 
-class MessagesList(View, LoginRequiredMixin):
+class MessagesList(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
@@ -191,7 +188,7 @@ class AdoptionFormView(View):
         return HttpResponseRedirect('/radysiaki/')
 
 
-class AdoptionFormList(View, LoginRequiredMixin):
+class AdoptionFormList(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
