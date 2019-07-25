@@ -26,7 +26,7 @@ class DogView(View):
         return render(request, "dog.html", ctx)
 
 
-class AddDog(View, LoginRequiredMixin):
+class AddDog(View):
 
     def get(self, request):
         form = AddDogForm()
@@ -34,34 +34,33 @@ class AddDog(View, LoginRequiredMixin):
 
     def post(self, request):
         form = AddDogForm(request.POST, request.FILES)
-        name = request.POST.get("name")
-        sex = request.POST.get("sex")
-        age = request.POST.get("age")
-        weight = request.POST.get("weight")
-        picture_1 = request.FILES.get("picture_1")
-        picture_2 = request.FILES.get("picture_2")
-        picture_3 = request.FILES.get("picture_3")
-        picture_4 = request.FILES.get("picture_4")
-        picture_5 = request.FILES.get("picture_5")
-        picture_6 = request.FILES.get("picture_6")
-        picture_7 = request.FILES.get("picture_7")
-        picture_8 = request.FILES.get("picture_8")
-        region = request.POST.get("region")
-        town = request.POST.get("town")
-        accepts_cats = request.POST.get("accepts_cats")
-        house_with_male_dog = request.POST.get("house_with_male_dog")
-        house_with_female_dog = request.POST.get("house_with_female_dog")
-        transport = request.POST.get("transport")
-        adoption_abroad = request.POST.get("adoption_abroad")
-        description = request.POST.get("description")
-        contact_data = request.POST.get("contact_data")
-        user = request.user
-        Dog.objects.create(name=name, sex=sex, age=age, weight=weight, picture_1=picture_1,
-                           picture_2=picture_2, picture_3=picture_3, picture_4=picture_4, picture_5=picture_5,
-                           picture_6=picture_6, picture_7=picture_7, picture_8=picture_8, region = region, town=town,
-                           accepts_cats=accepts_cats, house_with_male_dog=house_with_male_dog,
-                           house_with_female_dog=house_with_female_dog, transport=transport, adoption_abroad=adoption_abroad,
-                           description=description, contact_data=contact_data, user=user)
+        try:
+            Dog.objects.create(
+                name=request.POST.get("name"),
+                sex=request.POST.get("sex"),
+                age=request.POST.get("age"),
+                weight=request.POST.get("weight"),
+                picture_1=request.FILES.get("picture_1"),
+                picture_2=request.FILES.get("picture_2"),
+                picture_3=request.FILES.get("picture_3"),
+                picture_4=request.FILES.get("picture_4"),
+                picture_5=request.FILES.get("picture_5"),
+                picture_6=request.FILES.get("picture_6"),
+                picture_7=request.FILES.get("picture_7"),
+                picture_8=request.FILES.get("picture_8"),
+                region=request.POST.get("region"),
+                town=request.POST.get("town"),
+                accepts_cats=request.POST.get("accepts_cats"),
+                house_with_male_dog=request.POST.get("house_with_male_dog"),
+                house_with_female_dog=request.POST.get("house_with_female_dog"),
+                transport=request.POST.get("transport"),
+                adoption_abroad=request.POST.get("adoption_abroad"),
+                description=request.POST.get("description"),
+                contact_data=request.POST.get("contact_data"),
+                user=request.user
+            )
+        except ValueError:
+            return HttpResponse("Wystapił błąd. Sprawdź, czy jesteś zalogowany.")
         return HttpResponseRedirect('/radysiaki/')
 
 
@@ -76,38 +75,10 @@ class EditDog(View, LoginRequiredMixin):
             return HttpResponse("Nie możesz edytować tego ogłoszenia")
 
     def post(self, request, id):
-        form = AddDogForm(request.POST, request.FILES)
         dog = get_object_or_404(Dog, pk=id)
-        dog.name = request.POST.get("name")
-        dog.sex = request.POST.get("sex")
-        dog.age = request.POST.get("age")
-        dog.weight = request.POST.get("weight")
-        if request.FILES.get("picture_1") != None:
-            dog.picture_1 = request.FILES.get("picture_1")
-        if request.FILES.get("picture_2") != None:
-            dog.picture_2 = request.FILES.get("picture_2")
-        if request.FILES.get("picture_3") != None:
-            dog.picture_3 = request.FILES.get("picture_3")
-        if request.FILES.get("picture_4") != None:
-            dog.picture_4 = request.FILES.get("picture_4")
-        if request.FILES.get("picture_5") != None:
-            dog.picture_5 = request.FILES.get("picture_5")
-        if request.FILES.get("picture_6") != None:
-            dog.picture_6 = request.FILES.get("picture_6")
-        if request.FILES.get("picture_7") != None:
-            dog.picture_7 = request.FILES.get("picture_7")
-        if request.FILES.get("picture_8") != None:
-            dog.picture_8 = request.FILES.get("picture_8")
-        dog.region = request.POST.get("region")
-        dog.town = request.POST.get("town")
-        dog.accepts_cats = request.POST.get("accepts_cats")
-        dog.house_with_male_dog = request.POST.get("house_with_male_dog")
-        dog.house_with_female_dog = request.POST.get("house_with_female_dog")
-        dog.transport = request.POST.get("transport")
-        dog.adoption_abroad = request.POST.get("adoption_abroad")
-        dog.description = request.POST.get("description")
-        dog.contact_data = request.POST.get("contact_data")
-        dog.save()
+        form = AddDogForm(data=request.POST, files=request.FILES, instance=dog)
+        if form.is_valid():
+            form.save()
         return HttpResponseRedirect('/pies/{}'.format(dog.id))
 
 

@@ -13,7 +13,7 @@ class AddCategoriesForm(forms.ModelForm):
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['date_added', 'categories', 'user']
+        exclude = ['date_added', 'categories']
 
 
 class AdoptDogForm(forms.ModelForm):
