@@ -2,7 +2,7 @@
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    Kategoria: {{ form.category }}</br>
   <input type="submit" value="Dodaj">
 </form>
 <p>

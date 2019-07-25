@@ -28,7 +28,7 @@ class DogView(View):
 class AddDog(View):
 
     def get(self, request):
-        form = AddDogForm(request.GET)
+        form = AddDogForm()
         return render(request, "add_dog.html", {"form": form})
 
     def post(self, request):
@@ -71,7 +71,7 @@ class EditDog(UpdateView):
               'region', 'town', 'accepts_cats', 'picture_1', 'picture_2', 'picture_3', 'picture_4', 'picture_5',
               'picture_6', 'picture_7', 'picture_8', 'house_with_male_dog', 'house_with_female_dog', 'transport',
               'adoption_abroad', 'description', 'contact_data')
-    template_name = 'dog_update_form.html'
+    template_name = 'add_dog.html'
 
 
 class DeleteDog(View):
@@ -85,7 +85,7 @@ class DeleteDog(View):
 class AddCategory(View):
 
     def get(self, request, id):
-        form = AddCategoriesForm(request.GET)
+        form = AddCategoriesForm()
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "categories_form.html", {"form": form, "dog": dog})
 
@@ -117,7 +117,7 @@ class RemoveCategory(View):
 class MessageView(View):
 
     def get(self, request, id):
-        form = MessageForm(request.GET)
+        form = MessageForm()
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "message.html", {"form": form})
 
@@ -140,7 +140,7 @@ class MessagesList(View):
 class AdoptionFormView(View):
 
     def get(self, request, id):
-        form = AdoptDogForm(request.GET)
+        form = AdoptDogForm()
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "message.html", {"form": form})
 
@@ -182,7 +182,7 @@ class AdoptionFormList(View):
 class SearchView(View):
 
     def get(self, request):
-        form = SearchForm(request.GET)
+        form = SearchForm()
         return render(request, "search_form.html", {"form": form})
 
     def post(self, request):
@@ -211,7 +211,7 @@ class SearchView(View):
 class SortView(View):
 
     def get(self, request):
-        form = SortForm(request.GET)
+        form = SortForm()
         return render(request, "sort_form.html", {"form": form})
 
     def post(self, request):
@@ -238,7 +238,7 @@ class SortView(View):
 class Login(View):
 
     def get(self, request):
-        form = LoginForm(request.GET)
+        form = LoginForm()
         return render(request, "login.html", {"form": form})
 
     def post(self, request):
@@ -265,7 +265,7 @@ class Logout(View):
 class AddUser(View):
 
     def get(self, request):
-        form = AddUserForm(request.GET)
+        form = AddUserForm()
         return render(request, "user_form.html", {"form": form})
 
     def post(self, request):

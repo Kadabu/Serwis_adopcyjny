@@ -44,7 +44,7 @@ CATEGORIES = (
     (2, "maluchy"),
     (3, "czarnulki"),
     (4, "białaski"),
-    (5, "białaski"),
+    (5, "buraski"),
     (6, "rudzielce"),
     (7, "łaciate krówki"),
     (8, "kłapouszki"),
@@ -82,11 +82,10 @@ def validate_weight(weight):
 
 
 class Category(models.Model):
+
     name = models.CharField(max_length=64)
     def __str__(self):
         return self.name
-
-
 
 
 class Dog(models.Model):
@@ -124,19 +123,19 @@ class Dog(models.Model):
 
 
 class DogCategories(models.Model):
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 class Message(models.Model):
     content = models.TextField()
-    e_mail = models.CharField(max_length=64) #dodać walidację mejla
+    e_mail = models.EmailField()
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     date_sent = models.DateField(auto_now_add=True)
 
 
 class AdoptionForm(models.Model):
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE, null=True)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE, default=1)
     dog_owner = models.IntegerField(choices=YES_NO)
     family_agree = models.IntegerField(choices=YES_NO)
     place_type = models.IntegerField(choices=PLACE)

@@ -1,11 +1,31 @@
 {% extends "base.html" %}
+
 {% block content %}
  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+     {% csrf_token %}
+     Imię: {{ form.name }}</br>
+     Płeć: {{ form.sex }}</br>
+     Wiek (w latach): {{ form.age }} {{ form.age.errors }}</br>
+     Waga: {{ form.weight }} {{ form.weight.errors }}</br>
+     Zdjęcia (co najmniej jedno):</br>
+     {{ form.picture_1 }}</br>
+     {{ form.picture_2 }}</br>
+     {{ form.picture_3 }}</br>
+     {{ form.picture_4 }}</br>
+     {{ form.picture_5 }}</br>
+     {{ form.picture_6 }}</br>
+     {{ form.picture_7 }}</br>
+     {{ form.picture_8 }}</br>
+     Województwo: {{ form.region }}</br>
+     Miejscowość: {{ form.town }}</br>
+     Czy akceptuje koty: {{ form.accepts_cats }}</br>
+     Dom z psem: {{ form.house_with_male_dog }}</br>
+     Dom z suczką: {{ form.house_with_female_dog }}</br>
+     Możliwość transportu: {{ form.transport }}</br>
+     Możliwość adopcji za granicę: {{ form.adoption_abroad }}</br>
+     Opis: {{ form.description }}</br>
+     Dane do kontaktu: {{ form.contact_data }}</br>
     <button type="submit">Dodaj/Edytuj</button>
      {{ form.non_field_errors }}
-     {{ form.age.errors }}
-     {{ form.weight.errors }}
   </form>
 {% endblock %}

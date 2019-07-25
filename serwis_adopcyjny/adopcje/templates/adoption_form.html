@@ -1,8 +1,24 @@
 {% extends "base.html" %}
+
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    Czy pies, którego chcesz adoptować, to pies dla Ciebie i będzie mieszkał z Tobą? {{ form.dog_owner }}</br>
+    Czy wszyscy domownicy zgadzają się na psa? {{ form.family_agree }}</br>
+    Gdzie mieszkasz? {{ form.place_type }}</br>
+    Kto jest właścicielem mieszkania lub domu, w którym mieszkasz? {{ form.house_owner }}</br>
+    Jeżeli mieszkasz w bloku, to na którym piętrze i czy w budynku jest winda? {{ form.floor }}</br>
+    Jeżeli mieszkasz w domu, to czy dom jest ogrodzony? {{ form.fence }}</br>
+    Gdzie będzie przebywał pies podczas Twojej nieobecności? {{ form.dogs_place }}</br>
+    Ile godzin maksymalnie pies będzie zostawał sam? {{ form.time_alone }}</br>
+    Ile razy dziennie pies będzie wychodził na spacer? {{ form.walks }}</br>
+    Jak zamierzasz poradzić sobie w razie problemów behawioralnych (agresja, problemy z zostawaniem samemu - wycie, niszczenie)? {{ form.beh_problems }}</br>
+    Czy w domu są dzieci, jeśli tak, to w jakim wieku? {{ form.children }}</br>
+    Czy w domu są zwierzęta, jeśli tak, to jakie? {{ forms.pets_owned }}</br>
+    Czy miałeś wcześniej psa i co się z nim stało? {{ form.prev_dogs }}</br>
+    W jakiej miejscowości mieszkasz?</br>
+    Twój e-mail: {{ form.e_mail }}</br>
+    Twój telefon: {{ form.phone }}</br>
   <input type="submit" value="Wyślij">
 </form>
 {% endblock %}

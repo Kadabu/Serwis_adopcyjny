@@ -2,7 +2,8 @@
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    Użytkownik: {{ form.username }}</br>
+    Hasło: {{ form.password }}</br>
   <input type="submit" value="Zaloguj się">
 </form>
 {% endblock %}

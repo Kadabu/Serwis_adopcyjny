@@ -2,7 +2,8 @@
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-  <input type="submit" value="Szukaj">
+    Kategoria: {{ form.category }}</br>
+    Województwo: {{ form.region }}</br>
+  <input type="submit" value="Wyszukaj">
 </form>
 {% endblock %}
