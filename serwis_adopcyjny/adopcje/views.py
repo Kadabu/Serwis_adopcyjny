@@ -76,7 +76,7 @@ class EditDog(View):
         form = AddDogForm(data=request.POST, files=request.FILES, instance=dog)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('/pies/{}'.format(dog.id))
+            return HttpResponseRedirect('/pies/{}'.format(dog.id))
 
 
 class DeleteDog(View):
