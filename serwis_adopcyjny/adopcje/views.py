@@ -164,27 +164,25 @@ class AdoptionFormView(View):
     def post(self, request, id):
         form = AddDogForm(request.POST)
         dog = get_object_or_404(Dog, pk=id)
-        dog_owner = request.POST.get('dog_owner')
-        family_agree = request.POST.get('family_agree')
-        place_type = request.POST.get('place_type')
-        house_owner = request.POST.get('house_owner')
-        floor = request.POST.get('floor')
-        fence = request.POST.get('fence')
-        dogs_place = request.POST.get('dogs_place')
-        time_alone = request.POST.get('time_alone')
-        walks = request.POST.get('walks')
-        beh_problems = request.POST.get('beh_problems')
-        children = request.POST.get('children')
-        pets_owned = request.POST.get('pets_owned')
-        prev_dogs = request.POST.get('prev_dogs')
-        location = request.POST.get('location')
-        e_mail = request.POST.get('e_mail')
-        phone = request.POST.get('phone')
-
-        AdoptionForm.objects.create(dog=dog, dog_owner=dog_owner, family_agree=family_agree, place_type=place_type,
-                                    house_owner=house_owner, floor=floor, fence=fence, dogs_place=dogs_place,
-                                    time_alone=time_alone, walks=walks, beh_problems=beh_problems,  children=children,
-                                    pets_owned=pets_owned, prev_dogs=prev_dogs, location=location, e_mail=e_mail, phone=phone)
+        AdoptionForm.objects.create(
+            dog=dog,
+            dog_owner=request.POST.get('dog_owner'),
+            family_agree=request.POST.get('family_agree'),
+            place_type=request.POST.get('place_type'),
+            house_owner=request.POST.get('house_owner'),
+            floor=request.POST.get('floor'),
+            fence=request.POST.get('fence'),
+            dogs_place=request.POST.get('dogs_place'),
+            time_alone=request.POST.get('time_alone'),
+            walks=request.POST.get('walks'),
+            beh_problems=request.POST.get('beh_problems'),
+            children=request.POST.get('children'),
+            pets_owned=request.POST.get('pets_owned'),
+            prev_dogs=request.POST.get('prev_dogs'),
+            location=request.POST.get('location'),
+            e_mail=request.POST.get('e_mail'),
+            phone=request.POST.get('phone')
+        )
         return HttpResponseRedirect('/radysiaki/')
 
 
