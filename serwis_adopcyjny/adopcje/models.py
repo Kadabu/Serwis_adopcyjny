@@ -140,7 +140,7 @@ class AdoptionForm(models.Model):
     family_agree = models.IntegerField(choices=YES_NO)
     place_type = models.IntegerField(choices=PLACE)
     house_owner = models.CharField(max_length=64)
-    floor = models.CharField(max_length=64,null=True, blank=True)
+    floor = models.CharField(max_length=64, null=True, blank=True)
     fence = models.IntegerField(choices=YES_NO, null=True, blank=True)
     dogs_place = models.IntegerField(choices=DOGS_PLACE)
     time_alone = models.IntegerField()
@@ -149,7 +149,7 @@ class AdoptionForm(models.Model):
     children = models.CharField(max_length=128)
     pets_owned = models.CharField(max_length=128)
     prev_dogs = models.TextField()
-    location = models.CharField( max_length=64)
+    location = models.CharField(max_length=64)
     e_mail = models.EmailField()
     phone = models.CharField(max_length=32)
 

@@ -19,7 +19,7 @@ class AddDogForm(forms.ModelForm):
 class AdoptDogForm(forms.ModelForm):
      class Meta:
          model = AdoptionForm
-         fields = '__all__'
+         exclude = ['dog']
 
 class DeleteCategoriesForm(forms.ModelForm):
     class Meta:

@@ -159,7 +159,7 @@ class AdoptionFormView(View):
     def get(self, request, id):
         form = AdoptDogForm()
         dog = get_object_or_404(Dog, pk=id)
-        return render(request, "message.html", {"form": form})
+        return render(request, "adoption_form.html", {"form": form})
 
     def post(self, request, id):
         form = AddDogForm(request.POST)
