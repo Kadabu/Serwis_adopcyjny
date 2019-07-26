@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.views.generic import TemplateView
 from .models import Category, Dog, DogCategories, Message, AdoptionForm
 from .forms import AddCategoriesForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, MessageForm, SearchForm,\
     SortForm, LoginForm, AddUserForm
@@ -8,16 +9,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-class MainView(View):
+class MainView(TemplateView):
 
-    def get(self, request):
-        dogs = Dog.objects.order_by('date_added').reverse()
-        return render(request, "dogs.html", {"dogs": dogs})
+    template_name = 'dogs.html'
+
+    def get_context_data(self):
+        return {'dogs': Dog.objects.all()}
 
 
 class DogView(View):
 
     def get(self, request, id):
+
         dog = get_object_or_404(Dog, pk=id)
         ctx = {"dog": dog}
         return render(request, "dog.html", ctx)
@@ -153,6 +156,7 @@ class MessagesList(View):
         else:
             return HttpResponse("Nie możesz zobaczyć wiadomości do tego ogłoszenia")
 
+
 class MessageDelete(View):
 
     def get(self, request, id):
@@ -163,6 +167,7 @@ class MessageDelete(View):
             return HttpResponseRedirect('/wiadomosci/{}/'.format(dog.id))
         else:
             return HttpResponse("Nie możesz usunąć tej wiadomości")
+
 
 class AdoptionFormDelete(View):
 
