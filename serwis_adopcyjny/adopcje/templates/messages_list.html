@@ -4,7 +4,7 @@
 <p>
     <strong>{{ dog.name }} - wiadomości:</strong></br>
     {% for message in messages %}
-    {{ message.content }} - z dnia {{ message.date_sent }} od {{ message.e_mail }}
+    {{ message.content }} - z dnia {{ message.date_sent|date:"d m Y" }} od {{ message.e_mail }}
     <a href="/usun_wiadomosc/{{ message.id }}">Usuń</a></br>
     {% endfor %}
     <a href="/pies/{{ dog.id }}">Wróć do ogłoszenia</a>
