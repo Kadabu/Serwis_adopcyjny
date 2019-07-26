@@ -8,7 +8,7 @@
 
         <style>
                .jumbotron{
-                        background-color:#2E2D88;
+                        background-color: mediumblue;
                         color:black;
                }
          </style>
@@ -19,7 +19,9 @@
             {% block header %}
             {% load static %}
             <h1>Adoptuj psa z Radys</h1>
-            <img src="{% static "./Misiek.jpg" %}">
+                <img src="{% static "./Misiek.jpg" %}"></br>
+                <h3>Strona prezentujaca psy ze schroniska w Radysach, przebywające obecnie w hotelikach i domach tymczasowych
+                i gotowe do adopcji, będące pod opieką grupy wolontariuszy</h3>
               {% endblock %}
             </div>
             <div class="jumbotron">
@@ -28,7 +30,7 @@
             </div>
             {% block user %}
             {% endblock %}
-            <footer><a href="/radysiaki/">Strona główna</a></footer>
+            <footer><a href="/" class="btn btn-default btn-lg" role="button">Strona główna</a></footer>
       </div>
     </body>
 </html>

@@ -27,7 +27,7 @@ urlpatterns = [
     path('zaloguj/', Login.as_view(), name='login'),
     path('wyloguj/', Logout.as_view(), name='logout'),
     path('dodaj_konto/', AddUser.as_view(), name='add-user'),
-    path('radysiaki/', MainView.as_view(), name='main-page'),
+    path('', MainView.as_view(), name='main-page'),
     path('pies/<int:id>/', DogView.as_view(), name='dog'),
     path('dodaj/', AddDog.as_view()),
     path('kategorie_dodaj/<int:id>/', AddCategory.as_view()),

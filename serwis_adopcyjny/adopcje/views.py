@@ -58,7 +58,7 @@ class AddDog(View):
             )
         except ValueError:
             return HttpResponse("Wystapił błąd. Sprawdź, czy jesteś zalogowany.")
-        return HttpResponseRedirect('/radysiaki/')
+        return HttpResponseRedirect('/')
 
 
 class EditDog(View):
@@ -85,7 +85,7 @@ class DeleteDog(View):
         dog = get_object_or_404(Dog, pk=id)
         if request.user == dog.user or request.user.is_superuser:
             dog.delete()
-            return HttpResponseRedirect('/radysiaki/')
+            return HttpResponseRedirect('/')
         else:
             return HttpResponse("Nie możesz usunąć tego ogłoszenia")
 
@@ -183,7 +183,7 @@ class AdoptionFormView(View):
             e_mail=request.POST.get('e_mail'),
             phone=request.POST.get('phone')
         )
-        return HttpResponseRedirect('/radysiaki/')
+        return HttpResponseRedirect('/')
 
 
 class AdoptionFormList(View):
@@ -265,7 +265,7 @@ class Login(View):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/radysiaki/')
+            return HttpResponseRedirect('/')
         else:
             return HttpResponseRedirect('/zaloguj/')
 
@@ -277,7 +277,7 @@ class Logout(View):
 
     def post(self, request):
         logout(request)
-        return HttpResponseRedirect('/radysiaki/')
+        return HttpResponseRedirect('/')
 
 
 class AddUser(View):
