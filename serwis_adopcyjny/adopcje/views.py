@@ -244,7 +244,8 @@ class SearchView(View):
         for dog in dogs_by_reg:
             for cat in categories_chosen:
                 if cat in dog.categories.all():
-                    dogs.append(dog)
+                    if dog not in dogs:
+                        dogs.append(dog)
         return render(request, "search_result.html", {"dogs": dogs})
 
 

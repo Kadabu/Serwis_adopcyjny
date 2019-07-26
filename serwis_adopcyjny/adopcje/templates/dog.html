@@ -13,8 +13,11 @@
     Może zamieszkać z suczką: {{ dog.get_house_with_female_dog_display }}</br>
     Dowóz do domu: {{ dog.get_transport_display }}</br>
     Adopcja za granicę: {{ dog.get_adoption_abroad_display }}</br>
+    Kategorie: {% for cat in dog.categories.all %} {{ cat }} {% endfor %}</br>
 </p>
-<p>{{ dog.description }}</p>
+<p>
+    {{ dog.description }}
+</p>
 <p>
     Kontakt w sprawie adopcji: {{ dog.contact_data }}</br>
     <a href="/pytanie/{{ dog.pk }}">Wyślij wiadomość</a></br>
