@@ -153,6 +153,28 @@ class MessagesList(View):
         else:
             return HttpResponse("Nie możesz zobaczyć wiadomości do tego ogłoszenia")
 
+class MessageDelete(View):
+
+    def get(self, request, id):
+        message = get_object_or_404(Message, pk=id)
+        dog = message.dog
+        if request.user == dog.user or request.user.is_superuser:
+            message.delete()
+            return HttpResponseRedirect('/wiadomosci/{}/'.format(dog.id))
+        else:
+            return HttpResponse("Nie możesz usunąć tej wiadomości")
+
+class AdoptionFormDelete(View):
+
+    def get(self, request, id):
+        adoption_form = get_object_or_404(AdoptionForm, pk=id)
+        dog = adoption_form.dog
+        if request.user == dog.user or request.user.is_superuser:
+            adoption_form.delete()
+            return HttpResponseRedirect('/ankiety/{}/'.format(dog.id))
+        else:
+            return HttpResponse("Nie możesz usunąć tej ankiety")
+
 
 class AdoptionFormView(View):
 

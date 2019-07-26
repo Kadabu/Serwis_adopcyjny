@@ -35,10 +35,12 @@ urlpatterns = [
     path('kategorie_usun/<int:d_id>/<int:c_id>/', RemoveCategory.as_view()),
     path('edytuj/<int:id>/', EditDog.as_view()),
     path('usun/<int:id>/', DeleteDog.as_view()),
-    path('wiadomości/<int:id>/', MessagesList.as_view()),
+    path('wiadomosci/<int:id>/', MessagesList.as_view()),
+    path('usun_wiadomosc/<int:id>/', MessageDelete.as_view()),
     path('pytanie/<int:id>/', MessageView.as_view()),
     path('ankieta/<int:id>/', AdoptionFormView.as_view()),
     path('ankiety/<int:id>/', AdoptionFormList.as_view()),
+    path('usun_ankiete/<int:id>', AdoptionFormDelete.as_view()),
     path('wyszukaj/', SearchView.as_view()),
     path('sortuj/', SortView.as_view()),
 ]

@@ -20,8 +20,9 @@
         Miejscowość: {{ adf.location }}</br>
         E-mail: {{ adf.e_mail }}</br>
         Telefon: {{ adf.phone }}</br>
+        <a href="/usun_ankiete/{{ adf.id }}">Usuń</a></br>
       </p>
     {% endfor %}
-    <a href="/pies/{{ dog.id }}">Wróć do ogłoszenia</a>
+<p><a href="/pies/{{ dog.id }}">Wróć do ogłoszenia</a></p>
 </p>
 {% endblock %}

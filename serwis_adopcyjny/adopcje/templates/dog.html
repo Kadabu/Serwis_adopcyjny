@@ -36,7 +36,7 @@
 {% if user.is_authenticated%}
 {% if user == dog.user or user.is_superuser %}
 <p>
-    <a href="/wiadomości/{{ dog.pk }}/">Pokaż wiadomości</a></br>
+    <a href="/wiadomosci/{{ dog.pk }}/">Pokaż wiadomości</a></br>
     <a href="/ankiety/{{ dog.pk }}/">Pokaż ankiety adopcyjne</a></br>
     <a href="/edytuj/{{ dog.pk }}/">Edytuj</a></br>
     <a href="/kategorie_dodaj/{{ dog.pk }}">Dodaj kategorię</a></br>
