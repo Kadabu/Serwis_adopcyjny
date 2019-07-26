@@ -1,24 +1,30 @@
 {% extends "base.html" %}
-{% block content %}
 
-<h2>Wszystkie psy do adopcji</h2>
+{% block content %}
 <p>
-  {% for dog in dogs %}
-  <p><img src="/media/{{ dog.picture_1 }}"></p>
-  <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
-  {% endfor %}
+    <a href="/sortuj">Sortuj listę</a></br>
+    <a href="/wyszukaj">Znajdź psa dla siebie</a>
 </p>
-<a href="/wyszukaj">Znajdź psa dla siebie</a></br>
-<a href="/sortuj">Sortuj</a></br>
+{% for dog in dogs %}
+<p>
+    <h2><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h2>
+    <img src="/media/{{ dog.picture_1 }}">
+</p>
+{% endfor %}
+</p>
 {% endblock %}
+
 {% block user %}
-      {% if user.is_authenticated %}
-  <a href="/dodaj">Dodaj psa</a></br>
-  Użytkownik: {{ user }} <a href="/wyloguj/">Wyloguj</a></br>
-      {% else %}
-  <a href="/zaloguj/">Zaloguj się</a></br>
-  <a href="/dodaj_konto/">Załóż konto</a>
-      {% endif %}
+{% if user.is_authenticated %}
+<p>
+    Użytkownik: {{ user }}</br>
+    <a href="/dodaj">Dodaj psa</a></br>
+    <a href="/wyloguj/">Wyloguj</a></br>
+{% else %}
+    <a href="/zaloguj/">Zaloguj się</a></br>
+    <a href="/dodaj_konto/">Załóż konto</a>
+</p>
+{% endif %}
 {% endblock %}
 
 
