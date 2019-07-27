@@ -4,9 +4,10 @@
 <p>
     <a href="/sortuj" class = "btn btn-default btn-lg" role="button">Sortuj listę</a>
     <a href="/wyszukaj" class = "btn btn-info btn-lg" role="button">Znajdź psa dla siebie</a>
-
+</p>
+<p>
 {% for dog in dogs %}
-<h2><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h2>
+<h3><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h3>
 <img src="/media/{{ dog.picture_1 }}">
 {% endfor %}
 </p>
