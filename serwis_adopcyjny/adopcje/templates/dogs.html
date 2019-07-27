@@ -4,7 +4,7 @@
 <p>
     <a href="/sortuj" class = "btn btn-default btn-lg" role="button">Sortuj listę</a>
     <a href="/wyszukaj" class = "btn btn-info btn-lg" role="button">Znajdź psa dla siebie</a>
-</p>
+
 {% for dog in dogs %}
 <h2><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h2>
 <img src="/media/{{ dog.picture_1 }}">
@@ -19,8 +19,8 @@
     <a href="/dodaj">Dodaj psa</a></br>
     <a href="/wyloguj/">Wyloguj</a></br>
 {% else %}
-    <a href="/zaloguj/">Zaloguj się</a></br>
-    <a href="/dodaj_konto/">Załóż konto</a>
+    <a href="/zaloguj/" class="btn btn-default btn-info" role="button">Zaloguj się</a>
+    <a href="/dodaj_konto/" class="btn btn-default btn-info" role="button">Załóż konto</a>
 </p>
 {% endif %}
 {% endblock %}

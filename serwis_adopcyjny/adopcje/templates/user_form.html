@@ -4,7 +4,10 @@
 <p></p><strong>{{ message }}</strong></p>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-  <input type="submit" value="Wyślij">
+    Użytkownik:  {{ form.username }}</br>
+    Hasło 1:  {{ form.password_1 }}</br>
+    Hasło 2:  {{ form.password_2 }}</br>
+    E-mail:  {{ form.email }}</br>
+  <input type="submit" value="Wyślij" class="btn btn-default">
 </form>
 {% endblock %}
