@@ -2,14 +2,12 @@
 
 {% block content %}
 <p>
-    <a href="/sortuj">Sortuj listę</a></br>
-    <a href="/wyszukaj">Znajdź psa dla siebie</a>
+    <a href="/sortuj" class = "btn btn-default btn-lg" role="button">Sortuj listę</a>
+    <a href="/wyszukaj" class = "btn btn-info btn-lg" role="button">Znajdź psa dla siebie</a>
 </p>
 {% for dog in dogs %}
-<p>
-    <h2><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h2>
-    <img src="/media/{{ dog.picture_1 }}">
-</p>
+<h2><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h2>
+<img src="/media/{{ dog.picture_1 }}">
 {% endfor %}
 </p>
 {% endblock %}

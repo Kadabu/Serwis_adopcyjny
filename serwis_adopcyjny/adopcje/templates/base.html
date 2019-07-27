@@ -15,18 +15,32 @@
                     height: 400px;
                     border-radius: 3%;
                 }
+                .page-header img {
+                    float: left;
+                    width: auto;
+                    height: 120px;
+                    border-radius: 3%;
+                }
+                .page-header h1 {
+                    position: relative;
+                    left: 10px;
+                }
+                .page-header h3 {
+                    position: relative;
+                    left: 10px;
+                }
          </style>
     </head>
     <body>
       <div class="container">
-            <div class="page-header">
+            <div class="page-header well well-sm">
             {% block header %}
             {% load static %}
-            <h1>Adoptuj psa z Radys</h1>
-                <img src="{% static "./Misiek.jpg" %}"></br>
-                <h3>Strona prezentujaca psy ze schroniska w Radysach, przebywające obecnie w hotelikach i domach tymczasowych
-                i gotowe do adopcji, będące pod opieką wolontariuszy</h3>
-              {% endblock %}
+            <img align="left" src="{% static "./p4.jpg" %}">
+            <h1 align="right">Adoptuj psa z Radys</h1>
+            <h4 align="right">Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w hotelikach
+                i domach tymczasowych, będące pod opieką wolontariuszy</h4>
+             {% endblock %}
             </div>
             <div class="jumbotron">
             {% block content %}
