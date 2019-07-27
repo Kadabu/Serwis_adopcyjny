@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<p>
-    <strong>{{ dog.name }} - ankiety adopcyjne:</strong></br>
+<div>
+    <p><strong>{{ dog.name }} - ankiety adopcyjne:</strong></p>
     {% for adf in adoption_forms %}
      <p>
         Czy pies jest dla Ciebie: {{ adf.get_dog_owner_display }}</br>
@@ -20,9 +20,11 @@
         Miejscowość: {{ adf.location }}</br>
         E-mail: {{ adf.e_mail }}</br>
         Telefon: {{ adf.phone }}</br>
-        <a href="/usun_ankiete/{{ adf.id }}">Usuń</a></br>
+        <a href="/usun_ankiete/{{ adf.id }}" class="btn btn-default btn-lg" role="button">Usuń</a>
       </p>
     {% endfor %}
-<p><a href="/pies/{{ dog.id }}">Wróć do ogłoszenia</a></p>
-</p>
+    <p>
+        <a href="/pies/{{ dog.id }}" class="btn btn-default btn-lg" role="button">Wróć do ogłoszenia</a></p>
+    </p>
+</div>
 {% endblock %}

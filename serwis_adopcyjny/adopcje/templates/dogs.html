@@ -7,7 +7,7 @@
         <li>
             <form action="" method="post" class="navbar-form navbar-left">
              {% csrf_token %}
-                <input type="submit" value="Sortuj" >{{ form.sort_by }}
+                {{ form.sort_by }}<input type="submit" value="Sortuj">
             </form>
         </li>
         <li><a href="/wyszukaj">Znajdź psa dla siebie</a></li>
@@ -15,25 +15,25 @@
         <li><a href="/zaloguj/">Zaloguj się</a></li>
         <li><a href="/dodaj_konto/">Załóż konto</a></li>
             {% else %}
-        <li></li>   Użytkownik: {{ user }}
         <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
         <li><a href="/wyloguj/">Wyloguj</a></li>
             {% endif %}
       </ul>
     </div>
 </nav>
-<div class="row">
-    {% for dog in dogs %}
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="thumbnail">
-                <img src="/media/{{ dog.picture_1 }}">
+  <hr class="mt-2 mb-5">
+<div class="row text-center text-lg-left">
+   {% for dog in dogs %}
+    <div class="col-md-3 col-sm-6 col-xs-12" style="padding-bottom:0">
+          <div class="thumbnail">
+            <img src="/media/{{ dog.picture_1 }}" class="image-responsive">
                 <div class="caption">
                     <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
-                </div>
-        </div>
+                 </div>
+         </div>
     </div>
     {% endfor %}
-</div>
+ </div>
 {% endblock %}
 
 

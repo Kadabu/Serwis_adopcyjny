@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p></p><strong>{{ message }}</strong></p>
+<strong>{{ message }}</strong>
 <form action="" method="post">
     {% csrf_token %}
     Użytkownik:  {{ form.username }}</br>

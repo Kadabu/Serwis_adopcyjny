@@ -40,13 +40,13 @@ class SearchForm(forms.Form):
 
 class SortForm(forms.Form):
     sort_by = forms.ChoiceField(choices=(
-        (1, "według daty dodania - od najnowszych"),
-        (2, "według daty dodania - od najstarszych"),
-        (3, "według wieku - rosnąco"),
-        (4, "według wieku - malejąco"),
-        (5, "według wagi - rosnąco"),
-        (6, "według wagi - malejąco"),
-        (7, "losowo")))
+        (1, "Sortuj według daty dodania - od najnowszych"),
+        (2, "Sortuj według daty dodania - od najstarszych"),
+        (3, "Sortuj według wieku - rosnąco"),
+        (4, "Sortuj według wieku - malejąco"),
+        (5, "Sortuj według wagi - rosnąco"),
+        (6, "Sortuj według wagi - malejąco"),
+        (7, "Sortuj losowo")))
 
 
 class LoginForm(forms.Form):
