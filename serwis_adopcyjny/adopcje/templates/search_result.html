@@ -2,11 +2,17 @@
 
 {% block content %}
 <h2>Psiaki dla Ciebie:</h2>
-<p>
+<div class="row">
   {% for dog in dogs %}
-  <p><img src="/media/{{ dog.picture_1 }}"></p>
+  <div class="col-xs-2 col-md-3">
+  <div class="thumbnail">
+  <img src="/media/{{ dog.picture_1 }}">
+  <div class="caption">
   <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
+  </div>
+  </div>
+  </div>
   {% endfor %}
-</p>
+</div>
 <a href="/wyszukaj" class="btn btn-default btn-lg" role="button">Wróć do wyszukiwarki</a></br>
 {% endblock %}

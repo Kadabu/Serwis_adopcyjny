@@ -5,24 +5,30 @@
     <a href="/sortuj" class = "btn btn-default btn-lg" role="button">Sortuj listę</a>
     <a href="/wyszukaj" class = "btn btn-default btn-lg" role="button">Znajdź psa dla siebie</a>
 </p>
-<p>
+<div class="row">
 {% for dog in dogs %}
-<h3><a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a></h3>
+<div class="col-xs-2 col-md-3">
+<div class="thumbnail">
 <img src="/media/{{ dog.picture_1 }}">
+<div class="caption">
+<a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
+</div>
+</div>
+</div>
 {% endfor %}
-</p>
+</div>
 {% endblock %}
 
 {% block user %}
 {% if user.is_authenticated %}
-<p>
+<div>
     Użytkownik: {{ user }}</br>
-    <a href="/dodaj">Dodaj psa</a></br>
+    <a href="/dodaj">Dodaj ogłoszenie</a></br>
     <a href="/wyloguj/">Wyloguj</a></br>
 {% else %}
     <a href="/zaloguj/" class="btn btn-default btn-info" role="button">Zaloguj się</a>
     <a href="/dodaj_konto/" class="btn btn-default btn-info" role="button">Załóż konto</a>
-</p>
+</div>
 {% endif %}
 {% endblock %}
 
