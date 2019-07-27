@@ -9,12 +9,32 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-class MainView(TemplateView):
+class MainView(View):
 
-    template_name = 'dogs.html'
+    def get(self, request):
+        form = SortForm()
+        dogs = Dog.objects.all()
+        return render(request, "dogs.html", {"dogs": dogs, "form": form})
 
-    def get_context_data(self):
-        return {'dogs': Dog.objects.all()}
+    def post(self, request):
+        form = SortForm(request.POST)
+        sort_by = request.POST.get('sort_by')
+        dogs = Dog.objects.all()
+        if sort_by == '1':
+            dogs = dogs.order_by('date_added').reverse()
+        if sort_by == '2':
+            dogs = dogs.order_by('date_added')
+        if sort_by == '3':
+            dogs = dogs.order_by('age')
+        if sort_by == '4':
+            dogs = dogs.order_by('age').reverse()
+        if sort_by == '5':
+            dogs = dogs.order_by('weight')
+        if sort_by == '6':
+            dogs = dogs.order_by('weight').reverse()
+        if sort_by == '7':
+            dogs = dogs.order_by('?')
+        return render(request, "dogs.html", {"dogs": dogs, "form": form})
 
 
 class ReadMoreView(TemplateView):
@@ -258,33 +278,6 @@ class SearchView(View):
                     if dog not in dogs:
                         dogs.append(dog)
         return render(request, "search_result.html", {"dogs": dogs})
-
-
-class SortView(View):
-
-    def get(self, request):
-        form = SortForm()
-        return render(request, "sort_form.html", {"form": form})
-
-    def post(self, request):
-        form = SortForm(request.POST)
-        sort_by = request.POST.get('sort_by')
-        dogs = Dog.objects.all()
-        if sort_by == '1':
-            dogs = dogs.order_by('date_added').reverse()
-        if sort_by == '2':
-            dogs = dogs.order_by('date_added')
-        if sort_by == '3':
-            dogs = dogs.order_by('age')
-        if sort_by == '4':
-            dogs = dogs.order_by('age').reverse()
-        if sort_by == '5':
-            dogs = dogs.order_by('weight')
-        if sort_by == '6':
-            dogs = dogs.order_by('weight').reverse()
-        if sort_by == '7':
-            dogs = dogs.order_by('?')
-        return render(request, "dogs.html", {"dogs": dogs})
 
 
 class Login(View):

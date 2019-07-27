@@ -43,7 +43,6 @@ urlpatterns = [
     path('ankiety/<int:id>/', AdoptionFormList.as_view()),
     path('usun_ankiete/<int:id>', AdoptionFormDelete.as_view()),
     path('wyszukaj/', SearchView.as_view()),
-    path('sortuj/', SortView.as_view()),
 ]
 
 if settings.DEBUG:

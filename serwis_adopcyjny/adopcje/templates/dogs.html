@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>
-    <a href="/sortuj" class = "btn btn-default btn-lg" role="button">Sortuj listę</a>
-    <a href="/wyszukaj" class = "btn btn-default btn-lg" role="button">Znajdź psa dla siebie</a>
-</p>
+<div>
+
+    <form action="" method="post" >
+     {% csrf_token %}
+     <input type="submit" value="Sortuj" class="btn btn-default btn-lg">
+      {{ form.sort_by }}
+    </form>
+     <a href="/wyszukaj" class = "btn btn-default btn-lg" role="button">Znajdź psa dla siebie</a>
+</div>
 <div class="row">
 {% for dog in dogs %}
-<div class="col-xs-2 col-md-3">
+<div class="col-md-3 col-sm-6 col-xs-12">
 <div class="thumbnail">
 <img src="/media/{{ dog.picture_1 }}">
 <div class="caption">
