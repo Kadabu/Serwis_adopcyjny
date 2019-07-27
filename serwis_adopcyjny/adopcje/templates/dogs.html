@@ -1,40 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-
-    <form action="" method="post" >
-     {% csrf_token %}
-     <input type="submit" value="Sortuj" class="btn btn-default btn-lg">
-      {{ form.sort_by }}
-    </form>
-     <a href="/wyszukaj" class = "btn btn-default btn-lg" role="button">Znajdź psa dla siebie</a>
-</div>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li>
+            <form action="" method="post" class="navbar-form navbar-left">
+             {% csrf_token %}
+                <input type="submit" value="Sortuj" >{{ form.sort_by }}
+            </form>
+        </li>
+        <li><a href="/wyszukaj">Znajdź psa dla siebie</a></li>
+            {% if not user.is_authenticated %}
+        <li><a href="/zaloguj/">Zaloguj się</a></li>
+        <li><a href="/dodaj_konto/">Załóż konto</a></li>
+            {% else %}
+        <li></li>   Użytkownik: {{ user }}
+        <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
+        <li><a href="/wyloguj/">Wyloguj</a></li>
+            {% endif %}
+      </ul>
+    </div>
+</nav>
 <div class="row">
-{% for dog in dogs %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-<div class="thumbnail">
-<img src="/media/{{ dog.picture_1 }}">
-<div class="caption">
-<a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
-</div>
-</div>
-</div>
-{% endfor %}
+    {% for dog in dogs %}
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="thumbnail">
+                <img src="/media/{{ dog.picture_1 }}">
+                <div class="caption">
+                    <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
+                </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
-{% block user %}
-{% if user.is_authenticated %}
-<div>
-    Użytkownik: {{ user }}</br>
-    <a href="/dodaj">Dodaj ogłoszenie</a></br>
-    <a href="/wyloguj/">Wyloguj</a></br>
-{% else %}
-    <a href="/zaloguj/" class="btn btn-default btn-info" role="button">Zaloguj się</a>
-    <a href="/dodaj_konto/" class="btn btn-default btn-info" role="button">Załóż konto</a>
-</div>
-{% endif %}
-{% endblock %}
+
 
 
