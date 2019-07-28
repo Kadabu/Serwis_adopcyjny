@@ -44,18 +44,18 @@
          </style>
     </head>
     <body>
-      <div class="container">
-            <div class="page-header well well-lg">
+      <div class="container-fluid">
+            <div class="page-header well well-sm">
             {% block header %}
             {% load static %}
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <img align="left" src="{% static "./logo.jpeg" %}">
                 </div>
-                <div class="bottom-align-text col-sm-9">
+                <div class="float-left" col-sm-9">
                     <h1>Adoptuj psa z Radys</h1>
-                    <h4>Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
-                    hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji</h4>
+                    <h3>Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
+                    hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji</h3>
                 </div>
             </div>
              {% endblock %}
