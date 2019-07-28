@@ -13,7 +13,7 @@ class MainView(View):
 
     def get(self, request):
         form = SortForm()
-        dogs = Dog.objects.all()
+        dogs = Dog.objects.all().order_by('date_added').reverse()
         return render(request, "dogs.html", {"dogs": dogs, "form": form})
 
     def post(self, request):

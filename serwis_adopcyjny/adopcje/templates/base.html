@@ -27,10 +27,12 @@
                 .well {
                     background: lightskyblue;
                 }
-                .gallery img{
-                    height: 400px;
-                    width: auto;
-                }
+                 @media (min-width: 768px) {
+                     .row.equal {
+                         display: flex;
+                         flex-wrap: wrap;
+                     }
+                 }
          </style>
     </head>
     <body>
@@ -39,10 +41,10 @@
             {% block header %}
             {% load static %}
             <img align="left" src="{% static "./p4.jpg" %}">
-            <h1 align="right">Adoptuj psa z Radys</h1>
-            <h4 align="right">Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w hotelikach
-                i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji
-                <a href="/o_nas">czytaj więcej</a></h4>
+                <h1 align="right">Adoptuj psa z Radys</h1>
+                <h4 align="right">Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
+                    hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji
+                    <a href="/o_nas">czytaj więcej</a></h4>
              {% endblock %}
             </div>
             <div class="jumbotron">

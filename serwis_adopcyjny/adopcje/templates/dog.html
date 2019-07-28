@@ -16,7 +16,7 @@
         <strong>Adopcja za granicę:</strong>  {{ dog.get_adoption_abroad_display }}</br>
         <strong>Kategoria:</strong>  {% for cat in dog.categories.all %} {{ cat }} {% endfor %}</br>
     </p>
-    <p>
+    <p class="text-justify">
     {{ dog.description }}
     </p>
     <p>
@@ -27,7 +27,7 @@
         <a href="/ankieta/{{ dog.pk }}" class="btn btn-info btn-lg" role="button">Wyślij ankietę adopcyjną</a>
     </p>
 </div>
-<div class="row">
+<div class="row equal">
 <div class="col-xl-4 col-sm-6 col-xs-12">
     <div class="thumbnail">
         <img src="/media/{{ dog.picture_1 }}" class="image-responsive">
