@@ -13,7 +13,6 @@
                 .page-header img {
                     float: left;
                     width: auto;
-                    height: 120px;
                     border-radius: 3%;
                 }
                 .page-header h1 {
@@ -32,6 +31,15 @@
                          display: flex;
                          flex-wrap: wrap;
                      }
+                     .row {
+                        position: relative;
+                     }
+
+                     .bottom-align-text {
+                         position: absolute;
+                         bottom: 0;
+                         right: 0;
+                     }
                  }
          </style>
     </head>
@@ -40,11 +48,16 @@
             <div class="page-header well well-lg">
             {% block header %}
             {% load static %}
-            <img align="left" src="{% static "./p4.jpg" %}">
-                <h1 align="right">Adoptuj psa z Radys</h1>
-                <h4 align="right">Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
-                    hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji
-                    <a href="/o_nas">czytaj więcej</a></h4>
+            <div class="row">
+                <div class="col-sm-3">
+                    <img align="left" src="{% static "./logo.jpeg" %}">
+                </div>
+                <div class="bottom-align-text col-sm-9">
+                    <h1>Adoptuj psa z Radys</h1>
+                    <h4>Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
+                    hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji</h4>
+                </div>
+            </div>
              {% endblock %}
             </div>
             <div class="jumbotron">
