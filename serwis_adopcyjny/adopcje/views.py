@@ -1,10 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DeleteView
 from .models import Category, Dog, DogCategories, Message, AdoptionForm
-from .forms import AddCategoriesForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, MessageForm, SearchForm,\
-    SortForm, LoginForm, AddUserForm
+from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, MessageForm, \
+    SearchForm, SortForm, LoginForm, AddUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -143,7 +143,7 @@ class Categories(View):
         return render(request, "remove_categories_form.html", {"dog": dog})
 
 
-class RemoveCategory(View):
+class RemoveDogCategory(View):
 
     def get(self, request, d_id, c_id):
         dog = get_object_or_404(Dog, pk=d_id)
@@ -155,6 +155,31 @@ class RemoveCategory(View):
                 return HttpResponseRedirect('/pies/{}'.format(d_id))
         else:
             return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
+
+
+class NewCategory(View):
+
+    def get(self, request):
+        form = AddCategoryForm()
+        return render(request, "add_category.html", {"form": form})
+
+    def post(self, request):
+        name = request.POST.get('name')
+        Category.objects.create(name=name)
+        return HttpResponseRedirect('/kategorie_nowa/')
+
+
+class RemoveCategory(View):
+
+    def get(self, request):
+        form = AddCategoriesForm()
+        categories = Category.objects.all()
+        return render(request, "remove_category.html", {"form": form, "categories": categories})
+
+    def post(self, request):
+        category = Category.objects.get(id=request.POST.get('category'))
+        category.delete()
+        return HttpResponseRedirect('/kategorie_usun/')
 
 
 class MessageView(View):

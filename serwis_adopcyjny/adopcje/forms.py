@@ -1,13 +1,29 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Dog, DogCategories, Message, AdoptionForm, REGION, CATEGORIES
+from .models import Category, Dog, DogCategories, Message, AdoptionForm, REGION
 
+
+categories_list = []
+for cat in Category.objects.all():
+    cat_set = []
+    cat_set.append(cat.id)
+    cat_set.append(cat.name)
+    cat_tup = tuple(cat_set)
+    categories_list.append(cat_tup)
+
+CATEGORIES = tuple(categories_list)
 
 
 class AddCategoriesForm(forms.ModelForm):
     class Meta:
         model = DogCategories
         exclude = ['dog']
+
+
+class AddCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
 
 
 class AddDogForm(forms.ModelForm):
@@ -20,6 +36,7 @@ class AdoptDogForm(forms.ModelForm):
      class Meta:
          model = AdoptionForm
          exclude = ['dog']
+
 
 class DeleteCategoriesForm(forms.ModelForm):
     class Meta:
@@ -34,8 +51,8 @@ class MessageForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
     region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
+    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
 
 
 class SortForm(forms.Form):

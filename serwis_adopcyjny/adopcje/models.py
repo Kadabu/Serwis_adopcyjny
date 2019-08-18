@@ -39,16 +39,6 @@ REGION = (
     (16, "zachodniopomorskie"),
 )
 
-CATEGORIES = (
-    (1, "wielkopsy"),
-    (2, "maluchy"),
-    (3, "czarnulki"),
-    (4, "białaski"),
-    (5, "buraski"),
-    (6, "rudzielce"),
-    (7, "łaciate krówki"),
-    (8, "kłapouszki"),
-)
 
 OWNER = (
     (1, "dla mnie"),
@@ -138,7 +128,7 @@ class AdoptionForm(models.Model):
     place_type = models.IntegerField(choices=PLACE)
     house_owner = models.CharField(max_length=64)
     floor = models.CharField(max_length=64, null=True, blank=True)
-    fence = models.IntegerField(choices=YES_NO, null=True, blank=True)
+    fence = models.CharField(max_length=32, null=True, blank=True)
     dogs_place = models.IntegerField(choices=DOGS_PLACE)
     time_alone = models.IntegerField()
     walks = models.IntegerField()
