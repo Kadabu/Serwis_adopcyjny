@@ -3,8 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView, DeleteView
 from .models import Category, Dog, DogCategories, Message, AdoptionForm
-from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, MessageForm, \
-    SearchForm, SortForm, LoginForm, AddUserForm
+from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, EditDogForm, \
+    MessageForm, SearchForm, SortForm, LoginForm, AddUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -63,53 +63,64 @@ class AddDog(View):
 
     def post(self, request):
         form = AddDogForm(request.POST, request.FILES)
-        Dog.objects.create(
-            name=request.POST.get("name"),
-            sex=request.POST.get("sex"),
-            age=request.POST.get("age"),
-            weight=request.POST.get("weight"),
-            picture_1=request.FILES.get("picture_1"),
-            picture_2=request.FILES.get("picture_2"),
-            picture_3=request.FILES.get("picture_3"),
-            picture_4=request.FILES.get("picture_4"),
-            picture_5=request.FILES.get("picture_5"),
-            picture_6=request.FILES.get("picture_6"),
-            picture_7=request.FILES.get("picture_7"),
-            picture_8=request.FILES.get("picture_8"),
-            region=request.POST.get("region"),
-            town=request.POST.get("town"),
-            accepts_cats=request.POST.get("accepts_cats"),
-            house_with_male_dog=request.POST.get("house_with_male_dog"),
-            house_with_female_dog=request.POST.get("house_with_female_dog"),
-            transport=request.POST.get("transport"),
-            adoption_abroad=request.POST.get("adoption_abroad"),
-            description=request.POST.get("description"),
-            contact_data=request.POST.get("contact_data"),
-            user=request.user
-            )
-        return HttpResponseRedirect('/')
+
+        if form.is_valid():
+            dog = Dog.objects.create(
+                name=form.cleaned_data["name"],
+                sex=form.cleaned_data["sex"],
+                age=form.cleaned_data["age"],
+                weight=form.cleaned_data["weight"],
+                picture_1=form.cleaned_data["picture_1"],
+                picture_2=form.cleaned_data["picture_2"],
+                picture_3=form.cleaned_data["picture_3"],
+                picture_4=form.cleaned_data["picture_4"],
+                picture_5=form.cleaned_data["picture_5"],
+                picture_6=form.cleaned_data["picture_6"],
+                picture_7=form.cleaned_data["picture_7"],
+                picture_8=form.cleaned_data["picture_8"],
+                region=form.cleaned_data["region"],
+                town=form.cleaned_data["town"],
+                accepts_cats=form.cleaned_data["accepts_cats"],
+                house_with_male_dog=form.cleaned_data["house_with_male_dog"],
+                house_with_female_dog=form.cleaned_data["house_with_female_dog"],
+                transport=form.cleaned_data["transport"],
+                adoption_abroad=form.cleaned_data["adoption_abroad"],
+                description=form.cleaned_data["description"],
+                contact_data=form.cleaned_data["contact_data"],
+                user=request.user
+                )
+            categories = form.cleaned_data['categories']
+            categories_chosen = []
+            for cat in categories:
+                categories_chosen += Category.objects.filter(pk=int(cat))
+            for cat in categories_chosen:
+                DogCategories.objects.create(dog=dog, category=cat)
+
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/dodaj/')
 
 
 class EditDog(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
-        form = AddDogForm(instance=dog)
+        form = EditDogForm(instance=dog)
         if request.user == dog.user or request.user.is_superuser:
-            return render(request, "add_dog.html", {"form": form})
+            return render(request, "edit_dog.html", {"form": form, "dog": dog})
         else:
             return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
 
     def post(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
-        form = AddDogForm(data=request.POST, files=request.FILES, instance=dog)
+        form = EditDogForm(data=request.POST, files=request.FILES, instance=dog)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/pies/{}'.format(dog.id))
 
 
 class DeleteDog(View):
-
+                    
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         if request.user == dog.user or request.user.is_superuser:
@@ -130,10 +141,16 @@ class AddCategory(View):
             return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
 
     def post(self, request, id):
+        form = AddCategoriesForm(request.POST)
         dog = Dog.objects.get(pk=id)
-        category = Category.objects.get(id=request.POST.get('category'))
-        DogCategories.objects.create(dog=dog, category=category)
-        return HttpResponseRedirect('/kategorie_dodaj/{}'.format(id))
+        if form.is_valid():
+            categories = form.cleaned_data['categories']
+            categories_chosen = []
+            for cat in categories:
+                categories_chosen += Category.objects.filter(pk=int(cat))
+            for cat in categories_chosen:
+                DogCategories.objects.create(dog=dog, category=cat)              
+            return HttpResponseRedirect('/edytuj/{}'.format(id))
 
 
 class Categories(View):
@@ -152,7 +169,7 @@ class RemoveDogCategory(View):
         if request.user == dog.user or request.user.is_superuser:
             for cat in cat_set:
                 cat.delete()
-                return HttpResponseRedirect('/pies/{}'.format(d_id))
+                return HttpResponseRedirect('/edytuj/{}'.format(d_id))
         else:
             return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
 

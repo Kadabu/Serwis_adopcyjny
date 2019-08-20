@@ -3,10 +3,9 @@
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    Kategoria: {{ form.category }}</br>
+    Kategoria: {{ form.categories }}</br>
   <input type="submit" value="Dodaj" class="btn btn-default">
-</form>
-<p>
-    <a href="/pies/{{ dog.pk }}">Wróć do ogłoszenia</a>
-</p>
+</form></br>
+<a href="/edytuj/{{ dog.pk }}" class="btn btn-default">Wróć do edycji</a>
+<a href="/pies/{{ dog.pk }}" class="btn btn-default">Wróć do ogłoszenia</a>
 {% endblock %}

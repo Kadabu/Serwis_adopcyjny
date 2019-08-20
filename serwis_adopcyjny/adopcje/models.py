@@ -81,7 +81,7 @@ class Category(models.Model):
 class Dog(models.Model):
 
     name = models.CharField(max_length=64)
-    sex = models.IntegerField(choices=SEX)
+    sex = models.IntegerField(choices=SEX, default=1)
     age = models.IntegerField(default=0, validators=[validate_age])
     weight = models.IntegerField(default=0, validators=[validate_weight])
     picture_1 = models.ImageField(upload_to="documents/", default=None)
