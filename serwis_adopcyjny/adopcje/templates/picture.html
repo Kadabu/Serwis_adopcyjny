@@ -3,15 +3,16 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div>
+  <strong>Ogłoszenia bez zdjęcia nie będą widoczne na stronie głównej ani w wynikach wyszukiwania!</strong>
  <form method="post" enctype="multipart/form-data">
      {% csrf_token %}
-     {{ form.picture }}
+     Dodaj zdjęcie: {{ form.picture }}
      <button type="submit" class="btn btn-success btn-sm">Dodaj</button>
      {{ form.non_field_errors }}
   </form>
 </div>
 <div>
-  <a href="/pies/{{ dog.pk }}" class="btn btn-default">Wróć do ogłoszenia</a>
+  <a href="/pies/{{ dog.pk }}" class="btn btn-default btn-sm">Wróć do ogłoszenia</a>
 </div>
 {% else %}
 Nie możesz dodawać zdjęć.

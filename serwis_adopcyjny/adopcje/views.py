@@ -14,12 +14,14 @@ class MainView(View):
     def get(self, request):
         form = SortForm()
         dogs = Dog.objects.all().order_by('date_added').reverse()
-        return render(request, "dogs.html", {"dogs": dogs, "form": form})
+        pictures = Picture.objects.filter(profile=True)
+        return render(request, "dogs.html", {"dogs": dogs, "pictures": pictures, "form": form})
 
     def post(self, request):
         form = SortForm(request.POST)
         sort_by = request.POST.get('sort_by')
         dogs = Dog.objects.all()
+        pictures = Picture.objects.filter(profile=True)
         if sort_by == '1':
             dogs = dogs.order_by('date_added').reverse()
         if sort_by == '2':
@@ -34,7 +36,7 @@ class MainView(View):
             dogs = dogs.order_by('weight').reverse()
         if sort_by == '7':
             dogs = dogs.order_by('?')
-        return render(request, "dogs.html", {"dogs": dogs, "form": form})
+        return render(request, "dogs.html", {"dogs": dogs,  "pictures": pictures, "form": form})
 
 
 class ReadMoreView(TemplateView):
@@ -120,7 +122,7 @@ class AddDog(View):
             for cat in categories_chosen:
                 DogCategories.objects.create(dog=dog, category=cat)
 
-            return HttpResponseRedirect('/pies/{}'.format(dog.pk))
+            return HttpResponseRedirect('/zdjecie/{}'.format(dog.pk))
         else:
             return HttpResponseRedirect('/dodaj/')
 
@@ -211,9 +213,13 @@ class AddPicture(View):
     def post(self, request, id):
         form = PictureForm(request.POST, request.FILES)
         dog = Dog.objects.get(pk=id)
+        pictures = Picture.objects.filter(dog=dog)
         if form.is_valid():
             picture = form.cleaned_data['picture']
-            Picture.objects.create(dog=dog, picture=picture)
+            if not pictures:
+                Picture.objects.create(dog=dog, picture=picture, profile=True)
+            else:
+                Picture.objects.create(dog=dog, picture=picture)
             return HttpResponseRedirect('/zdjecie/{}'.format(id))
 
 
@@ -223,8 +229,11 @@ class DeletePicture(View):
         picture = get_object_or_404(Picture, pk=id)
         dog = picture.dog
         if request.user == dog.user or request.user.is_superuser:
-            picture.delete()
-            return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
+            if picture.profile == False:
+                picture.delete()
+                return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
+            else:
+                return render(request, "info.html", {"message": "Nie możesz usunąć zdjęcia profilowego. Ustaw najpierw nowe zdjęcie profilowe"})
         else:
             return render(request, "info.html", {"message": "Nie możesz usuwać zdjęć w tym ogłoszeniu"})
 
@@ -362,7 +371,8 @@ class SearchView(View):
                 if cat in dog.categories.all():
                     if dog not in dogs:
                         dogs.append(dog)
-        return render(request, "search_result.html", {"dogs": dogs})
+        pictures = Picture.objects.filter(profile=True)
+        return render(request, "search_result.html", {"dogs": dogs, "pictures": pictures})
 
 
 class Login(View):
