@@ -4,7 +4,7 @@
 {% if user.is_superuser %}
 <form action="" method="post">
     {% csrf_token %}
-    Kategoria: {{ form.category }}</br>
+    Kategoria: {{ form.categories }}</br>
     <input type="submit" value="Usuń" class="btn btn-default">
 </form>
 {% else %}

@@ -14,7 +14,8 @@ class MainView(View):
     def get(self, request):
         form = SortForm()
         dogs = Dog.objects.all().order_by('date_added').reverse()
-        return render(request, "dogs.html", {"dogs": dogs, "form": form})
+        pictures = Picture.objects.all()
+        return render(request, "dogs.html", {"dogs": dogs, "form": form, "pictures": pictures})
 
     def post(self, request):
         form = SortForm(request.POST)
@@ -53,22 +54,28 @@ class AddCategory(View):
         return render(request, "add_category.html", {"form": form})
 
     def post(self, request):
-        name = request.POST.get('name')
-        Category.objects.create(name=name)
-        return HttpResponseRedirect('/kategorie_nowa/')
+        form = AddCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/kategoria/')
 
 
 class DeleteCategory(View):
 
     def get(self, request):
         form = AddCategoriesForm()
-        categories = Category.objects.all()
-        return render(request, "remove_category.html", {"form": form, "categories": categories})
+        return render(request, "remove_category.html", {"form": form})
 
     def post(self, request):
-        category = Category.objects.get(id=request.POST.get('category'))
-        category.delete()
-        return HttpResponseRedirect('/kategorie_usun/')
+        form = AddCategoriesForm(request.POST)
+        if form.is_valid():
+            categories = form.cleaned_data['categories']
+            categories_chosen = []
+            for cat in categories:
+                categories_chosen += Category.objects.filter(pk=int(cat))
+            for cat in categories_chosen:
+                cat.delete()
+                return HttpResponseRedirect('/')
 
 
 class DogView(View):
@@ -131,7 +138,7 @@ class EditDog(View):
 
     def post(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
-        form = EditDogForm(request.POST)
+        form = EditDogForm(data=request.POST, instance=dog)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/pies/{}'.format(id))

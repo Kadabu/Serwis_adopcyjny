@@ -16,8 +16,8 @@
         <li><a href="/dodaj_konto/">Załóż konto</a></li>
             {% else %}
             {% if user.is_superuser %}
-        <li><a href="/kategorie_nowa/">Dodaj kategorię</a></li>
-        <li><a href="/kategorie_usun/">Usuń kategorię</a></li>
+        <li><a href="/kategoria/">Dodaj kategorię</a></li>
+        <li><a href="/usun_kategorie/">Usuń kategorię</a></li>
             {% endif %}
         <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
         <li><a href="/wyloguj/">Wyloguj</a></li>
@@ -41,7 +41,3 @@
     {% endfor %}
  </div>
 {% endblock %}
-
-
-
-
