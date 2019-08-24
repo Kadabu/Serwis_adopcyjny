@@ -204,8 +204,10 @@ class AddPicture(View):
 
     def post(self, request, id):
         form = PictureForm(request.POST, request.FILES)
+        dog = Dog.objects.get(pk=id)
         if form.is_valid():
-            form.save()
+            picture = form.cleaned_data['picture']
+            Picture.objects.create(dog=dog, picture=picture)
             return HttpResponseRedirect('/zdjecie/{}'.format(id))
 
 

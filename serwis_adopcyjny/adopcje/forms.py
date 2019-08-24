@@ -51,10 +51,12 @@ class EditDogForm(forms.ModelForm):
         model = Dog
         exclude = ['date_added', 'categories', 'user']
 
+
 class PictureForm(forms.ModelForm):
     class Meta:
         model = Picture
-        fields = '__all__'
+        exclude = ['dog']
+        
 
 class MessageForm(forms.ModelForm):
     class Meta:
