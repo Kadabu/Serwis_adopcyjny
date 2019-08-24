@@ -32,7 +32,8 @@
             <img src="/media/{{ pic.picture }}" class="img-responsive">
           </div>
           {% if user == dog.user or user.is_superuser %}
-          <a href="/usun_zdjecie/{{ pic.id }}" class="btn btn-warning btn-sm">Usuń zdjęcie</a>
+          <a href="/zdjecie_profilowe/{{ pic.id }}" class="btn btn-warning btn-xs">Ustaw jako zdjęcie profilowe</a>
+          <a href="/usun_zdjecie/{{ pic.id }}" class="btn btn-danger btn-xs">Usuń</a>
           {% endif %}
     </div>
     {% endfor %}

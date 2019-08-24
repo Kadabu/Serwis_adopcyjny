@@ -14,8 +14,7 @@ class MainView(View):
     def get(self, request):
         form = SortForm()
         dogs = Dog.objects.all().order_by('date_added').reverse()
-        pictures = Picture.objects.all()
-        return render(request, "dogs.html", {"dogs": dogs, "form": form, "pictures": pictures})
+        return render(request, "dogs.html", {"dogs": dogs, "form": form})
 
     def post(self, request):
         form = SortForm(request.POST)
@@ -228,6 +227,19 @@ class DeletePicture(View):
             return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
         else:
             return render(request, "info.html", {"message": "Nie możesz usuwać zdjęć w tym ogłoszeniu"})
+
+
+class SetProfilePicture(View):
+
+    def get(self, request, id):
+        profile_picture = get_object_or_404(Picture, pk=id)
+        dog = profile_picture.dog
+        if request.user == dog.user or request.user.is_superuser:
+            Picture.objects.filter(dog=dog).update(profile=False)
+            Picture.objects.filter(pk=id).update(profile=True)
+            return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
+        else:
+            return render(request, "info.html", {"message": "Nie możesz ustawiać zdjęcia profilowego w tym ogłoszeniu"})
 
 
 class AddMessage(View):

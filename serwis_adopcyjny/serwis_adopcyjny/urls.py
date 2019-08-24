@@ -40,6 +40,7 @@ urlpatterns = [
     path('usun/<int:id>/', DeleteDog.as_view()),
     path('zdjecie/<int:id>/', AddPicture.as_view()),
     path('usun_zdjecie/<int:id>/', DeletePicture.as_view()),
+    path('zdjecie_profilowe/<int:id>/', SetProfilePicture.as_view()),
     path('wiadomosci/<int:id>/', MessagesList.as_view()),
     path('usun_wiadomosc/<int:id>/', DeleteMessage.as_view()),
     path('wiadomosc/<int:id>/', AddMessage.as_view()),

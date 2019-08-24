@@ -109,6 +109,7 @@ class DogCategories(models.Model):
 class Picture(models.Model):
     picture = models.ImageField(upload_to="documents/", null=True, blank=True)
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
+    profile = models.BooleanField(default=False)
 
 
 class Message(models.Model):
