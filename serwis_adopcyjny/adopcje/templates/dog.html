@@ -23,66 +23,22 @@
         <strong>Kontakt w sprawie adopcji</strong> : {{ dog.contact_data }}
     </p>
     <p>
-        <a href="/pytanie/{{ dog.pk }}" class="btn btn-info btn-lg" role="button">Wyślij wiadomość</a>
-        <a href="/ankieta/{{ dog.pk }}" class="btn btn-info btn-lg" role="button">Wyślij ankietę adopcyjną</a>
+        <a href="/wiadomosc/{{ dog.pk }}" class="btn btn-default btn-lg" role="button">Wyślij wiadomość</a>
+        <a href="/ankieta/{{ dog.pk }}" class="btn btn-default btn-lg" role="button">Wyślij ankietę adopcyjną</a>
     </p>
 </div>
 <div class="row equal">
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_1 }}" class="image-responsive">
+   {% for pic in pictures %}
+    <div class="col-md-2 col-sm-6 col-xs-12">
+          <div class="thumbnail">
+            <img src="/media/{{ pic.picture }}" class="img-responsive">
+          </div>
+          {% if user == dog.user or user.is_superuser %}
+          <a href="/usun_zdjecie/{{ pic.id }}" class="btn btn-warning btn-sm">Usuń zdjęcie</a>
+          {% endif %}
     </div>
-</div>
-{% if dog.picture_2 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_2 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
-{% if dog.picture_3 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_3 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
-{% if dog.picture_4 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_4 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
-{% if dog.picture_5 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_5 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
-{% if dog.picture_6 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_6 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
- {% if dog.picture_7 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_7 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
-  {% if dog.picture_8 %}
-<div class="col-md-3 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-        <img src="/media/{{ dog.picture_8 }}" class="image-responsive">
-    </div>
-</div>
-{% endif %}
-</div>
+    {% endfor %}
+ </div>
 {% endblock %}
 
 {% block user %}
@@ -91,8 +47,9 @@
 <div>
     <a href="/wiadomosci/{{ dog.pk }}/" class="btn btn-info">Pokaż wiadomości</a>
     <a href="/ankiety/{{ dog.pk }}/" class="btn btn-info">Pokaż ankiety adopcyjne</a>
-    <a href="/edytuj/{{ dog.pk }}/" class="btn btn-info">Edytuj</a>
-    <a href="/usun/{{ dog.pk }}/" class="btn btn-warning">Usuń</a>
+    <a href="/zdjecie/{{ dog.pk }}" class="btn btn-warning">Dodaj zdjęcia</a>
+    <a href="/edytuj/{{ dog.pk }}/" class="btn btn-warning">Edytuj</a>
+    <a href="/usun/{{ dog.pk }}/" class="btn btn-danger">Usuń</a>
 </div>
 {% endif %}
 {% endif %}

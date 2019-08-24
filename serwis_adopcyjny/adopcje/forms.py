@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Category, Dog, DogCategories, Message, AdoptionForm, REGION
+from .models import Picture, Category, Dog, DogCategories, Message, AdoptionForm, REGION
 
 
 categories_list = []
@@ -51,7 +51,10 @@ class EditDogForm(forms.ModelForm):
         model = Dog
         exclude = ['date_added', 'categories', 'user']
 
-
+class PictureForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        fields = '__all__'
 
 class MessageForm(forms.ModelForm):
     class Meta:
@@ -86,6 +89,3 @@ class AddUserForm(forms.ModelForm):
         fields = ("username", "email")
     password_1 = forms.CharField(widget=forms.PasswordInput)
     password_2 = forms.CharField(widget=forms.PasswordInput)
-
-
-

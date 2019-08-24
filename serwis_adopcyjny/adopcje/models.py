@@ -84,14 +84,6 @@ class Dog(models.Model):
     sex = models.IntegerField(choices=SEX, default=1)
     age = models.IntegerField(default=0, validators=[validate_age])
     weight = models.IntegerField(default=0, validators=[validate_weight])
-    picture_1 = models.ImageField(upload_to="documents/", default=None)
-    picture_2 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_3 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_4 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_5 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_6 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_7 = models.ImageField(upload_to="documents/", null=True, blank=True)
-    picture_8 = models.ImageField(upload_to="documents/", null=True, blank=True)
     region = models.IntegerField(choices=REGION, default=1)
     town = models.CharField(max_length=64)
     accepts_cats = models.IntegerField(choices=CATS, default=1)
@@ -112,6 +104,11 @@ class Dog(models.Model):
 class DogCategories(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
+class Picture(models.Model):
+    picture = models.ImageField(upload_to="documents/", null=True, blank=True)
+    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
 
 
 class Message(models.Model):
@@ -139,10 +136,3 @@ class AdoptionForm(models.Model):
     location = models.CharField(max_length=64)
     e_mail = models.EmailField()
     phone = models.CharField(max_length=32)
-
-
-
-
-
-
-

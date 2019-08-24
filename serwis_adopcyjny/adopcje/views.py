@@ -2,9 +2,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView, DeleteView
-from .models import Category, Dog, DogCategories, Message, AdoptionForm
+from .models import AdoptionForm, Category, Dog, DogCategories, Message, Picture
 from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, EditDogForm, \
-    MessageForm, SearchForm, SortForm, LoginForm, AddUserForm
+    MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -46,12 +46,38 @@ class ReadMoreView(TemplateView):
         return {'message': message}
 
 
+class AddCategory(View):
+
+    def get(self, request):
+        form = AddCategoryForm()
+        return render(request, "add_category.html", {"form": form})
+
+    def post(self, request):
+        name = request.POST.get('name')
+        Category.objects.create(name=name)
+        return HttpResponseRedirect('/kategorie_nowa/')
+
+
+class DeleteCategory(View):
+
+    def get(self, request):
+        form = AddCategoriesForm()
+        categories = Category.objects.all()
+        return render(request, "remove_category.html", {"form": form, "categories": categories})
+
+    def post(self, request):
+        category = Category.objects.get(id=request.POST.get('category'))
+        category.delete()
+        return HttpResponseRedirect('/kategorie_usun/')
+
+
 class DogView(View):
 
     def get(self, request, id):
 
         dog = get_object_or_404(Dog, pk=id)
-        ctx = {"dog": dog}
+        pictures = Picture.objects.filter(dog=dog)
+        ctx = {"dog": dog, "pictures": pictures}
         return render(request, "dog.html", ctx)
 
 
@@ -70,14 +96,6 @@ class AddDog(View):
                 sex=form.cleaned_data["sex"],
                 age=form.cleaned_data["age"],
                 weight=form.cleaned_data["weight"],
-                picture_1=form.cleaned_data["picture_1"],
-                picture_2=form.cleaned_data["picture_2"],
-                picture_3=form.cleaned_data["picture_3"],
-                picture_4=form.cleaned_data["picture_4"],
-                picture_5=form.cleaned_data["picture_5"],
-                picture_6=form.cleaned_data["picture_6"],
-                picture_7=form.cleaned_data["picture_7"],
-                picture_8=form.cleaned_data["picture_8"],
                 region=form.cleaned_data["region"],
                 town=form.cleaned_data["town"],
                 accepts_cats=form.cleaned_data["accepts_cats"],
@@ -96,7 +114,7 @@ class AddDog(View):
             for cat in categories_chosen:
                 DogCategories.objects.create(dog=dog, category=cat)
 
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/pies/{}'.format(dog.pk))
         else:
             return HttpResponseRedirect('/dodaj/')
 
@@ -113,14 +131,14 @@ class EditDog(View):
 
     def post(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
-        form = EditDogForm(data=request.POST, files=request.FILES, instance=dog)
+        form = EditDogForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/pies/{}'.format(dog.id))
+            return HttpResponseRedirect('/pies/{}'.format(id))
 
 
 class DeleteDog(View):
-                    
+
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         if request.user == dog.user or request.user.is_superuser:
@@ -130,7 +148,7 @@ class DeleteDog(View):
             return render(request, "info.html", {"message": "Nie możesz usunąć tego ogłoszenia"})
 
 
-class AddCategory(View):
+class AddDogCategories(View):
 
     def get(self, request, id):
         form = AddCategoriesForm()
@@ -149,18 +167,18 @@ class AddCategory(View):
             for cat in categories:
                 categories_chosen += Category.objects.filter(pk=int(cat))
             for cat in categories_chosen:
-                DogCategories.objects.create(dog=dog, category=cat)              
+                DogCategories.objects.create(dog=dog, category=cat)
             return HttpResponseRedirect('/edytuj/{}'.format(id))
 
 
-class Categories(View):
+class DogCategoriesList(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
         return render(request, "remove_categories_form.html", {"dog": dog})
 
 
-class RemoveDogCategory(View):
+class DeleteDogCategories(View):
 
     def get(self, request, d_id, c_id):
         dog = get_object_or_404(Dog, pk=d_id)
@@ -174,32 +192,36 @@ class RemoveDogCategory(View):
             return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
 
 
-class NewCategory(View):
+class AddPicture(View):
 
-    def get(self, request):
-        form = AddCategoryForm()
-        return render(request, "add_category.html", {"form": form})
+    def get(self, request, id):
+        form = PictureForm()
+        dog = get_object_or_404(Dog, pk=id)
+        if request.user == dog.user or request.user.is_superuser:
+            return render(request, "picture.html", {"form": form, "dog": dog})
+        else:
+            return render(request, "info.html", {"message": "Nie możesz dodawać zdjęć do tego ogłoszenia"})
 
-    def post(self, request):
-        name = request.POST.get('name')
-        Category.objects.create(name=name)
-        return HttpResponseRedirect('/kategorie_nowa/')
-
-
-class RemoveCategory(View):
-
-    def get(self, request):
-        form = AddCategoriesForm()
-        categories = Category.objects.all()
-        return render(request, "remove_category.html", {"form": form, "categories": categories})
-
-    def post(self, request):
-        category = Category.objects.get(id=request.POST.get('category'))
-        category.delete()
-        return HttpResponseRedirect('/kategorie_usun/')
+    def post(self, request, id):
+        form = PictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/zdjecie/{}'.format(id))
 
 
-class MessageView(View):
+class DeletePicture(View):
+
+    def get(self, request, id):
+        picture = get_object_or_404(Picture, pk=id)
+        dog = picture.dog
+        if request.user == dog.user or request.user.is_superuser:
+            picture.delete()
+            return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
+        else:
+            return render(request, "info.html", {"message": "Nie możesz usuwać zdjęć w tym ogłoszeniu"})
+
+
+class AddMessage(View):
 
     def get(self, request, id):
         form = MessageForm()
@@ -225,7 +247,7 @@ class MessagesList(View):
             return render(request, "info.html", {"message": "Nie możesz przeglądać wiadomości do tego ogłoszenia"})
 
 
-class MessageDelete(View):
+class DeleteMessage(View):
 
     def get(self, request, id):
         message = get_object_or_404(Message, pk=id)
@@ -237,7 +259,7 @@ class MessageDelete(View):
             return render(request, "info.html", {"message": "Nie możesz usunąć tej wiadomości"})
 
 
-class AdoptionFormDelete(View):
+class DeleteAdoptionForm(View):
 
     def get(self, request, id):
         adoption_form = get_object_or_404(AdoptionForm, pk=id)
@@ -249,7 +271,7 @@ class AdoptionFormDelete(View):
             return render(request, "info.html", {"message": "Nie możesz usunąć tej ankiety"})
 
 
-class AdoptionFormView(View):
+class AddAdoptionForm(View):
 
     def get(self, request, id):
         form = AdoptDogForm()
@@ -281,7 +303,7 @@ class AdoptionFormView(View):
         return HttpResponseRedirect('/')
 
 
-class AdoptionFormList(View):
+class AdoptionFormsList(View):
 
     def get(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
@@ -368,5 +390,3 @@ class AddUser(View):
         else:
             User.objects.create_user(username=username, password=password_1, email=email)
             return HttpResponseRedirect('/zaloguj/')
-
-
