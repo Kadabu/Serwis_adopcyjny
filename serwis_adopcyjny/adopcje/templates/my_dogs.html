@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    {% if user.is_authenticated %}
+    Twoje ogłoszenia:</br>
+    {% for dog in dogs %}
+    <a href='/pies/{{ dog.id }}'>{{ dog.name }}</a></br>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -3,8 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView, DeleteView
 from .models import AdoptionForm, Category, Dog, DogCategories, Message, Picture
-from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, EditDogForm, \
-    MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
+from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, EditDogForm, MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -15,7 +14,8 @@ class MainView(View):
         form = SortForm()
         dogs = Dog.objects.all().order_by('date_added').reverse()
         pictures = Picture.objects.filter(profile=True)
-        return render(request, "dogs.html", {"dogs": dogs, "pictures": pictures, "form": form})
+        return render(request, "dogs.html", {"dogs": dogs, "pictures": pictures,
+         "form": form})
 
     def post(self, request):
         form = SortForm(request.POST)
@@ -36,7 +36,8 @@ class MainView(View):
             dogs = dogs.order_by('weight').reverse()
         if sort_by == '7':
             dogs = dogs.order_by('?')
-        return render(request, "dogs.html", {"dogs": dogs,  "pictures": pictures, "form": form})
+        return render(request, "dogs.html", {"dogs": dogs,  "pictures": pictures,
+         "form": form})
 
 
 class ReadMoreView(TemplateView):
@@ -135,7 +136,8 @@ class EditDog(View):
         if request.user == dog.user or request.user.is_superuser:
             return render(request, "edit_dog.html", {"form": form, "dog": dog})
         else:
-            return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz edytować\
+             tego ogłoszenia"})
 
     def post(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
@@ -153,7 +155,8 @@ class DeleteDog(View):
             dog.delete()
             return HttpResponseRedirect('/')
         else:
-            return render(request, "info.html", {"message": "Nie możesz usunąć tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz usunąć \
+            tego ogłoszenia"})
 
 
 class AddDogCategories(View):
@@ -164,7 +167,8 @@ class AddDogCategories(View):
         if request.user == dog.user or request.user.is_superuser:
             return render(request, "categories_form.html", {"form": form, "dog": dog})
         else:
-            return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz edytować\
+             tego ogłoszenia"})
 
     def post(self, request, id):
         form = AddCategoriesForm(request.POST)
@@ -197,7 +201,8 @@ class DeleteDogCategories(View):
                 cat.delete()
                 return HttpResponseRedirect('/edytuj/{}'.format(d_id))
         else:
-            return render(request, "info.html", {"message": "Nie możesz edytować tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz edytować\
+             tego ogłoszenia"})
 
 
 class AddPicture(View):
@@ -208,7 +213,8 @@ class AddPicture(View):
         if request.user == dog.user or request.user.is_superuser:
             return render(request, "picture.html", {"form": form, "dog": dog})
         else:
-            return render(request, "info.html", {"message": "Nie możesz dodawać zdjęć do tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz dodawać \
+            zdjęć do tego ogłoszenia"})
 
     def post(self, request, id):
         form = PictureForm(request.POST, request.FILES)
@@ -233,9 +239,11 @@ class DeletePicture(View):
                 picture.delete()
                 return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
             else:
-                return render(request, "info.html", {"message": "Nie możesz usunąć zdjęcia profilowego. Ustaw najpierw nowe zdjęcie profilowe"})
+                return render(request, "info.html", {"message": "Nie możesz \
+                usunąć zdjęcia profilowego. Ustaw najpierw nowe zdjęcie profilowe"})
         else:
-            return render(request, "info.html", {"message": "Nie możesz usuwać zdjęć w tym ogłoszeniu"})
+            return render(request, "info.html", {"message": "Nie możesz usuwać \
+            zdjęć w tym ogłoszeniu"})
 
 
 class SetProfilePicture(View):
@@ -248,7 +256,8 @@ class SetProfilePicture(View):
             Picture.objects.filter(pk=id).update(profile=True)
             return HttpResponseRedirect('/pies/{}/'.format(dog.pk))
         else:
-            return render(request, "info.html", {"message": "Nie możesz ustawiać zdjęcia profilowego w tym ogłoszeniu"})
+            return render(request, "info.html", {"message": "Nie możesz ustawiać\
+             zdjęcia profilowego w tym ogłoszeniu"})
 
 
 class AddMessage(View):
@@ -272,9 +281,11 @@ class MessagesList(View):
         dog = get_object_or_404(Dog, pk=id)
         messages = Message.objects.filter(dog=dog)
         if request.user == dog.user or request.user.is_superuser:
-            return render(request, "messages_list.html", {"messages": messages, "dog": dog})
+            return render(request, "messages_list.html", {"messages": messages,
+            "dog": dog})
         else:
-            return render(request, "info.html", {"message": "Nie możesz przeglądać wiadomości do tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz \
+            przeglądać wiadomości do tego ogłoszenia"})
 
 
 class DeleteMessage(View):
@@ -286,7 +297,8 @@ class DeleteMessage(View):
             message.delete()
             return HttpResponseRedirect('/wiadomosci/{}/'.format(dog.id))
         else:
-            return render(request, "info.html", {"message": "Nie możesz usunąć tej wiadomości"})
+            return render(request, "info.html", {"message": "Nie możesz usunąć \
+            tej wiadomości"})
 
 
 class DeleteAdoptionForm(View):
@@ -298,7 +310,8 @@ class DeleteAdoptionForm(View):
             adoption_form.delete()
             return HttpResponseRedirect('/ankiety/{}/'.format(dog.id))
         else:
-            return render(request, "info.html", {"message": "Nie możesz usunąć tej ankiety"})
+            return render(request, "info.html", {"message": "Nie możesz usunąć \
+            tej ankiety"})
 
 
 class AddAdoptionForm(View):
@@ -339,9 +352,11 @@ class AdoptionFormsList(View):
         dog = get_object_or_404(Dog, pk=id)
         adoption_forms = AdoptionForm.objects.filter(dog=dog)
         if request.user == dog.user or request.user.is_superuser:
-            return render(request, "adoption_form_list.html", {"adoption_forms": adoption_forms, "dog": dog})
+            return render(request, "adoption_form_list.html", {"adoption_forms":
+             adoption_forms, "dog": dog})
         else:
-            return render(request, "info.html", {"message": "Nie możesz przeglądać ankiet do tego ogłoszenia"})
+            return render(request, "info.html", {"message": "Nie możesz \
+            przeglądać ankiet do tego ogłoszenia"})
 
 
 class SearchView(View):
@@ -372,7 +387,8 @@ class SearchView(View):
                     if dog not in dogs:
                         dogs.append(dog)
         pictures = Picture.objects.filter(profile=True)
-        return render(request, "search_result.html", {"dogs": dogs, "pictures": pictures})
+        return render(request, "search_result.html", {"dogs": dogs, "pictures":
+        pictures})
 
 
 class Login(View):
@@ -414,10 +430,28 @@ class AddUser(View):
         message = ''
         if User.objects.filter(username=username).exists():
             message += "Taki użytkownik już istnieje"
-            return render(request, "user_form.html", {"form": form, "message": message})
+            return render(request, "user_form.html", {"form": form, "message":
+            message})
         elif password_1 != password_2:
             message += "Wpisane hasła są niezgodne"
-            return render(request, "user_form.html", {"form": form, "message": message})
+            return render(request, "user_form.html", {"form": form, "message":
+            message})
         else:
-            User.objects.create_user(username=username, password=password_1, email=email)
+            User.objects.create_user(username=username, password=password_1,
+            email=email)
             return HttpResponseRedirect('/zaloguj/')
+
+
+class MyDogsView(View):
+
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            if user.is_superuser:
+                dogs = Dog.objects.all()
+            else:
+                dogs = Dog.objects.filter(user=user)
+            return render(request, "my_dogs.html", {"dogs": dogs})
+        else:
+            return render(request, "info.html", {"message": "Strona dostępna \
+            tylko dla zalogowanych użytkowsników"})
