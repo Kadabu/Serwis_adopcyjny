@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="" method="post" class="form-inline">
+<form action="" method="post">
     {% csrf_token %}
-    Kategoria: {{ form.category }}
+    Płeć: {{ form.sex }}
     Województwo: {{ form.region }}
-  <input type="submit" value="Wyszukaj" class="btn btn-default">
+    Kategoria: {{ form.category }}
+  <input type="submit" value="Wyszukaj" class="btn btn-default"></br>
+  {% if form.errors %}
+  Sprawdź, czy formularz jest poprawnie wypełniony.
+  {% endif %}
 </form>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Picture, Category, Dog, DogCategories, Message, AdoptionForm, REGION
+from .models import Picture, Category, Dog, DogCategories, Message, AdoptionForm, REGION, SEX
 
 
 categories_list = []
@@ -56,7 +56,7 @@ class PictureForm(forms.ModelForm):
     class Meta:
         model = Picture
         exclude = ['dog']
-        
+
 
 class MessageForm(forms.ModelForm):
     class Meta:
@@ -65,8 +65,9 @@ class MessageForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
-    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
+    sex = forms.ChoiceField(choices=SEX, widget=forms.RadioSelect)
+    region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple, required=True)
+    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple, required=True)
 
 
 class SortForm(forms.Form):

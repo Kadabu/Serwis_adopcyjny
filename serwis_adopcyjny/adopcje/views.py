@@ -371,6 +371,7 @@ class SearchView(View):
         if form.is_valid():
             category = form.cleaned_data['category']
             region = form.cleaned_data['region']
+            sex = form.cleaned_data['sex']
         else:
             form = SearchForm(request.GET)
             return render(request, "search_form.html", {"form": form})
@@ -380,7 +381,7 @@ class SearchView(View):
             categories_chosen += Category.objects.filter(pk=int(cat))
         dogs_by_reg = []
         for reg in region:
-            dogs_by_reg += Dog.objects.filter(region=int(reg))
+            dogs_by_reg += Dog.objects.filter(region=int(reg)).filter(sex=int(sex))
         for dog in dogs_by_reg:
             for cat in categories_chosen:
                 if cat in dog.categories.all():
