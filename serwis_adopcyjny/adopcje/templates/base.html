@@ -5,12 +5,21 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width = device-width, initial-scale = 1">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Finger+Paint|Paytone+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <style>
+               body {
+                  font-family: 'Open Sans', sans-serif;
+               }
                .jumbotron {
                    background-color: cornflowerblue;
                    color:black;
                }
-                .page-header img {
+               .page-header {
+                   font-family: 'Finger Paint', sans-serif;
+                   color: DarkSlateBlue;
+               }
+               .page-header img {
                     float: left;
                     width: auto;
                     border-radius: 3%;
@@ -48,31 +57,30 @@
             <div class="page-header well well-sm">
             {% block header %}
             {% load static %}
-            <div class="row">
-                <div class="col-sm-2">
-                    <img align="left" src="{% static "./logo.jpeg" %}">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img align="left" src="{% static "./logo.jpeg" %}">
+                    </div>
+                    <div class="float-left" col-sm-9>
+                      <h1>Adoptuj psa z Radys!</h1>
+                      <h3>Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
+                      hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji</h3>
+                   </div>
                 </div>
-                <div class="float-left" col-sm-9">
-                    <h1>Adoptuj psa z Radys</h1>
-                    <h3>Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
-                    hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji</h3>
-                </div>
-            </div>
-             {% endblock %}
-            </div>
-            <div class="jumbotron">
+            {% endblock %}
+      </div>
+      <div class="jumbotron">
             {% block content %}
             {% endblock %}
-            </div>
-            <div>
+      </div>
+      <div>
             {% block user %}
             {% endblock %}
-            </div>
-            <footer class="page-footer font-small blue pt-4">
-                 <div class="container-fluid text-md-left">
-                    <a href="/" class="btn btn-default btn-lg" role="button">Strona główna</a>
-                 </div>
-            </footer>
       </div>
+      <footer class="page-footer font-large blue">
+            <div class="container-fluid text-md-left">
+                  <a href="/" class="btn btn-block" role="button">Strona główna</a>
+            </div>
+      </footer>
     </body>
 </html>

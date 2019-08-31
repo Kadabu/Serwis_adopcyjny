@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    Płeć: {{ form.sex }}
-    Województwo: {{ form.region }}
-    Kategoria: {{ form.category }}
-  <input type="submit" value="Wyszukaj" class="btn btn-default"></br>
-  {% if form.errors %}
-  Sprawdź, czy formularz jest poprawnie wypełniony.
-  {% endif %}
-</form>
+<div class="text-danger">{% if form.errors %}
+   Sprawdź, czy formularz jest poprawnie wypełniony.
+   {% endif %}
+</div>
+<div>
+   <form action="" method="post">
+       {% csrf_token %}
+       <strong>Płeć (zaznacz przynajmniej 1 pole): {{ form.sex }}</strong>
+       <strong>Województwo (zaznacz przynajmniej 1 pole): {{ form.region }}</strong>
+       <strong>Kategoria: {{ form.category }}</strong>
+       <input type="submit" value="Wyszukaj" class="btn btn-default"></br>
+   </form>
+</div>
 {% endblock %}

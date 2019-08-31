@@ -65,9 +65,9 @@ class MessageForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    sex = forms.ChoiceField(choices=SEX, widget=forms.RadioSelect)
-    region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple, required=True)
-    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple, required=True)
+    sex = forms.MultipleChoiceField(choices=SEX, widget=forms.CheckboxSelectMultiple)
+    region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
+    category = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple, required=False)
 
 
 class SortForm(forms.Form):
