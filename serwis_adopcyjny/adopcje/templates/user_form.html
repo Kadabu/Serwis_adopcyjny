@@ -5,8 +5,8 @@
 <form action="" method="post">
     {% csrf_token %}
     Użytkownik:  {{ form.username }}</br>
-    Hasło 1:  {{ form.password_1 }}</br>
-    Hasło 2:  {{ form.password_2 }}</br>
+    Hasło:  {{ form.password_1 }}</br>
+    Powtórz hasło:  {{ form.password_2 }}</br>
     E-mail:  {{ form.email }}</br>
   <input type="submit" value="Wyślij" class="btn btn-default">
 </form>

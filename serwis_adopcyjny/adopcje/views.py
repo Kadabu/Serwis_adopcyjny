@@ -381,12 +381,20 @@ class SearchView(View):
             categories_chosen += Category.objects.filter(pk=int(cat))
         dogs_by_reg = []
         for reg in region:
-            dogs_by_reg += Dog.objects.filter(region=int(reg)).filter(sex=int(sex))
-        for dog in dogs_by_reg:
-            for cat in categories_chosen:
-                if cat in dog.categories.all():
-                    if dog not in dogs:
-                        dogs.append(dog)
+            dogs_by_reg += Dog.objects.filter(region=int(reg))
+        dogs_by_sex = []
+        for opt in sex:
+            dogs_by_sex += Dog.objects.filter(sex=int(opt))
+        if categories_chosen:
+            for dog in dogs_by_reg:
+                for cat in categories_chosen:
+                    if cat in dog.categories.all():
+                        if dog in dogs_by_sex and dog not in dogs:
+                            dogs.append(dog)
+        else:
+            for dog in dogs_by_reg:
+                if dog in dogs_by_sex and dog not in dogs:
+                    dogs.append(dog)
         pictures = Picture.objects.filter(profile=True)
         return render(request, "search_result.html", {"dogs": dogs, "pictures":
         pictures})
