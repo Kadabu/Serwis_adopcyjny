@@ -2,8 +2,8 @@
 
 {% block content %}
 <h2> {{ dog.name }}</h2>
-<div>
-    <p>
+<div class="row equal bottom-25">
+    <div class="col-md-4 col-xs-12">
         <strong>Płeć:</strong> {{ dog.get_sex_display }}</br>
         <strong>Wiek w latach:</strong>  {{ dog.age }} </br>
         <strong>Waga:</strong>  {{ dog.weight }} kg</br>
@@ -15,19 +15,17 @@
         <strong>Dowóz do domu:</strong>  {{ dog.get_transport_display }}</br>
         <strong>Adopcja za granicę:</strong>  {{ dog.get_adoption_abroad_display }}</br>
         <strong>Kategoria:</strong>  {% for cat in dog.categories.all %} {{ cat }} {% endfor %}</br>
-    </p>
-    <p class="text-justify">
-    {{ dog.description }}
-    </p>
-    <p>
-        <strong>Kontakt w sprawie adopcji</strong> : {{ dog.contact_data }}
+        <strong>Kontakt:</strong> : {{ dog.contact_data }}</br>
         <a href="/wiadomosc/{{ dog.pk }}" class="btn btn-default btn-md" role="button">Wyślij wiadomość</a>
         <a href="/ankieta/{{ dog.pk }}" class="btn btn-default btn-md" role="button">Wyślij ankietę adopcyjną</a>
-    </p>
+    </div>
+    <div class="text-left col-md-8 col-xs-12">
+        {{ dog.description }}
+    </div>
 </div>
 <div class="row equal">
    {% for pic in pictures %}
-    <div class="col-md-3 col-sm-6 col-xs-12" id="dog-image">
+    <div class="col-md-3 col-sm-6 col-xs-12 bottom-25">
           <img src="/media/{{ pic.picture }}" class="img-responsive img-rounded">
           {% if user == dog.user or user.is_superuser %}
           <a href="/zdjecie_profilowe/{{ pic.id }}" class="btn btn-warning btn-xs">Ustaw jako zdjęcie profilowe</a>
