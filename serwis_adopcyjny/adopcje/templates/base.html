@@ -1,5 +1,5 @@
 <!doctype html>
-
+{% load static %}
 <html>
     <head>
         <meta charset="utf-8">
@@ -7,20 +7,22 @@
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css?family=Finger+Paint|Merienda+One|Manjari&display=swap" rel="stylesheet">
         <style>
+
                body {
                   font-family: 'Manjari', sans-serif;
                }
                h2 {
                  font-family: 'Merienda One', cursive;
-                 color: IndianRed;
+                 color: Brown;
                }
                .jumbotron {
+                   background-image: url('{% static "./paw-print-941498_1920.jpg" %}');
                    background-color: LightBlue;
                    color:black;
                }
                .page-header {
                    font-family: 'Finger Paint', cursive;
-                   color: DarkSlateBlue;
+                   color: SteelBlue;
                }
                .page-header img {
                     float: left;
@@ -38,6 +40,13 @@
                 .well {
                     background: #8ac7db;
                 }
+                 .caption {
+                    font-size: 15px;
+                 }
+                 .bottom-25 {
+                   margin-bottom: 25px;
+                   font-size: 20px;
+                 }
                  @media (min-width: 768px) {
                      .row.equal {
                          display: flex;
@@ -52,17 +61,12 @@
                          right: 0;
                      }
                  }
-                 .bottom-25 {
-                   margin-bottom: 25px;
-                   font-size: 20px;
-                 }
          </style>
     </head>
     <body>
       <div class="container-fluid">
             <div class="page-header well well-sm">
             {% block header %}
-            {% load static %}
                 <div class="row">
                     <div class="col-sm-2">
                         <img align="left" src="{% static "./logo.jpeg" %}">
@@ -70,7 +74,7 @@
                     <div class="float-left" col-sm-9>
                       <h1>Adoptuj psa z Radys!</h1>
                       <h3>Strona prezentująca psy ze schroniska w Radysach, przebywające obecnie w
-                      hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji</h3>
+                      hotelikach i domach tymczasowych, będące pod opieką wolontariuszy i gotowe do adopcji :-)</h3>
                    </div>
                 </div>
             {% endblock %}
