@@ -222,11 +222,14 @@ class AddPicture(View):
         pictures = Picture.objects.filter(dog=dog)
         if form.is_valid():
             picture = form.cleaned_data['picture']
-            if not pictures:
-                Picture.objects.create(dog=dog, picture=picture, profile=True)
+            if pictures.count() == 10:
+                return render(request, "info.html", {"message": "Możesz dodać maksymalnie 10 zdjęć"})
             else:
-                Picture.objects.create(dog=dog, picture=picture)
-            return HttpResponseRedirect('/zdjecie/{}'.format(id))
+                if not pictures:
+                    Picture.objects.create(dog=dog, picture=picture, profile=True)
+                else:
+                    Picture.objects.create(dog=dog, picture=picture)
+                return HttpResponseRedirect('/zdjecie/{}'.format(id))
 
 
 class DeletePicture(View):
