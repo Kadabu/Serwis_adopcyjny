@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="description" content="adopcje">
         <meta name="viewport" content="width = device-width, initial-scale = 1">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css?family=Finger+Paint|Merienda+One|Manjari&display=swap" rel="stylesheet">
@@ -15,10 +16,19 @@
                  font-family: 'Merienda One', cursive;
                  color: Brown;
                }
+               ul {
+                 list-style: none;
+               }
                .jumbotron {
-                   background-image: url('{% static "./paw-print-941498_1920.jpg" %}');
-                   background-color: LightBlue;
-                   color:black;
+                   color: black;
+               }
+               .full {
+                   background: url('{% static "./paw-print-941498_1920.jpg" %}') no-repeat center center fixed;
+                   -webkit-background-size: cover;
+                   -moz-background-size: cover;
+                   background-size: cover;
+                   -o-background-size: cover;
+                   height:100%;
                }
                .page-header {
                    font-family: 'Finger Paint', cursive;
@@ -79,7 +89,7 @@
                 </div>
             {% endblock %}
       </div>
-      <div class="jumbotron">
+      <div class="jumbotron full">
             {% block content %}
             {% endblock %}
       </div>

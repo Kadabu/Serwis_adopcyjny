@@ -5,7 +5,7 @@
     <strong>{{ dog.name }} - wiadomości:</strong></br>
     {% for message in messages %}
     {{ message.content }} - z dnia {{ message.date_sent|date:"d m Y" }} od {{ message.e_mail }}
-    <a href="/usun_wiadomosc/{{ message.id }}" class="btn btn-default btn-lg" role="button">Usuń</a></br>
+    <a href="/usun_wiadomosc/{{ message.id }}" class="btn btn-warning btn-lg" role="button">Usuń</a></br>
     {% endfor %}
     <a href="/pies/{{ dog.id }}" class="btn btn-default btn-lg" role="button">Wróć do ogłoszenia</a>
 </p>

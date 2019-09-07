@@ -136,4 +136,4 @@ class AdoptionForm(models.Model):
     prev_dogs = models.TextField()
     location = models.CharField(max_length=64)
     e_mail = models.EmailField()
-    phone = models.CharField(max_length=32)
+    phone = models.CharField(max_length=32, null=True, blank=True)

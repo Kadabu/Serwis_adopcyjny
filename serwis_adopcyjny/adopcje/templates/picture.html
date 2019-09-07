@@ -3,7 +3,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div>
-  <strong>Możesz dodać 10 zdjęć. Ogłoszenia bez zdjęcia nie będą widoczne na stronie głównej ani w wynikach wyszukiwania!</strong>
+  <strong>Możesz dodać 8 zdjęć. Ogłoszenia bez zdjęcia nie będą widoczne na stronie głównej ani w wynikach wyszukiwania!</strong>
  <form method="post" enctype="multipart/form-data">
      {% csrf_token %}
      Dodaj zdjęcie: {{ form.picture }}

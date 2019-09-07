@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'adopcje_db',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'root',
-        'PASSWORD': 'coderslab',
+        'PASSWORD': 'adopt2019',
         'OPTIONS': {
 
         },
@@ -134,5 +134,3 @@ LOGIN_URL = '/login/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-

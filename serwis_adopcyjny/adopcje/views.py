@@ -222,8 +222,8 @@ class AddPicture(View):
         pictures = Picture.objects.filter(dog=dog)
         if form.is_valid():
             picture = form.cleaned_data['picture']
-            if pictures.count() == 10:
-                return render(request, "info.html", {"message": "Możesz dodać maksymalnie 10 zdjęć"})
+            if pictures.count() == 8:
+                return render(request, "info.html", {"message": "Możesz dodać maksymalnie 8 zdjęć"})
             else:
                 if not pictures:
                     Picture.objects.create(dog=dog, picture=picture, profile=True)
