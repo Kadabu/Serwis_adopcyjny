@@ -8,6 +8,57 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
+class AddUser(View):
+
+    def get(self, request):
+        form = AddUserForm()
+        return render(request, "user_form.html", {"form": form})
+
+    def post(self, request):
+        form = AddUserForm(request.POST)
+        username = request.POST.get('username')
+        password_1 = request.POST.get('password_1')
+        password_2 = request.POST.get('password_2')
+        email = request.POST.get('email')
+        message = ''
+        if User.objects.filter(username=username).exists():
+            message += "Taki użytkownik już istnieje"
+            return render(request, "user_form.html", {"form": form, "message":
+            message})
+        elif password_1 != password_2:
+            message += "Wpisane hasła są niezgodne"
+            return render(request, "user_form.html", {"form": form, "message":
+            message})
+        else:
+            User.objects.create_user(username=username, password=password_1,
+            email=email)
+            return HttpResponseRedirect('/zaloguj/')
+
+
+class Login(View):
+
+    def get(self, request):
+        form = LoginForm()
+        return render(request, "login.html", {"form": form})
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/zaloguj/')
+
+
+class Logout(View):
+
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect('/')
+
+
 class MainView(View):
 
     def get(self, request):
@@ -401,57 +452,6 @@ class SearchView(View):
         pictures = Picture.objects.filter(profile=True)
         return render(request, "search_result.html", {"dogs": dogs, "pictures":
         pictures})
-
-
-class Login(View):
-
-    def get(self, request):
-        form = LoginForm()
-        return render(request, "login.html", {"form": form})
-
-    def post(self, request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect('/')
-        else:
-            return HttpResponseRedirect('/zaloguj/')
-
-
-class Logout(View):
-
-    def get(self, request):
-        logout(request)
-        return HttpResponseRedirect('/')
-
-
-class AddUser(View):
-
-    def get(self, request):
-        form = AddUserForm()
-        return render(request, "user_form.html", {"form": form})
-
-    def post(self, request):
-        form = AddUserForm(request.POST)
-        username = request.POST.get('username')
-        password_1 = request.POST.get('password_1')
-        password_2 = request.POST.get('password_2')
-        email = request.POST.get('email')
-        message = ''
-        if User.objects.filter(username=username).exists():
-            message += "Taki użytkownik już istnieje"
-            return render(request, "user_form.html", {"form": form, "message":
-            message})
-        elif password_1 != password_2:
-            message += "Wpisane hasła są niezgodne"
-            return render(request, "user_form.html", {"form": form, "message":
-            message})
-        else:
-            User.objects.create_user(username=username, password=password_1,
-            email=email)
-            return HttpResponseRedirect('/zaloguj/')
 
 
 class MyDogsView(View):

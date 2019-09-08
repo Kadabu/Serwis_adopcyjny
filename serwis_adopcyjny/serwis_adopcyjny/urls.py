@@ -16,17 +16,21 @@ Including another URLconf
 
 
 from django.contrib import admin
-from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls import url
+from django.conf.urls.static import static
 from adopcje.views import *
 from adopcje.models import *
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dodaj_konto/', AddUser.as_view(), name='add-user'),
     path('zaloguj/', Login.as_view(), name='login'),
     path('wyloguj/', Logout.as_view(), name='logout'),
-    path('dodaj_konto/', AddUser.as_view(), name='add-user'),
+    url('^', include('django.contrib.auth.urls')),
     path('', MainView.as_view(), name='main-page'),
     path('o_nas/', ReadMoreView.as_view(), name='main-page'),
     path('pies/<int:id>/', DogView.as_view(), name='dog'),
