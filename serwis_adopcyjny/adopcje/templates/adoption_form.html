@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form action="" method="post">
+  <form method="post">
     {% csrf_token %}
     Czy pies, którego chcesz adoptować, to pies dla Ciebie i będzie mieszkał z Tobą? {{ form.dog_owner }}</br>
     Czy wszyscy domownicy zgadzają się na psa? {{ form.family_agree }}</br>
@@ -20,6 +20,6 @@
     W jakiej miejscowości mieszkasz? {{ form.location }}</br>
     Twój e-mail: {{ form.e_mail }}</br>
     Twój telefon: {{ form.phone }}</br>
-  <input type="submit" value="Wyślij" class="btn btn-default">
-</form>
+    <input type="submit" value="Wyślij" class="btn btn-default">
+  </form>
 {% endblock %}

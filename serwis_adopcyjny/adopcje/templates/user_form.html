@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<strong>{{ message }}</strong>
-<form action="" method="post">
+  <p>
+    <strong>{{ message }}</strong>
+  </p>
+  <form method="post">
     {% csrf_token %}
     Użytkownik:  {{ form.username }}</br>
     Hasło:  {{ form.password_1 }}</br>
     Powtórz hasło:  {{ form.password_2 }}</br>
     E-mail:  {{ form.email }}</br>
-  <input type="submit" value="Wyślij" class="btn btn-default">
-</form>
+    <input type="submit" value="Wyślij" class="btn btn-default">
+  </form>
 {% endblock %}

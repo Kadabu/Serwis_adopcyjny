@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
+  <p>
     Twoje ogłoszenia:</br>
     {% for dog in dogs %}
-    <a href='/pies/{{ dog.id }}'>{{ dog.name }}</a></br>
+      <a href='/pies/{{ dog.id }}'>{{ dog.name }}</a></br>
     {% endfor %}
-</div>
+  </p>
 {% endblock %}

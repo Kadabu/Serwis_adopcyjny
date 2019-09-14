@@ -1,27 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_authenticated %}
- <form method="post" enctype="multipart/form-data">
-     {% csrf_token %}
-     Imię: {{ form.name }}</br>
-     Płeć: {{ form.sex }}</br>
-     Wiek (w latach): {{ form.age }} {{ form.age.errors }}</br>
-     Waga: {{ form.weight }} {{ form.weight.errors }}</br>
-     Województwo: {{ form.region }}</br>
-     Miejscowość: {{ form.town }}</br>
-     Czy akceptuje koty: {{ form.accepts_cats }}</br>
-     Dom z psem: {{ form.house_with_male_dog }}</br>
-     Dom z suczką: {{ form.house_with_female_dog }}</br>
-     Możliwość transportu: {{ form.transport }}</br>
-     Możliwość adopcji za granicę: {{ form.adoption_abroad }}</br>
-     Opis: {{ form.description }}</br>
-     Kategorie: {{ form.categories }}</br>
-     Dane do kontaktu: {{ form.contact_data }}</br>
-    <button type="submit" class="btn btn-default">Dodaj</button>
-     {{ form.non_field_errors }}
-  </form>
-{% else %}
-Nie możesz dodać ogłoszenia.
-{% endif %}
+  {% if user.is_authenticated %}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      Imię: {{ form.name }}</br>
+      Płeć: {{ form.sex }}</br>
+      Wiek (w latach): {{ form.age }} {{ form.age.errors }}</br>
+      Waga: {{ form.weight }} {{ form.weight.errors }}</br>
+      Województwo: {{ form.region }}</br>
+      Miejscowość: {{ form.town }}</br>
+      Czy akceptuje koty: {{ form.accepts_cats }}</br>
+      Dom z psem: {{ form.house_with_male_dog }}</br>
+      Dom z suczką: {{ form.house_with_female_dog }}</br>
+      Możliwość transportu: {{ form.transport }}</br>
+      Możliwość adopcji za granicę: {{ form.adoption_abroad }}</br>
+      Opis: {{ form.description }}</br>
+      Kategorie: {{ form.categories }}</br>
+      Dane do kontaktu: {{ form.contact_data }}</br>
+      <button type="submit" class="btn btn-default">Dodaj</button>
+      {{ form.non_field_errors }}
+    </form>
+  {% else %}
+    <p>
+      Nie możesz dodać ogłoszenia.
+    </p>
+  {% endif %}
 {% endblock %}

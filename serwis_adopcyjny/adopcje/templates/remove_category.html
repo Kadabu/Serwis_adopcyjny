@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_superuser %}
-<form action="" method="post">
-    {% csrf_token %}
-    Kategoria: {{ form.categories }}</br>
-    <input type="submit" value="Usuń" class="btn btn-default">
-</form>
-{% else %}
-Nie możesz usuwać kategorii.
-{% endif %}
-
+  {% if user.is_superuser %}
+    <form method="post">
+      {% csrf_token %}
+      Kategoria: {{ form.categories }}</br>
+      <input type="submit" value="Usuń" class="btn btn-default">
+    </form>
+  {% else %}
+    <p>
+      Nie możesz usuwać kategorii.
+    </p>
+  {% endif %}
 {% endblock %}

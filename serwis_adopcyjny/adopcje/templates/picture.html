@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_authenticated %}
-<div>
-  <strong>Możesz dodać 8 zdjęć. Ogłoszenia bez zdjęcia nie będą widoczne na stronie głównej ani w wynikach wyszukiwania!</strong>
- <form method="post" enctype="multipart/form-data">
-     {% csrf_token %}
-     Dodaj zdjęcie: {{ form.picture }}
-     <button type="submit" class="btn btn-success btn-sm">Dodaj</button>
-     {{ form.non_field_errors }}
-  </form>
-</div>
-<div>
-  <a href="/pies/{{ dog.pk }}" class="btn btn-default btn-sm">Wróć do ogłoszenia</a>
-</div>
-{% else %}
-Nie możesz dodawać zdjęć.
-{% endif %}
+  {% if user.is_authenticated %}
+    <p>
+      <strong>Możesz dodać 8 zdjęć. Ogłoszenia bez zdjęcia nie będą widoczne na stronie głównej ani w wynikach wyszukiwania!</strong>
+    </p>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      Dodaj zdjęcie: {{ form.picture }}
+      <button type="submit" class="btn btn-success btn-sm">Dodaj</button>
+      {{ form.non_field_errors }}
+    </form>
+    <p>
+      <a href="/pies/{{ dog.pk }}" class="btn btn-default btn-sm">Wróć do ogłoszenia</a>
+    </p>
+  {% else %}
+    <p>
+      Nie możesz dodawać zdjęć.
+    </p>
+  {% endif %}
 {% endblock %}

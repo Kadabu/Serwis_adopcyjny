@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>
-<form action="" method="post">
+  <form action="" method="post">
     {% csrf_token %}
     {{ form.content }}</br>
     Twój e-mail: {{ form.e_mail }}</br>
-  <input type="submit" value="Wyślij" class="btn btn-default">
-</form>
-</p>
+    <input type="submit" value="Wyślij" class="btn btn-default">
+  </form>
 {% endblock %}

@@ -1,30 +1,31 @@
 {% extends "base.html" %}
+
 {% block content %}
-<div>
-    <p><strong>{{ dog.name }} - ankiety adopcyjne:</strong></p>
-    {% for adf in adoption_forms %}
-     <p>
-        <strong>Czy pies jest dla Ciebie:</strong> {{ adf.get_dog_owner_display }}</br>
-        <strong>Zgoda domowników:</strong> {{ adf.get_family_agree_display }}</br>
-        <strong>Dom/blok:</strong> {{ adf.get_place_type_display }}</br>
-        <strong>Właściciel mieszkania:</strong> {{ adf.house_owner }}</br>
-        <strong>Piętro/winda:</strong> {{ adf.floor }}</br>
-        <strong>Ogrodzenie:</strong> {{ adf.get_fence_display }}</br>
-        <strong>Gdzie będzie zostawał pies:</strong> {{ adf.get_dogs_place_display }}</br>
-        <strong>Ile godzin pies będzie zostawał sam:</strong> {{ adf.time_alone }}</br>
-        <strong>Ile spacerów:</strong> {{ adf.walks }}</br>
-        <strong>Postępowanie w razie problemów:</strong> {{ adf.beh_problems }}</br>
-        <strong>Dzieci:</strong> {{ adf.children }}</br>
-        <strong>Zwierzęta w domu:</strong> {{ adf.pets_owned }}</br>
-        <strong>Poprzednie psy:</strong> {{ adf.prev_dogs }}</br>
-        <strong>Miejscowość:</strong> {{ adf.location }}</br>
-        <strong>E-mail:</strong> {{ adf.e_mail }}</br>
-        <strong>Telefon:</strong> {{ adf.phone }}</br>
-        <a href="/usun_ankiete/{{ adf.id }}" class="btn btn-warning btn-lg" role="button">Usuń</a>
-      </p>
-    {% endfor %}
+  <p>
+    <strong>{{ dog.name }} - ankiety adopcyjne:</strong>
+  </p>
+  {% for adf in adoption_forms %}
     <p>
-        <a href="/pies/{{ dog.id }}" class="btn btn-default btn-lg" role="button">Wróć do ogłoszenia</a></p>
+      <strong>Czy pies jest dla Ciebie:</strong> {{ adf.get_dog_owner_display }}</br>
+      <strong>Zgoda domowników:</strong> {{ adf.get_family_agree_display }}</br>
+      <strong>Dom/blok:</strong> {{ adf.get_place_type_display }}</br>
+      <strong>Właściciel mieszkania:</strong> {{ adf.house_owner }}</br>
+      <strong>Piętro/winda:</strong> {{ adf.floor }}</br>
+      <strong>Ogrodzenie:</strong> {{ adf.get_fence_display }}</br>
+      <strong>Gdzie będzie zostawał pies:</strong> {{ adf.get_dogs_place_display }}</br>
+      <strong>Ile godzin pies będzie zostawał sam:</strong> {{ adf.time_alone }}</br>
+      <strong>Ile spacerów:</strong> {{ adf.walks }}</br>
+      <strong>Postępowanie w razie problemów:</strong> {{ adf.beh_problems }}</br>
+      <strong>Dzieci:</strong> {{ adf.children }}</br>
+      <strong>Zwierzęta w domu:</strong> {{ adf.pets_owned }}</br>
+      <strong>Poprzednie psy:</strong> {{ adf.prev_dogs }}</br>
+      <strong>Miejscowość:</strong> {{ adf.location }}</br>
+      <strong>E-mail:</strong> {{ adf.e_mail }}</br>
+      <strong>Telefon:</strong> {{ adf.phone }}</br>
+      <a href="/usun_ankiete/{{ adf.id }}" class="btn btn-warning btn-lg" role="button">Usuń</a>
     </p>
-</div>
+  {% endfor %}
+  <p>
+    <a href="/pies/{{ dog.id }}" class="btn btn-default btn-lg" role="button">Wróć do ogłoszenia</a></p>
+  </p>
 {% endblock %}

@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Psiaki dla Ciebie:</h2>
-<div class="row equal">
-  {% for dog in dogs %}
-  {% for pic in pictures %}
-  {% if pic.dog == dog %}
-  <div class="col-md-2 col-sm-6 col-xs-12">
-    <div class="thumbnail">
-      <img src="/media/{{ pic.picture }}">
-        <div class="caption">
-          <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
-        </div>
+  <h2>Psiaki dla Ciebie:</h2>
+    <div class="row equal">
+      {% for dog in dogs %}
+        {% for pic in pictures %}
+          {% if pic.dog == dog %}
+            <div class="col-md-2 col-sm-6 col-xs-12">
+              <div class="thumbnail">
+                <img src="/media/{{ pic.picture }}">
+                <div class="caption">
+                  <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
     </div>
-  </div>
-  {% endif %}
-  {% endfor %}
-  {% endfor %}
-</div>
-<a href="/wyszukaj" class="btn btn-default btn-lg" role="button">Wróć do wyszukiwarki</a></br>
+  <p>
+    <a href="/wyszukaj" class="btn btn-default btn-lg" role="button">Wróć do wyszukiwarki</a></br>
+  </p>
 {% endblock %}

@@ -1,48 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
       <ul class="nav navbar-nav">
         <li>
             <form action="" method="post" class="navbar-form navbar-left">
              {% csrf_token %}
-                {{ form.sort_by }}<input type="submit" value="Sortuj">
+             {{ form.sort_by }}<input type="submit" value="Sortuj">
             </form>
         </li>
         <li><a href="/wyszukaj">Znajdź psa dla siebie</a></li>
-            {% if not user.is_authenticated %}
-        <li><a href="/zaloguj/">Zaloguj się</a></li>
-        <li><a href="/dodaj_konto/">Załóż konto</a></li>
-            {% else %}
-            {% if user.is_superuser %}
-        <li><a href="/kategoria/">Dodaj kategorię</a></li>
-        <li><a href="/usun_kategorie/">Usuń kategorię</a></li>
-            {% endif %}
-        <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
-        <li><a href="/moje_psy/">Twoje ogłoszenia</a></li>
-        <li><a href="/wyloguj/">Wyloguj</a></li>
-            {% endif %}
-
-         <li><a href="/o_nas">O nas</li>
+        {% if not user.is_authenticated %}
+          <li><a href="/zaloguj/">Zaloguj się</a></li>
+          <li><a href="/dodaj_konto/">Załóż konto</a></li>
+        {% else %}
+          {% if user.is_superuser %}
+            <li><a href="/kategoria/">Dodaj kategorię</a></li>
+            <li><a href="/usun_kategorie/">Usuń kategorię</a></li>
+          {% endif %}
+          <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
+          <li><a href="/moje_psy/">Twoje ogłoszenia</a></li>
+          <li><a href="/wyloguj/">Wyloguj</a></li>
+        {% endif %}
+        <li><a href="/o_nas">O nas</li>
       </ul>
     </div>
-</nav>
+  </nav>
   <hr class="mt-2 mb-5">
-<div class="row equal">
-   {% for dog in dogs %}
-   {% for pic in pictures %}
-   {% if pic.dog == dog %}
-    <div class="col-md-2 col-sm-3 col-xs-12">
-          <div class="thumbnail">
-            <img src="/media/{{ pic.picture }}" class="img-responsive">
+  <div class="row equal">
+    {% for dog in dogs %}
+      {% for pic in pictures %}
+        {% if pic.dog == dog %}
+          <div class="col-md-2 col-sm-3 col-xs-12">
+            <div class="thumbnail">
+              <img src="/media/{{ pic.picture }}" class="img-responsive">
               <div class="caption">
                 <a href="/pies/{{ dog.id }}">{{ dog.name }}, {{ dog.town }}</a>
               </div>
-         </div>
-    </div>
-    {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
     {% endfor %}
-    {% endfor %}
- </div>
+  </div>
 {% endblock %}

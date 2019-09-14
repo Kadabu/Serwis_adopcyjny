@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2> {{ dog.name }}</h2>
-<div class="row equal bottom-25">
+  <h2> {{ dog.name }}</h2>
+  <div class="row equal bottom-25">
     <div class="col-md-4 col-xs-12">
         <strong>Płeć:</strong> {{ dog.get_sex_display }}</br>
         <strong>Wiek w latach:</strong>  {{ dog.age }} </br>
@@ -22,30 +22,30 @@
     <div class="text-left col-md-8 col-xs-12">
         {{ dog.description }}
     </div>
-</div>
-<div class="row equal">
-   {% for pic in pictures %}
-    <div class="col-md-3 col-sm-6 col-xs-12 bottom-25">
+  </div>
+  <div class="row equal">
+    {% for pic in pictures %}
+      <div class="col-md-3 col-sm-6 col-xs-12 bottom-25">
           <img src="/media/{{ pic.picture }}" class="img-responsive img-rounded">
           {% if user == dog.user or user.is_superuser %}
           <a href="/zdjecie_profilowe/{{ pic.id }}" class="btn btn-warning btn-xs">Ustaw jako zdjęcie profilowe</a>
           <a href="/usun_zdjecie/{{ pic.id }}" class="btn btn-danger btn-xs">Usuń</a>
           {% endif %}
-    </div>
+      </div>
     {% endfor %}
- </div>
+  </div>
 {% endblock %}
 
 {% block user %}
-{% if user.is_authenticated%}
-{% if user == dog.user or user.is_superuser %}
-<div>
-    <a href="/wiadomosci/{{ dog.pk }}/" class="btn btn-info">Pokaż wiadomości</a>
-    <a href="/ankiety/{{ dog.pk }}/" class="btn btn-info">Pokaż ankiety adopcyjne</a>
-    <a href="/zdjecie/{{ dog.pk }}" class="btn btn-warning">Dodaj zdjęcia</a>
-    <a href="/edytuj/{{ dog.pk }}/" class="btn btn-warning">Edytuj</a>
-    <a href="/usun/{{ dog.pk }}/" class="btn btn-danger">Usuń</a>
-</div>
-{% endif %}
-{% endif %}
+  {% if user.is_authenticated%}
+    {% if user == dog.user or user.is_superuser %}
+      <div>
+        <a href="/wiadomosci/{{ dog.pk }}/" class="btn btn-info">Pokaż wiadomości</a>
+        <a href="/ankiety/{{ dog.pk }}/" class="btn btn-info">Pokaż ankiety adopcyjne</a>
+        <a href="/zdjecie/{{ dog.pk }}" class="btn btn-warning">Dodaj zdjęcia</a>
+        <a href="/edytuj/{{ dog.pk }}/" class="btn btn-warning">Edytuj</a>
+        <a href="/usun/{{ dog.pk }}/" class="btn btn-danger">Usuń</a>
+      </div>
+    {% endif %}
+  {% endif %}
 {% endblock %}
