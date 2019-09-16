@@ -27,7 +27,7 @@ from adopcje.models import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dodaj_konto/', AddUser.as_view(), name='add-user'),
+    path('dodaj_konto/', AddUserBlocked.as_view(), name='add-user'),
     path('zaloguj/', Login.as_view(), name='login'),
     path('wyloguj/', Logout.as_view(), name='logout'),
     url('^', include('django.contrib.auth.urls')),

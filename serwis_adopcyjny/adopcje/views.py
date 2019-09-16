@@ -8,6 +8,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
+class AddUserBlocked(TemplateView):
+
+    template_name = 'info.html'
+
+    def get_context_data(self):
+        message = "Strona w budowie - założenie konta nie jest obecnie możliwe"
+        return {'message': message}
+
+
 class AddUser(View):
 
     def get(self, request):
