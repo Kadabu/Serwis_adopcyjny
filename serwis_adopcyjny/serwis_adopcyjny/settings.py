@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY='c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
+SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -135,9 +135,11 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-DEFAULT_FROM_EMAIL = 'Serwis Adopcyjny serwis_adopcyjny@onet.pl'
+#EMAIL_HOST = config('EMAIL_HOST')
+#EMAIL_PORT = config('EMAIL_PORT', cast=int)
+#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+#EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+#DEFAULT_FROM_EMAIL = 'Serwis Adopcyjny serwis_adopcyjny@onet.pl'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # for development purposes only
