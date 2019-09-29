@@ -82,8 +82,8 @@ DATABASES = {
         'HOST': '*',
         'NAME': 'adopcje_db',
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'root',
-        'PASSWORD': 'adopt2019',
+        'USER': 'Kadabu',
+        'PASSWORD': 'JS10151955',
         'OPTIONS': {
 
         },
