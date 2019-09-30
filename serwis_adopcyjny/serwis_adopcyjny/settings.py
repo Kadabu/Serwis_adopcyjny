@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': '*',
+        'HOST': 'Kadabu-1334.postgres.pythonanywhere-services.com',
         'NAME': 'adopcje_db',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'Kadabu',
