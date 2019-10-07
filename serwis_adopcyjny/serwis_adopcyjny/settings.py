@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'www.kadabu.pythonanywhere.com']
 
@@ -76,17 +76,29 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': '127.0.0.1',
         'NAME': 'adopcje_db',
-        'USER': 'serwis_adopcyjny',
-        'PASSWORD': 's_a_28_07_2019',
-        'HOST': 'Kadabu-1334.postgres.pythonanywhere-services.com',
-        'PORT': 11334,
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'root',
+        'PASSWORD': 'adopt2019',
+        'OPTIONS': {
+
+        },
     }
 }
+
+#DATABASES = {
+    #'default': {
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': 'adopcje_db',
+    #    'USER': 'serwis_adopcyjny',
+    #    'PASSWORD': 's_a_28_07_2019',
+    #    'HOST': 'Kadabu-1334.postgres.pythonanywhere-services.com',
+    #    'PORT': 11334,
+    #}
+#}
 
 
 # Password validation
