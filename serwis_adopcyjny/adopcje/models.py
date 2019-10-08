@@ -58,7 +58,6 @@ DOGS_PLACE = (
       (4, "w ogrodzie w kojcu"),
 )
 
-
 def validate_age(age):
 
     if age < 0 or age > 20:

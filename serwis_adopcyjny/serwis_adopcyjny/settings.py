@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*', 'www.kadabu.pythonanywhere.com']
+ALLOWED_HOSTS = ['*', 'www.kadabu.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -78,14 +78,11 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': '127.0.0.1',
-        'NAME': 'adopcje_db',
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'root',
-        'PASSWORD': 'adopt2019',
-        'OPTIONS': {
-
-        },
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Kadabu$adopcje_db',
+        'USER': 'Kadabu',
+        'PASSWORD': 'D020120172826',
+        'HOST': 'Kadabu.mysql.pythonanywhere-services.com',
     }
 }
 
