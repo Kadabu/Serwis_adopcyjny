@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', 'www.kadabu.pythonanywhere.com', '127.0.0.1']
 
@@ -76,28 +76,31 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Kadabu$adopcje_db',
-        'USER': 'Kadabu',
-        'PASSWORD': 'D020120172826',
-        'HOST': 'Kadabu.mysql.pythonanywhere-services.com',
+        'HOST': '127.0.0.1',
+        'NAME': 'adopcje_db1',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'root',
+        'PASSWORD': 'adopt2019',
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
 
-        }
+        },
     }
 }
 
 #DATABASES = {
     #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': 'adopcje_db',
-    #    'USER': 'serwis_adopcyjny',
-    #    'PASSWORD': 's_a_28_07_2019',
-    #    'HOST': 'Kadabu-1334.postgres.pythonanywhere-services.com',
-    #    'PORT': 11334,
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'Kadabu$adopcje_db',
+        #'USER': 'Kadabu',
+        #'PASSWORD': 'D020120172826',
+        #'HOST': 'Kadabu.mysql.pythonanywhere-services.com',
+        #'OPTIONS': {
+            #'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+
+        #}
     #}
 #}
 
@@ -138,13 +141,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 LOGIN_URL = '/login/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+
+#STATIC_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
+
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 #EMAIL_HOST = config('EMAIL_HOST')
 #EMAIL_PORT = config('EMAIL_PORT', cast=int)

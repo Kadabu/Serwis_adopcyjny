@@ -1,39 +1,23 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Picture, Category, Dog, DogCategories, Message, AdoptionForm, REGION, SEX
+from .models import Picture, Dog, Message, AdoptionForm, REGION, SEX, CATEGORIES
 
 
 
-class AddCategoriesForm(forms.ModelForm):
-    class Meta:
-        model = DogCategories
-        exclude = ['dog', 'category']
-    categories = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, empty_label="")
-
-
-class AddCategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
+class AddCategoriesForm(forms.Form):
+    categories = forms.CharField(strip=True)
 
 
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['date_added', 'categories', 'user']
-    categories = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, empty_label="")
+        exclude = ['date_added', 'user']
 
 
 class AdoptDogForm(forms.ModelForm):
      class Meta:
          model = AdoptionForm
          exclude = ['dog']
-
-
-class DeleteCategoriesForm(forms.ModelForm):
-    class Meta:
-        model = DogCategories
-        exclude = ['dog']
 
 
 class EditDogForm(forms.ModelForm):
@@ -57,7 +41,7 @@ class MessageForm(forms.ModelForm):
 class SearchForm(forms.Form):
     sex = forms.MultipleChoiceField(choices=SEX, widget=forms.CheckboxSelectMultiple)
     region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, empty_label="", required=FALSE)
+    #category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, required=False,  initial=0)
 
 class SortForm(forms.Form):
     sort_by = forms.ChoiceField(choices=(

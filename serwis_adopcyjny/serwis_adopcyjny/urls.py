@@ -27,7 +27,7 @@ from adopcje.models import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dodaj_konto/', AddUserBlocked.as_view(), name='add-user'),
+    path('dodaj_konto/', AddUser.as_view(), name='add-user'),
     path('zaloguj/', Login.as_view(), name='login'),
     path('wyloguj/', Logout.as_view(), name='logout'),
     url('^', include('django.contrib.auth.urls')),
@@ -38,8 +38,6 @@ urlpatterns = [
     path('dodaj_kategorie/<int:id>/', AddDogCategories.as_view()),
     path('kategorie/<int:id>/', DogCategoriesList.as_view()),
     path('usun_kategorie/<int:d_id>/<int:c_id>/', DeleteDogCategories.as_view()),
-    path('kategoria/', AddCategory.as_view()),
-    path('usun_kategorie/', DeleteCategory.as_view()),
     path('edytuj/<int:id>/', EditDog.as_view()),
     path('usun/<int:id>/', DeleteDog.as_view()),
     path('zdjecie/<int:id>/', AddPicture.as_view()),

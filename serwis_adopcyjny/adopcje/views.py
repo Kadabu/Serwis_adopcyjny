@@ -2,8 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView, DeleteView
-from .models import AdoptionForm, Category, Dog, DogCategories, Message, Picture
-from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, EditDogForm, MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
+from .models import AdoptionForm, Dog, Message, Picture
+from .forms import AddCategoriesForm, AddDogForm, AdoptDogForm, EditDogForm, MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -109,6 +109,7 @@ class ReadMoreView(TemplateView):
         return {'message': message}
 
 
+
 class AddCategory(View):
 
     def get(self, request):
@@ -130,14 +131,21 @@ class DeleteCategory(View):
 
     def post(self, request):
         form = AddCategoriesForm(request.POST)
-        if form.is_valid():
+        if form.is_valid:
             categories = form.cleaned_data['categories']
-            categories_chosen = []
-            for cat in categories:
-                categories_chosen += Category.objects.filter(pk=int(cat))
-            for cat in categories_chosen:
-                cat.delete()
-                return HttpResponseRedirect('/')
+            print('categories {}'.format(categories))
+
+        #categories_chosen = []
+        #for cat in categories:
+            #print('cat {}'.format(cat))
+            #print('cat id {}'.format(int(cat)))
+            #categories_chosen += Category.objects.filter(pk=int(cat))
+            #c = Category.objects.filter(pk=int(cat))
+            #print('category to delete {}'.format(c))
+        #for cat in categories_chosen:
+            #print(cat)
+            #cat.delete()
+            return HttpResponseRedirect('/')
 
 
 class DogView(View):
@@ -157,35 +165,32 @@ class AddDog(View):
         return render(request, "add_dog.html", {"form": form})
 
     def post(self, request):
-        form = AddDogForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            dog = Dog.objects.create(
-                name=form.cleaned_data["name"],
-                sex=form.cleaned_data["sex"],
-                age=form.cleaned_data["age"],
-                weight=form.cleaned_data["weight"],
-                region=form.cleaned_data["region"],
-                town=form.cleaned_data["town"],
-                accepts_cats=form.cleaned_data["accepts_cats"],
-                house_with_male_dog=form.cleaned_data["house_with_male_dog"],
-                house_with_female_dog=form.cleaned_data["house_with_female_dog"],
-                transport=form.cleaned_data["transport"],
-                adoption_abroad=form.cleaned_data["adoption_abroad"],
-                description=form.cleaned_data["description"],
-                contact_data=form.cleaned_data["contact_data"],
-                user=request.user
-                )
-            categories = form.cleaned_data['categories']
-            categories_chosen = []
-            for cat in categories:
-                categories_chosen += Category.objects.filter(pk=int(cat))
-            for cat in categories_chosen:
-                DogCategories.objects.create(dog=dog, category=cat)
+        form = AddDogForm(request.POST)
+        dog = Dog.objects.create(
+            name=request.POST.get("name"),
+            sex=request.POST.get('sex'),
+            age=request.POST.get("age"),
+            weight=request.POST.get("weight"),
+            region=request.POST.get("region"),
+            town=request.POST.get("town"),
+            accepts_cats=request.POST.get("accepts_cats"),
+            house_with_male_dog=request.POST.get("house_with_male_dog"),
+            house_with_female_dog=request.POST.get("house_with_female_dog"),
+            transport=request.POST.get("transport"),
+            adoption_abroad=request.POST.get("adoption_abroad"),
+            description=request.POST.get("description"),
+            contact_data=request.POST.get("contact_data"),
+            user=request.user
+            )
+        categories = request.POST.get('categories')
+        categories_chosen = []
+        for cat in categories:
+            categories_chosen += Category.objects.filter(pk=int(cat))
+        for cat in categories_chosen:
+            DogCategories.objects.create(dog=dog, category=cat)
 
             return HttpResponseRedirect('/zdjecie/{}'.format(dog.pk))
-        else:
-            return HttpResponseRedirect('/dodaj/')
+
 
 
 class EditDog(View):
@@ -233,14 +238,13 @@ class AddDogCategories(View):
     def post(self, request, id):
         form = AddCategoriesForm(request.POST)
         dog = Dog.objects.get(pk=id)
-        if form.is_valid():
-            categories = form.cleaned_data['categories']
-            categories_chosen = []
-            for cat in categories:
-                categories_chosen += Category.objects.filter(pk=int(cat))
-            for cat in categories_chosen:
-                DogCategories.objects.create(dog=dog, category=cat)
-            return HttpResponseRedirect('/edytuj/{}'.format(id))
+        categories = request.POST.get('categories')
+        categories_chosen = []
+        for cat in categories:
+            categories_chosen += Category.objects.filter(pk=int(cat))
+        for cat in categories_chosen:
+            DogCategories.objects.create(dog=dog, category=cat)
+        return HttpResponseRedirect('/edytuj/{}'.format(id))
 
 
 class DogCategoriesList(View):
@@ -430,25 +434,28 @@ class SearchView(View):
 
     def post(self, request):
         form = SearchForm(request.POST)
+        region = request.POST.get('region')
+        sex = request.POST.get('sex')
+        category = request.POST.get('category')
+        print("category: {}".format(category))
+        print("region: {}".format(region))
+        print("sex: {}".format(sex))
         dogs = []
-        if form.is_valid():
-            category = form.cleaned_data['category']
-            region = form.cleaned_data['region']
-            sex = form.cleaned_data['sex']
-        else:
-            form = SearchForm(request.GET)
-            return render(request, "search_form.html", {"form": form})
-
-        categories_chosen = []
-        for cat in category:
-            categories_chosen += Category.objects.filter(pk=int(cat))
         dogs_by_reg = []
+        dogs_by_sex = []
+        categories_chosen = []
+
         for reg in region:
             dogs_by_reg += Dog.objects.filter(region=int(reg))
-        dogs_by_sex = []
-        for opt in sex:
-            dogs_by_sex += Dog.objects.filter(sex=int(opt))
-        if categories_chosen:
+        print("dogs_by_reg: {}".format(dogs_by_reg))
+        for s in sex:
+            dogs_by_sex += Dog.objects.filter(sex=int(s))
+        print("dogs_by_sex: {}".format(dogs_by_sex))
+
+        if category:
+            for cat in category:
+                categories_chosen += Category.objects.filter(pk=int(cat))
+            print("categories_chosen: {}".format(categories_chosen))
             for dog in dogs_by_reg:
                 for cat in categories_chosen:
                     if cat in dog.categories.all():
@@ -458,6 +465,7 @@ class SearchView(View):
             for dog in dogs_by_reg:
                 if dog in dogs_by_sex and dog not in dogs:
                     dogs.append(dog)
+
         pictures = Picture.objects.filter(profile=True)
         return render(request, "search_result.html", {"dogs": dogs, "pictures":
         pictures})
