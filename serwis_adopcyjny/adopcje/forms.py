@@ -1,11 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Picture, Dog, Message, AdoptionForm, REGION, SEX, CATEGORIES
+from .models import AdoptionForm, Dog, Message, Picture, CATEGORIES, REGION, SEX
 
-
-
-class AddCategoriesForm(forms.Form):
-    categories = forms.CharField(strip=True)
 
 
 class AddDogForm(forms.ModelForm):
@@ -20,16 +16,17 @@ class AdoptDogForm(forms.ModelForm):
          exclude = ['dog']
 
 
-class EditDogForm(forms.ModelForm):
+class AddUserForm(forms.ModelForm):
     class Meta:
-        model = Dog
-        exclude = ['date_added', 'categories', 'user']
+        model = User
+        fields = ("username", "email")
+    password_1 = forms.CharField(widget=forms.PasswordInput)
+    password_2 = forms.CharField(widget=forms.PasswordInput)
 
 
-class PictureForm(forms.ModelForm):
-    class Meta:
-        model = Picture
-        exclude = ['dog']
+class LoginForm(forms.Form):
+    username = forms.CharField(strip=True)
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class MessageForm(forms.ModelForm):
@@ -38,10 +35,17 @@ class MessageForm(forms.ModelForm):
         exclude = ['dog', 'date_sent']
 
 
+class PictureForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        exclude = ['dog']
+
+
 class SearchForm(forms.Form):
     sex = forms.MultipleChoiceField(choices=SEX, widget=forms.CheckboxSelectMultiple)
     region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
-    #category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, required=False,  initial=0)
+    categories = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
+
 
 class SortForm(forms.Form):
     sort_by = forms.ChoiceField(choices=(
@@ -52,16 +56,3 @@ class SortForm(forms.Form):
         (5, "Sortuj według wagi - rosnąco"),
         (6, "Sortuj według wagi - malejąco"),
         (7, "Sortuj losowo")))
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(strip=True)
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
-class AddUserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ("username", "email")
-    password_1 = forms.CharField(widget=forms.PasswordInput)
-    password_2 = forms.CharField(widget=forms.PasswordInput)

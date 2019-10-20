@@ -98,7 +98,7 @@ class Dog(models.Model):
     transport = models.IntegerField(choices=YES_NO, default=1)
     adoption_abroad = models.IntegerField(choices=YES_NO, default=1)
     description = models.TextField()
-    categories = MultiSelectField(choices=CATEGORIES, default=1)
+    categories = MultiSelectField(choices=CATEGORIES, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     contact_data = models.CharField(max_length=64)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

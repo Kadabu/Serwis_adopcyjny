@@ -15,10 +15,6 @@
           <li><a href="/zaloguj/">Zaloguj się</a></li>
           <li><a href="/dodaj_konto/">Załóż konto</a></li>
         {% else %}
-          {% if user.is_superuser %}
-            <li><a href="/kategoria/">Dodaj kategorię</a></li>
-            <li><a href="/usun_kategorie/">Usuń kategorię</a></li>
-          {% endif %}
           <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
           <li><a href="/moje_psy/">Twoje ogłoszenia</a></li>
           <li><a href="/wyloguj/">Wyloguj</a></li>

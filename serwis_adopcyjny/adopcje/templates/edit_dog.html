@@ -16,15 +16,11 @@
      Możliwość transportu: {{ form.transport }}</br>
      Możliwość adopcji za granicę: {{ form.adoption_abroad }}</br>
      Opis: {{ form.description }}</br>
+     Kategorie: {{ form.categories }}</br>
      Dane do kontaktu: {{ form.contact_data }}</br>
      <button type="submit" class="btn btn-warning">Zapisz</button>
      {{ form.non_field_errors }}
     </form>
-    Kategorie:</br>
-    {% for cat in dog.categories.all %}
-      {{ cat.name }} <a href="/usun_kategorie/{{ dog.pk }}/{{ cat.pk }}" class="btn btn-warning">Usuń</a></br>
-    {% endfor %}</br>
-    <a href="/dodaj_kategorie/{{ dog.pk }}" class="btn btn-warning">Dodaj kategorię</a></br>
     <a href="/pies/{{ dog.pk }}" class="btn btn-info">Wróć do ogłoszenia</a>
   {% else %}
     <p>
