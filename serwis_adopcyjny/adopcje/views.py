@@ -1,10 +1,10 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import AdoptionForm, Dog, Message, Picture
+from .models import AdoptionForm, Dog, Message, Picture, CATEGORIES
 from .forms import AddDogForm, AdoptDogForm, AddUserForm, LoginForm, MessageForm, PictureForm, SearchForm, SortForm
 
 
@@ -184,29 +184,6 @@ class DeleteDog(View):
             tego ogłoszenia"})
 
 
-class AddDogCategories(View):
-
-    def get(self, request, id):
-        form = AddCategoriesForm()
-        dog = get_object_or_404(Dog, pk=id)
-        if request.user == dog.user or request.user.is_superuser:
-            return render(request, "categories_form.html", {"form": form, "dog": dog})
-        else:
-            return render(request, "info.html", {"message": "Nie możesz edytować\
-             tego ogłoszenia"})
-
-    def post(self, request, id):
-        form = AddCategoriesForm(request.POST)
-        dog = Dog.objects.get(pk=id)
-        categories = request.POST.get('categories')
-        categories_chosen = []
-        for cat in categories:
-            categories_chosen += Category.objects.filter(pk=int(cat))
-        for cat in categories_chosen:
-            DogCategories.objects.create(dog=dog, category=cat)
-        return HttpResponseRedirect('/edytuj/{}'.format(id))
-
-
 class AddPicture(View):
 
     def get(self, request, id):
@@ -372,36 +349,38 @@ class SearchView(View):
 
     def post(self, request):
         form = SearchForm(request.POST)
+
         if form.is_valid():
             region = form.cleaned_data['region']
             sex = form.cleaned_data['sex']
             categories = form.cleaned_data['categories']
-        dogs = []
-        dogs_by_reg = []
-        dogs_by_sex = []
-        categories_chosen = []
+            print("Form.categories {}".format(form.cleaned_data['categories']))
+            dogs = []
+            dogs_by_reg = []
+            dogs_by_sex = []
+            dogs_by_categories = []
 
-        for reg in region:
-            dogs_by_reg += Dog.objects.filter(region=int(reg))
-        for s in sex:
-            dogs_by_sex += Dog.objects.filter(sex=int(s))
+            for reg in region:
+                dogs_by_reg += Dog.objects.filter(region=int(reg))
+            for s in sex:
+                dogs_by_sex += Dog.objects.filter(sex=int(s))
 
-        if categories:
-            for cat in categories:
-                categories_chosen += Category.objects.filter(pk=int(cat))
             for dog in dogs_by_reg:
-                for cat in categories_chosen:
-                    if cat in dog.categories:
-                        if dog in dogs_by_sex and dog not in dogs:
-                            dogs.append(dog)
-        else:
-            for dog in dogs_by_reg:
-                if dog in dogs_by_sex and dog not in dogs:
+                if dog in dogs_by_sex and dog not in dogs :
                     dogs.append(dog)
 
-        pictures = Picture.objects.filter(profile=True)
-        return render(request, "search_result.html", {"dogs": dogs, "pictures":
-        pictures})
+            for cat in categories:
+                for dog in dogs:
+                    if CATEGORIES[int(cat)-1][1] in str(dog.categories) and dog not in dogs_by_categories:
+                        dogs_by_categories.append(dog)
+            print(dogs_by_categories)
+
+            pictures = Picture.objects.filter(profile=True)
+            return render(request, "search_result.html", {"dogs": dogs_by_categories,
+                "pictures": pictures})
+
+        else:
+            return HttpResponseRedirect('/wyszukaj/')
 
 
 class MyDogsView(View):
