@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-  <p>
-    {% for cat in dog.categories.all %}
-    {{ cat.name }}<a href="/kategorie_usun/{{ dog.id }}/{{ cat.id }}/" class="btn btn-default btn-sm" role="button">Usuń</a><br>
-    {% endfor %}
-  </p>
-{% endblock %}

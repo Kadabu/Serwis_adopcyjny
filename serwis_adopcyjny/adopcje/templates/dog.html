@@ -14,7 +14,7 @@
         <strong>Może zamieszkać z suczką:</strong>  {{ dog.get_house_with_female_dog_display }}</br>
         <strong>Dowóz do domu:</strong>  {{ dog.get_transport_display }}</br>
         <strong>Adopcja za granicę:</strong>  {{ dog.get_adoption_abroad_display }}</br>
-        <strong>Kategoria:</strong>  {% for cat in dog.categories.all %} {{ cat }} {% endfor %}</br>
+        <strong>Kategoria:</strong>  {{ dog.get_categories_display }}</br>
         <strong>Kontakt:</strong> : {{ dog.contact_data }}</br>
         <a href="/wiadomosc/{{ dog.pk }}" class="btn btn-default btn-md" role="button">Wyślij wiadomość</a>
         <a href="/ankieta/{{ dog.pk }}" class="btn btn-default btn-md" role="button">Wyślij ankietę adopcyjną</a>

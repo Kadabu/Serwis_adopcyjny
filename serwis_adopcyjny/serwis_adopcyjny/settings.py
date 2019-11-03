@@ -76,6 +76,20 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
+#DATABASES = {
+    #'default': {
+        #'HOST': '127.0.0.1',
+        #'NAME': 'adopcje_db1',
+        #'ENGINE': 'django.db.backends.postgresql',
+        #'USER': 'postgres',
+        #'PASSWORD': 'coderslab',
+        #'OPTIONS': {
+
+        #},
+    #}
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -84,22 +98,11 @@ DATABASES = {
         'PASSWORD': 'D020120172826',
         'HOST': 'Kadabu.mysql.pythonanywhere-services.com',
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+           'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
 
         }
     }
 }
-
-#DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': 'adopcje_db',
-    #    'USER': 'serwis_adopcyjny',
-    #    'PASSWORD': 's_a_28_07_2019',
-    #    'HOST': 'Kadabu-1334.postgres.pythonanywhere-services.com',
-    #    'PORT': 11334,
-    #}
-#}
 
 
 # Password validation
@@ -149,6 +152,7 @@ MEDIA_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/media"
 STATIC_URL = '/static/'
 
 STATIC_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
+
 
 #EMAIL_HOST = config('EMAIL_HOST')
 #EMAIL_PORT = config('EMAIL_PORT', cast=int)

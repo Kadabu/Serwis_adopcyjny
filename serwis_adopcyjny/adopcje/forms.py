@@ -1,27 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Picture, Category, Dog, DogCategories, Message, AdoptionForm, REGION, SEX
+from .models import AdoptionForm, Dog, Message, Picture, CATEGORIES, REGION, SEX
 
-
-class AddCategoriesForm(forms.ModelForm):
-    class Meta:
-        model = DogCategories
-        exclude = ['dog', 'category']
-    categories = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, initial=0)
-
-
-
-class AddCategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
 
 
 class AddDogForm(forms.ModelForm):
     class Meta:
         model = Dog
-        exclude = ['date_added', 'categories', 'user']
-    #categories = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, initial=0, required=False)
+        exclude = ['date_added', 'user']
 
 
 class AdoptDogForm(forms.ModelForm):
@@ -30,22 +16,17 @@ class AdoptDogForm(forms.ModelForm):
          exclude = ['dog']
 
 
-class DeleteCategoriesForm(forms.ModelForm):
+class AddUserForm(forms.ModelForm):
     class Meta:
-        model = DogCategories
-        exclude = ['dog']
+        model = User
+        fields = ("username", "email")
+    password_1 = forms.CharField(widget=forms.PasswordInput)
+    password_2 = forms.CharField(widget=forms.PasswordInput)
 
 
-class EditDogForm(forms.ModelForm):
-    class Meta:
-        model = Dog
-        exclude = ['date_added', 'categories', 'user']
-
-
-class PictureForm(forms.ModelForm):
-    class Meta:
-        model = Picture
-        exclude = ['dog']
+class LoginForm(forms.Form):
+    username = forms.CharField(strip=True)
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class MessageForm(forms.ModelForm):
@@ -54,10 +35,16 @@ class MessageForm(forms.ModelForm):
         exclude = ['dog', 'date_sent']
 
 
+class PictureForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        exclude = ['dog']
+
+
 class SearchForm(forms.Form):
     sex = forms.MultipleChoiceField(choices=SEX, widget=forms.CheckboxSelectMultiple)
     region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple, initial=0, required=False)
+    categories = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
 
 
 class SortForm(forms.Form):
@@ -69,16 +56,3 @@ class SortForm(forms.Form):
         (5, "Sortuj według wagi - rosnąco"),
         (6, "Sortuj według wagi - malejąco"),
         (7, "Sortuj losowo")))
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(strip=True)
-    password = forms.CharField(widget=forms.PasswordInput)
-
-
-class AddUserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ("username", "email")
-    password_1 = forms.CharField(widget=forms.PasswordInput)
-    password_2 = forms.CharField(widget=forms.PasswordInput)

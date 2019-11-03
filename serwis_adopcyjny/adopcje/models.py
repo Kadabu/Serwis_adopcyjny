@@ -1,12 +1,21 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from multiselectfield import MultiSelectField
 
 
-
-SEX = (
-    (1, "pies"),
-    (2, "suczka"),
+CATEGORIES = (
+    (1, "mikropsy"),
+    (2, "wielkopsy"),
+    (3, "przegubowce"),
+    (4, "czarnulki"),
+    (5, "białaski"),
+    (6, "rudzielce"),
+    (7, "buraski"),
+    (8, "łaciate krówki"),
+    (9, "włochacze"),
+    (10, "młodzież"),
+    (11, "starszaki"),
 )
 
 CATS = (
@@ -15,9 +24,22 @@ CATS = (
     (3, "eksterminator kotów"),
 )
 
-YES_NO = (
-    (1, "tak"),
-    (2, "nie"),
+DOGS_PLACE = (
+      (1, "w domu/mieszkaniu"),
+      (2, "w domu/mieszkaniu w klatce kenelowej"),
+      (3, "w ogrodzie"),
+      (4, "w ogrodzie w kojcu"),
+)
+
+OWNER = (
+    (1, "dla mnie"),
+    (2, "dla kogoś innego"),
+)
+
+PLACE = (
+    (1, "w domu z ogrodem"),
+    (2, "w bloku/kamienicy"),
+    (2, "w innym miejscu"),
 )
 
 REGION = (
@@ -39,24 +61,16 @@ REGION = (
     (16, "zachodniopomorskie"),
 )
 
-
-OWNER = (
-    (1, "dla mnie"),
-    (2, "dla kogoś innego"),
+SEX = (
+    (1, "pies"),
+    (2, "suczka"),
 )
 
-PLACE = (
-    (1, "w domu z ogrodem"),
-    (2, "w bloku/kamienicy"),
-    (2, "w innym miejscu"),
+YES_NO = (
+    (1, "tak"),
+    (2, "nie"),
 )
 
-DOGS_PLACE = (
-      (1, "w domu/mieszkaniu"),
-      (2, "w domu/mieszkaniu w klatce kenelowej"),
-      (3, "w ogrodzie"),
-      (4, "w ogrodzie w kojcu"),
-)
 
 def validate_age(age):
 
@@ -68,13 +82,6 @@ def validate_weight(weight):
 
     if weight < 0 or weight > 80:
         raise ValidationError("Podaj wagę w zakresie od 0 do 80 kg")
-
-
-class Category(models.Model):
-
-    name = models.CharField(max_length=64)
-    def __str__(self):
-        return self.name
 
 
 class Dog(models.Model):
@@ -91,18 +98,13 @@ class Dog(models.Model):
     transport = models.IntegerField(choices=YES_NO, default=1)
     adoption_abroad = models.IntegerField(choices=YES_NO, default=1)
     description = models.TextField()
-    categories = models.ManyToManyField(Category, through="DogCategories")
+    categories = MultiSelectField(choices=CATEGORIES, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     contact_data = models.CharField(max_length=64)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
-
-
-class DogCategories(models.Model):
-    dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 class Picture(models.Model):
@@ -136,3 +138,4 @@ class AdoptionForm(models.Model):
     location = models.CharField(max_length=64)
     e_mail = models.EmailField()
     phone = models.CharField(max_length=32, null=True, blank=True)
+
