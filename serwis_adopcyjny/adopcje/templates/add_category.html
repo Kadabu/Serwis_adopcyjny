@@ -5,7 +5,7 @@
     <form method="post">
       {% csrf_token %}
       Kategoria: {{ form.name }}
-      <button type="submit" class="btn btn-default btn-sm">Dodaj/Usuń</button>
+      <button type="submit" class="btn btn-default btn-sm">Dodaj</button>
       {{ form.non_field_errors }}
     </form>
    {% else %}

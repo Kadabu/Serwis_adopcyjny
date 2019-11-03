@@ -1,9 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.generic import TemplateView, DeleteView
+from django.views.generic import TemplateView
 from .models import AdoptionForm, Category, Dog, DogCategories, Message, Picture
-from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, DeleteCategoriesForm, EditDogForm, MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
+from .forms import AddCategoriesForm, AddCategoryForm, AddDogForm, AdoptDogForm, EditDogForm, MessageForm, SearchForm, SortForm, LoginForm, AddUserForm, PictureForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -130,14 +130,14 @@ class DeleteCategory(View):
 
     def post(self, request):
         form = AddCategoriesForm(request.POST)
-        if form.is_valid():
-            categories = form.cleaned_data['categories']
-            categories_chosen = []
-            for cat in categories:
-                categories_chosen += Category.objects.filter(pk=int(cat))
+        categories = request.POST.get('categories')
+        categories_chosen = []
+        for cat in categories:
+            categories_chosen += Category.objects.filter(pk=int(cat))
             for cat in categories_chosen:
-                cat.delete()
-                return HttpResponseRedirect('/')
+                    cat.delete()
+            return HttpResponseRedirect('/usun_kategorie')
+
 
 
 class DogView(View):
@@ -157,7 +157,7 @@ class AddDog(View):
         return render(request, "add_dog.html", {"form": form})
 
     def post(self, request):
-        form = AddDogForm(request.POST, request.FILES)
+        form = AddDogForm(request.POST)
 
         if form.is_valid():
             dog = Dog.objects.create(
@@ -176,12 +176,12 @@ class AddDog(View):
                 contact_data=form.cleaned_data["contact_data"],
                 user=request.user
                 )
-            categories = form.cleaned_data['categories']
-            categories_chosen = []
-            for cat in categories:
-                categories_chosen += Category.objects.filter(pk=int(cat))
-            for cat in categories_chosen:
-                DogCategories.objects.create(dog=dog, category=cat)
+            #categories = form.cleaned_data['categories']
+            #categories_chosen = []
+            #for cat in categories:
+                #categories_chosen += Category.objects.filter(pk=int(cat))
+            #for cat in categories_chosen:
+                #DogCategories.objects.create(dog=dog, category=cat)
 
             return HttpResponseRedirect('/zdjecie/{}'.format(dog.pk))
         else:
@@ -381,11 +381,9 @@ class AddAdoptionForm(View):
 
     def get(self, request, id):
         form = AdoptDogForm()
-        dog = get_object_or_404(Dog, pk=id)
         return render(request, "adoption_form.html", {"form": form})
 
     def post(self, request, id):
-        form = AddDogForm(request.POST)
         dog = get_object_or_404(Dog, pk=id)
         AdoptionForm.objects.create(
             dog=dog,

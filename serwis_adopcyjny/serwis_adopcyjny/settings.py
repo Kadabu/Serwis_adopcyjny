@@ -138,13 +138,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
 
 LOGIN_URL = '/login/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/media"
+
+STATIC_URL = '/static/'
+
+STATIC_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
 
 #EMAIL_HOST = config('EMAIL_HOST')
 #EMAIL_PORT = config('EMAIL_PORT', cast=int)
