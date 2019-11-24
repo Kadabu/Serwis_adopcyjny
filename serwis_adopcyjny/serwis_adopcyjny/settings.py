@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-#from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -71,24 +70,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-
-#DATABASES = {
-    #'default': {
-        #'HOST': '127.0.0.1',
-        #'NAME': 'adopcje_db1',
-        #'ENGINE': 'django.db.backends.postgresql',
-        #'USER': 'postgres',
-        #'PASSWORD': 'coderslab',
-        #'OPTIONS': {
-
-        #},
-    #}
-#}
 
 db_pswd = os.getenv("db_pswd")
 
@@ -160,14 +141,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'serwis.adopcyjny@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
-#DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
-
-
-#EMAIL_HOST = config('EMAIL_HOST')
-#EMAIL_PORT = config('EMAIL_PORT', cast=int)
-#EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-#EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-#DEFAULT_FROM_EMAIL = 'Serwis Adopcyjny serwis_adopcyjny@onet.pl'
 
 
