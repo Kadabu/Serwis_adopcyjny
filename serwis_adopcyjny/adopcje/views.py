@@ -110,6 +110,11 @@ class ReadMoreView(TemplateView):
         return {'message': message}
 
 
+class PrivacyView(TemplateView):
+
+    template_name = 'privacy.html'
+
+
 class DogView(View):
 
     def get(self, request, id):

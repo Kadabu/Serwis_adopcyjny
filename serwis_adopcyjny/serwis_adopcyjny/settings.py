@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -90,12 +90,14 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
     #}
 #}
 
+db_pswd = os.getenv("db_pswd")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Kadabu$adopcje_db',
         'USER': 'Kadabu',
-        'PASSWORD': 'D020120172826',
+        'PASSWORD': db_pswd,
         'HOST': 'Kadabu.mysql.pythonanywhere-services.com',
         'OPTIONS': {
            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
@@ -153,6 +155,13 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'serwis.adopcyjny@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
+
 
 #EMAIL_HOST = config('EMAIL_HOST')
 #EMAIL_PORT = config('EMAIL_PORT', cast=int)
@@ -161,4 +170,4 @@ STATIC_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
 #EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 #DEFAULT_FROM_EMAIL = 'Serwis Adopcyjny serwis_adopcyjny@onet.pl'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # for development purposes only
+
