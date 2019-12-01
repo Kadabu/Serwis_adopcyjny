@@ -21,6 +21,7 @@ class AddUser(View):
         password_1 = request.POST.get('password_1')
         password_2 = request.POST.get('password_2')
         email = request.POST.get('email')
+        consent = request.POST.get('consent')
         message = ''
         if User.objects.filter(username=username).exists():
             message += "Taki użytkownik już istnieje"
@@ -28,6 +29,10 @@ class AddUser(View):
             message})
         elif password_1 != password_2:
             message += "Wpisane hasła są niezgodne"
+            return render(request, "user_form.html", {"form": form, "message":
+            message})
+        elif not consent:
+            message += "Musisz wyrazić zgodę na przetwarzanie Twoich danych"
             return render(request, "user_form.html", {"form": form, "message":
             message})
         else:
@@ -251,15 +256,18 @@ class AddMessage(View):
 
     def get(self, request, id):
         form = MessageForm()
-        dog = get_object_or_404(Dog, pk=id)
         return render(request, "message.html", {"form": form})
 
     def post(self, request, id):
         dog = Dog.objects.get(pk=id)
         content = request.POST.get('content')
         e_mail = request.POST.get('e_mail')
-        Message.objects.create(dog=dog, content=content, e_mail=e_mail)
-        return HttpResponseRedirect('/pies/{}'.format(id))
+        consent = request.POST.get('consent')
+        if consent:
+            Message.objects.create(dog=dog, content=content, e_mail=e_mail)
+            return HttpResponseRedirect('/pies/{}'.format(id))
+        else:
+            return HttpResponseRedirect('/ankieta/<int:id>/')
 
 
 class MessagesList(View):
@@ -305,32 +313,34 @@ class AddAdoptionForm(View):
 
     def get(self, request, id):
         form = AdoptDogForm()
-        dog = get_object_or_404(Dog, pk=id)
         return render(request, "adoption_form.html", {"form": form})
 
     def post(self, request, id):
-        form = AddDogForm(request.POST)
         dog = get_object_or_404(Dog, pk=id)
-        AdoptionForm.objects.create(
-            dog=dog,
-            dog_owner=request.POST.get('dog_owner'),
-            family_agree=request.POST.get('family_agree'),
-            place_type=request.POST.get('place_type'),
-            house_owner=request.POST.get('house_owner'),
-            floor=request.POST.get('floor'),
-            fence=request.POST.get('fence'),
-            dogs_place=request.POST.get('dogs_place'),
-            time_alone=request.POST.get('time_alone'),
-            walks=request.POST.get('walks'),
-            beh_problems=request.POST.get('beh_problems'),
-            children=request.POST.get('children'),
-            pets_owned=request.POST.get('pets_owned'),
-            prev_dogs=request.POST.get('prev_dogs'),
-            location=request.POST.get('location'),
-            e_mail=request.POST.get('e_mail'),
-            phone=request.POST.get('phone')
-        )
-        return HttpResponseRedirect('/')
+        consent = request.POST.get('consent')
+        if consent:
+            AdoptionForm.objects.create(
+                dog=dog,
+                dog_owner=request.POST.get('dog_owner'),
+                family_agree=request.POST.get('family_agree'),
+                place_type=request.POST.get('place_type'),
+                house_owner=request.POST.get('house_owner'),
+                floor=request.POST.get('floor'),
+                fence=request.POST.get('fence'),
+                dogs_place=request.POST.get('dogs_place'),
+                time_alone=request.POST.get('time_alone'),
+                walks=request.POST.get('walks'),
+                beh_problems=request.POST.get('beh_problems'),
+                children=request.POST.get('children'),
+                pets_owned=request.POST.get('pets_owned'),
+                prev_dogs=request.POST.get('prev_dogs'),
+                location=request.POST.get('location'),
+                e_mail=request.POST.get('e_mail'),
+                phone=request.POST.get('phone')
+            )
+            return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/ankieta/<int:id>/')
 
 
 class AdoptionFormsList(View):

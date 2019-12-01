@@ -11,9 +11,10 @@ class AddDogForm(forms.ModelForm):
 
 
 class AdoptDogForm(forms.ModelForm):
-     class Meta:
+    class Meta:
          model = AdoptionForm
          exclude = ['dog']
+    consent = forms.BooleanField()
 
 
 class AddUserForm(forms.ModelForm):
@@ -22,6 +23,7 @@ class AddUserForm(forms.ModelForm):
         fields = ("username", "email")
     password_1 = forms.CharField(widget=forms.PasswordInput)
     password_2 = forms.CharField(widget=forms.PasswordInput)
+    consent = forms.BooleanField()
 
 
 class LoginForm(forms.Form):
@@ -33,6 +35,7 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         exclude = ['dog', 'date_sent']
+    consent = forms.BooleanField()
 
 
 class PictureForm(forms.ModelForm):
