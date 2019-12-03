@@ -138,4 +138,5 @@ class AdoptionForm(models.Model):
     location = models.CharField(max_length=64)
     e_mail = models.EmailField()
     phone = models.CharField(max_length=32, null=True, blank=True)
+    date_sent = models.DateField(auto_now_add=True)
 

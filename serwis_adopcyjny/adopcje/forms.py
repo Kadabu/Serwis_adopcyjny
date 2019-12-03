@@ -13,7 +13,7 @@ class AddDogForm(forms.ModelForm):
 class AdoptDogForm(forms.ModelForm):
     class Meta:
          model = AdoptionForm
-         exclude = ['dog']
+         exclude = ['dog', 'date_sent']
     consent = forms.BooleanField()
 
 

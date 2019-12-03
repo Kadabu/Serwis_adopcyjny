@@ -22,6 +22,7 @@
       <strong>Miejscowość:</strong> {{ adf.location }}</br>
       <strong>E-mail:</strong> {{ adf.e_mail }}</br>
       <strong>Telefon:</strong> {{ adf.phone }}</br>
+      <strong>Data:</strong> {{ adf.date_sent|date:"d m Y" }}
       <a href="/usun_ankiete/{{ adf.id }}" class="btn btn-warning btn-lg" role="button">Usuń</a>
     </p>
   {% endfor %}
