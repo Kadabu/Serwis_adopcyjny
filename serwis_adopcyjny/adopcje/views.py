@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.views.generic import TemplateView
@@ -29,10 +29,6 @@ class AddUser(View):
             message})
         elif password_1 != password_2:
             message += "Wpisane hasła są niezgodne"
-            return render(request, "user_form.html", {"form": form, "message":
-            message})
-        elif not consent:
-            message += "Musisz wyrazić zgodę na przetwarzanie Twoich danych"
             return render(request, "user_form.html", {"form": form, "message":
             message})
         else:
@@ -118,6 +114,11 @@ class ReadMoreView(TemplateView):
 class PrivacyView(TemplateView):
 
     template_name = 'privacy.html'
+
+
+class TermsOfUseView(TemplateView):
+
+    template_name = 'terms_of_use.html'
 
 
 class DogView(View):

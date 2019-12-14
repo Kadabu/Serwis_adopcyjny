@@ -2,6 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
+from datetime import datetime, timedelta
 
 
 CATEGORIES = (
@@ -84,6 +85,10 @@ def validate_weight(weight):
         raise ValidationError("Podaj wagę w zakresie od 0 do 80 kg")
 
 
+def get_expiry():
+    return datetime.today() + timedelta(days=7)
+
+
 class Dog(models.Model):
 
     name = models.CharField(max_length=64)
@@ -117,7 +122,8 @@ class Message(models.Model):
     content = models.TextField()
     e_mail = models.EmailField()
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE)
-    date_sent = models.DateField(auto_now_add=True)
+    date_sent = models.DateField(default=datetime.today)
+    expiry_date = models.DateField(default=get_expiry)
 
 
 class AdoptionForm(models.Model):
@@ -138,5 +144,5 @@ class AdoptionForm(models.Model):
     location = models.CharField(max_length=64)
     e_mail = models.EmailField()
     phone = models.CharField(max_length=32, null=True, blank=True)
-    date_sent = models.DateField(auto_now_add=True)
-
+    date_sent = models.DateField(default=datetime.today)
+    expiry_date = models.DateField(default=get_expiry)

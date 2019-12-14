@@ -33,6 +33,7 @@ urlpatterns = [
     path('', MainView.as_view(), name='main-page'),
     path('o_nas/', ReadMoreView.as_view(), name='main-page'),
     path('polityka_prywatnosci/', PrivacyView.as_view()),
+    path('regulamin/', TermsOfUseView.as_view()),
     path('pies/<int:id>/', DogView.as_view(), name='dog'),
     path('dodaj/', AddDog.as_view()),
     path('edytuj/<int:id>/', EditDog.as_view()),

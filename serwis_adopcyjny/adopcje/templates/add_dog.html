@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <p class='text-warning'>
+      Strona służy tylko ogłaszaniu psów pochodzących ze schroniska w Radysach. Inne ogłoszenia będą usuwane przez administratora.
+    </p>
   {% if user.is_authenticated %}
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
