@@ -76,10 +76,10 @@ db_pswd = os.getenv("db_pswd")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Kadabu$adopcje_db',
-        'USER': 'Kadabu',
+        'NAME': 'Kadaboo$adopcje_db',
+        'USER': 'Kadaboo',
         'PASSWORD': db_pswd,
-        'HOST': 'Kadabu.mysql.pythonanywhere-services.com',
+        'HOST': 'Kadaboo.mysql.pythonanywhere-services.com',
         'OPTIONS': {
            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
 
