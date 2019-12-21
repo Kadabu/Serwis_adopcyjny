@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*', 'www.kadabu.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['*', 'Kadaboo.eu.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'Kadaboo$adopcje_db',
         'USER': 'Kadaboo',
         'PASSWORD': db_pswd,
-        'HOST': 'Kadaboo.mysql.pythonanywhere-services.com',
+        'HOST': 'Kadaboo.mysql.eu.pythonanywhere-services.com',
         'OPTIONS': {
            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
 
@@ -130,11 +130,11 @@ LOGIN_URL = '/login/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/media"
+MEDIA_ROOT = "/home/Kadaboo/Serwis_adopcyjny/serwis_adopcyjny/media"
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/home/Kadabu/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
+STATIC_ROOT = "/home/Kadaboo/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
