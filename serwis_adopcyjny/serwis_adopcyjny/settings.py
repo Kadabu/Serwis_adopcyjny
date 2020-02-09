@@ -134,7 +134,7 @@ MEDIA_ROOT = "/home/Kadaboo/Serwis_adopcyjny/serwis_adopcyjny/media"
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = "/home/Kadaboo/Serwis_adopcyjny/serwis_adopcyjny/adopcje/static"
+STATIC_ROOT = ""
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
