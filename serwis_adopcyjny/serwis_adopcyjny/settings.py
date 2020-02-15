@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'adopcje_db',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
-        'PASSWORD': 'coderslab',
+        'PASSWORD': 'adopt2019',
         'OPTIONS': {
 
         },
