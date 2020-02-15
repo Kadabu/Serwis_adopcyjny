@@ -15,13 +15,14 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
-from adopcje.views import *
-from adopcje.models import *
+from adopcje.views import AddDog, AddPicture, AddUser, DeleteDog, DeletePicture, \
+    EditDog, DeleteUser, DeleteUserConfirmation, DogView, EmailChange, Login, \
+    Logout, MainView, NewDogsView, PasswordChange, UserAccountView, PrivacyView, \
+    ReadMoreView, SearchView, SetProfilePicture, TermsOfUseView, UserDogsView
 
 
 urlpatterns = [
@@ -29,7 +30,13 @@ urlpatterns = [
     path('dodaj_konto/', AddUser.as_view(), name='add-user'),
     path('zaloguj/', Login.as_view(), name='login'),
     path('wyloguj/', Logout.as_view(), name='logout'),
-    url('^', include('django.contrib.auth.urls')),
+    path('konto/', UserAccountView.as_view()),
+    path('usun_konto_potwierdz/', DeleteUserConfirmation.as_view()),
+    path('usun_konto/', DeleteUser.as_view()),
+    path('haslo/', PasswordChange.as_view()),
+    path('email/', EmailChange.as_view()),
+    path('moje_psy/', UserDogsView.as_view()),
+    path('nowe/', NewDogsView.as_view()),
     path('', MainView.as_view(), name='main-page'),
     path('o_nas/', ReadMoreView.as_view(), name='main-page'),
     path('polityka_prywatnosci/', PrivacyView.as_view()),
@@ -41,17 +48,9 @@ urlpatterns = [
     path('zdjecie/<int:id>/', AddPicture.as_view()),
     path('usun_zdjecie/<int:id>/', DeletePicture.as_view()),
     path('zdjecie_profilowe/<int:id>/', SetProfilePicture.as_view()),
-    path('wiadomosci/<int:id>/', MessagesList.as_view()),
-    path('usun_wiadomosc/<int:id>/', DeleteMessage.as_view()),
-    path('wiadomosc/<int:id>/', AddMessage.as_view()),
-    path('ankieta/<int:id>/', AddAdoptionForm.as_view()),
-    path('ankiety/<int:id>/', AdoptionFormsList.as_view()),
-    path('usun_ankiete/<int:id>', DeleteAdoptionForm.as_view()),
     path('wyszukaj/', SearchView.as_view()),
-    path('moje_psy/', MyDogsView.as_view()),
+    url('^', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-

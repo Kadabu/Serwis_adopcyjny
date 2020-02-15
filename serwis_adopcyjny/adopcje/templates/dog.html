@@ -1,23 +1,35 @@
 {% extends "base.html" %}
-
+{% block head %}
+  <meta name="description" content="{{ dog.description }}">
+  <meta property="og:url" content="https://www.adoptujradysiaka.org/pies/{{ dog.id }}/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ dog.name }} - do adopcji, {{ dog.town }} | Adoptuj radysiaka!">
+  <meta property="og:description" content="{{ dog.description }}">
+  <meta property="og:image" content="https://www.adoptujradysiaka.org/media/{{ profile_picture.picture }}">
+{% endblock %}
 {% block content %}
   <h2> {{ dog.name }}</h2>
-  <div class="row equal bottom-25">
+  <div class="row equal bottom-25 xsfont">
     <div class="col-md-4 col-xs-12">
         <strong>Płeć:</strong> {{ dog.get_sex_display }}</br>
         <strong>Wiek w latach:</strong>  {{ dog.age }} </br>
+        {% if dog.weight is not 0 %}
         <strong>Waga:</strong>  {{ dog.weight }} kg</br>
+        {% endif %}
         <strong>Województwo:</strong>  {{ dog.get_region_display }}</br>
         <strong>Miejscowość:</strong>  {{ dog.town }}</br>
         <strong>Akceptuje koty:</strong>  {{ dog.get_accepts_cats_display }}</br>
+        {% if dog.house_with_male_dog is not 3 %}
         <strong>Może zamieszkać z psem:</strong>  {{ dog.get_house_with_male_dog_display }}</br>
+        {% endif %}
+        {% if dog.house_with_female_dog is not 3 %}
         <strong>Może zamieszkać z suczką:</strong>  {{ dog.get_house_with_female_dog_display }}</br>
-        <strong>Dowóz do domu:</strong>  {{ dog.get_transport_display }}</br>
+        {% endif %}
+        {% if dog.adoption_abroad is not 3 %}
         <strong>Adopcja za granicę:</strong>  {{ dog.get_adoption_abroad_display }}</br>
+        {% endif %}
         <strong>Kategoria:</strong>  {{ dog.get_categories_display }}</br>
         <strong>Kontakt:</strong> : {{ dog.contact_data }}</br>
-        <a href="/wiadomosc/{{ dog.pk }}" class="btn btn-default btn-md" role="button">Wyślij wiadomość</a>
-        <a href="/ankieta/{{ dog.pk }}" class="btn btn-default btn-md" role="button">Wyślij ankietę adopcyjną</a>
     </div>
     <div class="text-left col-md-8 col-xs-12">
         {{ dog.description }}
@@ -35,17 +47,21 @@
     {% endfor %}
   </div>
 {% endblock %}
-
 {% block user %}
   {% if user.is_authenticated%}
     {% if user == dog.user or user.is_superuser %}
       <div>
-        <a href="/wiadomosci/{{ dog.pk }}/" class="btn btn-info">Pokaż wiadomości</a>
-        <a href="/ankiety/{{ dog.pk }}/" class="btn btn-info">Pokaż ankiety adopcyjne</a>
         <a href="/zdjecie/{{ dog.pk }}" class="btn btn-warning">Dodaj zdjęcia</a>
         <a href="/edytuj/{{ dog.pk }}/" class="btn btn-warning">Edytuj</a>
         <a href="/usun/{{ dog.pk }}/" class="btn btn-danger">Usuń</a>
       </div>
+    {% endif %}
+    {% if user.is_superuser %}
+      <form method="post">
+        {% csrf_token %}
+        Ogłoszenie zaakceptowane:{{ form.accepted }}
+        <input type="submit" value="Zapisz" class="btn btn-warning">
+      </form>
     {% endif %}
   {% endif %}
 {% endblock %}

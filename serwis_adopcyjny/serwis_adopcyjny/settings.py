@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*', 'Kadaboo.eu.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -71,21 +71,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 
-db_pswd = os.getenv("db_pswd")
+
+# Database
+# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Kadaboo$adopcje_db',
-        'USER': 'Kadaboo',
-        'PASSWORD': db_pswd,
-        'HOST': 'Kadaboo.mysql.eu.pythonanywhere-services.com',
+        'HOST': '127.0.0.1',
+        'NAME': 'adopcje_db',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres',
+        'PASSWORD': 'coderslab',
         'OPTIONS': {
-           'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
 
-        }
+        },
     }
 }
+
 
 
 # Password validation
@@ -124,21 +126,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-
+STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = "/home/Kadaboo/Serwis_adopcyjny/serwis_adopcyjny/media"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = '/static/'
-
-STATIC_ROOT = ""
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'serwis.adopcyjny@gmail.com'
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = True
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # for development purposes only

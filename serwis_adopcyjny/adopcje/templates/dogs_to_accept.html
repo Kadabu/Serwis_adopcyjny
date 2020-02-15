@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <p>
+    Ogłoszenia do akceptacji:</br>
+    {% for dog in dogs %}
+      <a href='/pies/{{ dog.id }}'>{{ dog.name }}</a></br>
+    {% endfor %}
+  </p>
+{% endblock %}

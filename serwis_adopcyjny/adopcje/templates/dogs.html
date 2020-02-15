@@ -1,7 +1,14 @@
 {% extends "base.html" %}
-
+{% block head %}
+  <meta name="description" content="Strona prezentująca psy pochodzące ze schroniska w Radysach, które przebywają obecnie w hotelikach i domach tymczasowych i szukają domów">
+  <meta property="og:url" content="https://www.adoptujradysiaka.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Psy do adopcji | Adoptuj radysiaka!">
+  <meta property="og:description" content="Strona prezentująca psy pochodzące ze schroniska w Radysach, które przebywają obecnie w hotelikach i domach tymczasowych i szukają domów">
+  <meta property="og:image" content="https://www.adoptujradysiaka.org/static/logofb.jpg">
+{% endblock %}
 {% block content %}
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-inverse" style="background-color: #0d242b;">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
         <li>
@@ -16,12 +23,15 @@
           <li><a href="/dodaj_konto/">Załóż konto</a></li>
         {% else %}
           <li><a href="/dodaj">Dodaj ogłoszenie</a></li>
-          <li><a href="/moje_psy/">Twoje ogłoszenia</a></li>
+          <li><a href="/konto/">Twoje konto</a></li>
           <li><a href="/wyloguj/">Wyloguj</a></li>
         {% endif %}
+        {% if user.is_superuser %}
+        <li><a href="/nowe">Nowe ogłoszenia</a></li>
+        {% endif %}
         <li><a href="/o_nas">O nas</a></li>
-        <li><a href="/polityka_prywatnosci">Polityka prywatności</a></li>
         <li><a href="/regulamin">Regulamin</a></li>
+        <li><a href="/polityka_prywatnosci">Prywatność/cookies</a></li>
       </ul>
     </div>
   </nav>
