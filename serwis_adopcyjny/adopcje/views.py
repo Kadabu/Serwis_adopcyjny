@@ -8,7 +8,6 @@ from .models import Dog, Picture, CATEGORIES
 from .forms import AcceptDogForm, AddDogForm, AddUserForm, LoginForm, EditUserForm, PictureForm, SearchForm, SortForm
 
 
-
 class AddUser(View):
 
     def get(self, request):
@@ -17,11 +16,11 @@ class AddUser(View):
         return render(request, "user_form.html", {"form": form})
 
     def post(self, request):
-        """Create an instance of User.
+        """Create a new User object.
 
-        Check the data in the form and if valid, create the instance od User \
-        and redirect to login page.
-        Othervise, return en error message.
+        Check the data in the form and if valid, create a new User object and \
+        redirect to login page.
+        Otherwise, return the error message.
         """
         form = AddUserForm(request.POST)
         username = request.POST.get('username')
@@ -97,7 +96,7 @@ class PasswordChange(View):
 
         Check the data in the form and if valid, change user`s password and \
         redirect to user`s account management page.
-        Othervise, return en error message.
+        Otherwise, return the error message.
         """
         user = request.user
         form = EditUserForm(request.POST)
@@ -154,7 +153,7 @@ class Login(View):
     def post(self, request):
         """Authenticate and login user.
 
-        Authenticate the user using the username and password.
+        Authenticate the user with the username and password.
         If user is authenticated, login user and redirect to the main page.
         Otherwise, render the login form.
         """
@@ -217,8 +216,8 @@ class MainView(View):
          "form": form})
 
     def post(self, request):
-        """Render the SortForm and the profile pictures of dogs \
-        from the queryset sorted by date or age or randomly.
+        """Render the SortForm and the profile pictures of dogs from the queryset \
+         sorted by date or age or randomly.
         """
         form = SortForm(request.POST)
         sort_by = request.POST.get('sort_by')
@@ -272,16 +271,16 @@ class DogView(View):
 class AddDog(View):
 
     def get(self, request):
-        """Render AddDogForm in order to create an instance of Dog."""
+        """Render AddDogForm in order to create a Dog object."""
         form = AddDogForm()
         return render(request, "add_dog.html", {"form": form})
 
     def post(self, request):
-        """Create an instance of Dog.
+        """Create a Dog object.
 
-        Check the data in the form and if valid, create the instance od Dog \
-        and redirect to the page with PictureForm.
-        Othervise, redirect to the same page.
+        Check the data in the form and if valid, create a Dog object and \
+        redirect to the page with PictureForm.
+        Otherwise, redirect to the same page.
         """
         form = AddDogForm(request.POST)
         if form.is_valid():
@@ -309,10 +308,10 @@ class AddDog(View):
 class EditDog(View):
 
     def get(self, request, id):
-        """Render AddDogForm in order to edit the instance of Dog.
+        """Render AddDogForm in order to update a Dog object.
 
-        If the instance of Dog is related to the user with the foreign key or \
-        the user is superuser, render AddDogForm.
+        If the Dog object is related to the request user with the foreign key \
+        or the request user is superuser, render AddDogForm.
         Otherwise, return the error message.
         """
         dog = get_object_or_404(Dog, pk=id)
@@ -324,9 +323,9 @@ class EditDog(View):
              tego ogłoszenia"})
 
     def post(self, request, id):
-        """Edit an instance of Dog.
+        """Update a Dog object.
 
-        Check the data in the form and if valid, edit the instance od Dog and \
+        Check the data in the form and if valid, update the Dog object and \
         redirect to the page with the adoption advertisment.
         Otherwise, redirect to the same page.
         """
@@ -342,10 +341,10 @@ class EditDog(View):
 class DeleteDog(View):
 
     def get(self, request, id):
-        """Delete the instance of Dog.
+        """Delete a Dog object.
 
-        If the instance of Dog is related to the user with the foreign key or \
-        the user is superuser, delete the instance of dog.
+        If the Dog object is related to the request user with the foreign key \
+        or the request user is superuser, delete the Dog object.
         Otherwise, return the error messsage.
         """
         dog = get_object_or_404(Dog, pk=id)
@@ -360,10 +359,10 @@ class DeleteDog(View):
 class AddPicture(View):
 
     def get(self, request, id):
-        """Render PictureForm in order to create an instance of Picture.
+        """Render PictureForm in order to create a Picture object.
 
-        If the instance of Dog is related to the user with the foreign key or \
-        the user is superuser, render PictureForm.
+        If the  Dog object is related to the request user with the foreign key \
+        or the user is superuser, render PictureForm.
         Otherwise, return the error messsage.
         """
         form = PictureForm()
@@ -375,11 +374,11 @@ class AddPicture(View):
             zdjęć do tego ogłoszenia"})
 
     def post(self, request, id):
-        """Create an instance of Dog.
+        """Create a Dog object.
 
-        Check the data in the form and if valid, create the instance od Dog \
-        and redirect to the page with PictureForm.
-        Othervise, redirect to the same page.
+        Check the data in the form and if valid, create a Dog object and \
+        redirect to the page with PictureForm.
+        Otherwise, redirect to the same page.
         """
         form = PictureForm(request.POST, request.FILES)
         dog = Dog.objects.get(pk=id)
@@ -399,12 +398,12 @@ class AddPicture(View):
 class DeletePicture(View):
 
     def get(self, request, id):
-        """Delete the instance of Picture.
+        """Delete a Picture object.
 
-        If the instance of Picture is related to the instance od Dog with the \
-        foreign key and the instance of Dog is related to the user with the \
-        foreign key or the user is superuser and the picture is not the profile \
-        picture, delete the instance of Picture.
+        If the Picture object is related to the Dog object with the foreign key \
+        and the Dog object is related to the request user with the foreign key \
+        or the user is superuser and the Picture object is not the profile picture, \
+        delete the Picture object.
         Otherwise, return the error messsage.
         """
         picture = get_object_or_404(Picture, pk=id)
@@ -424,14 +423,14 @@ class DeletePicture(View):
 class SetProfilePicture(View):
 
     def get(self, request, id):
-        """Render PictureForm in order to create an instance of Picture.
+        """Set the profile picture.
 
-        Get the Picture object (profile_picture) by the id. If the instance \
-        of Dog, to which the profile_picture is related to with the foreign key, \
-        is related the user with the foreign key or the user is superuser, \
-        set the profile field of the Picture objects related to the instance \
-        of Dog with the foreign key as False. Then set the profile field \
-        of the profile_picture as True.
+        Get the Picture object (profile_picture) by the id.
+        If the Dog object, to which the profile_picture is related to with \
+        the foreign key, is related the request user with the foreign key or \
+        the request user is superuser, set the profile field of the Picture \
+        objects related to the Dog object with the foreign key as False.
+        Then set the profile field of the profile_picture as True.
         Otherwise, return the error messsage.
         """
         profile_picture = get_object_or_404(Picture, pk=id)
@@ -453,7 +452,9 @@ class SearchView(View):
         return render(request, "search_form.html", {"form": form})
 
     def post(self, request):
-        """Check the data in the form and if valid, create the list of Dog objects \
+        """Filter the adoption advertisments.
+
+        Check the data in the form and if valid, create the list of Dog objects \
         (dogs_by_categories) and the queryset of Picture objects (pictures).
         Otherwise, redirect to the same page.
         """
@@ -487,8 +488,13 @@ class SearchView(View):
 class UserDogsView(View):
 
     def get(self, request):
-        """Render the page with links to adoption advertisments. \
-        If user is not authenticated, return the error message."""
+        """Render the page with links to user`s adoption advertisments.
+
+        If the request user is authenticated, render the page with links to \
+        adoption advertisments added by the user. If the user is superuser, \
+        render the page with links to all adoption advertisments.
+        Otherwise, return the error message.
+        """
         user = request.user
         if user.is_authenticated:
             if user.is_superuser:
@@ -504,8 +510,12 @@ class UserDogsView(View):
 class NewDogsView(View):
 
     def get(self, request):
-        """Render the page with links to new adoption advertisments. \
-        If user is not authenticated or superuser, return the error message."""
+        """Render the page with links to new adoption advertisments.
+
+        If the request user is superuser, render the page with links to new \
+        adoption advertisments.
+        Otherwise, return the error message.
+        """
         user = request.user
         if user.is_authenticated and user.is_superuser:
             dogs = Dog.objects.filter(accepted=2)
