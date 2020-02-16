@@ -43,9 +43,12 @@ class PictureForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    sex = forms.MultipleChoiceField(choices=SEX, widget=forms.CheckboxSelectMultiple)
-    region = forms.MultipleChoiceField(choices=REGION, widget=forms.CheckboxSelectMultiple)
-    categories = forms.MultipleChoiceField(choices=CATEGORIES, widget=forms.CheckboxSelectMultiple)
+    sex = forms.MultipleChoiceField(choices=SEX, \
+    widget=forms.CheckboxSelectMultiple)
+    region = forms.MultipleChoiceField(choices=REGION, \
+    widget=forms.CheckboxSelectMultiple)
+    categories = forms.MultipleChoiceField(choices=CATEGORIES, \
+    widget=forms.CheckboxSelectMultiple)
 
 
 class SortForm(forms.Form):

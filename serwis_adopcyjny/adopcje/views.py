@@ -5,7 +5,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Dog, Picture, CATEGORIES
-from .forms import AcceptDogForm, AddDogForm, AddUserForm, LoginForm, EditUserForm, PictureForm, SearchForm, SortForm
+from .forms import AcceptDogForm, AddDogForm, AddUserForm, LoginForm, \
+EditUserForm, PictureForm, SearchForm, SortForm
 
 
 class AddUser(View):
@@ -18,7 +19,7 @@ class AddUser(View):
     def post(self, request):
         """Create a new User object.
 
-        Check the data in the form and if valid, create a new User object and \
+        Check the data in the form and if valid, create a new User object and
         redirect to login page.
         Otherwise, return the error message.
         """
@@ -94,7 +95,7 @@ class PasswordChange(View):
     def post(self, request):
         """Change user`s password.
 
-        Check the data in the form and if valid, change user`s password and \
+        Check the data in the form and if valid, change user`s password and
         redirect to user`s account management page.
         Otherwise, return the error message.
         """
@@ -216,9 +217,8 @@ class MainView(View):
          "form": form})
 
     def post(self, request):
-        """Render the SortForm and the profile pictures of dogs from the queryset \
-         sorted by date or age or randomly.
-        """
+        """Render the SortForm and the profile pictures of dogs from the queryset
+         sorted by date or age or randomly."""
         form = SortForm(request.POST)
         sort_by = request.POST.get('sort_by')
         dogs = Dog.objects.filter(accepted=1)
@@ -259,7 +259,8 @@ class DogView(View):
         pictures = Picture.objects.filter(dog=dog)
         profile_picture = pictures.get(profile=True)
         form = AcceptDogForm(instance=dog)
-        return render(request, "dog.html", {"dog": dog, "pictures": pictures, "profile_picture": profile_picture, "form": form})
+        return render(request, "dog.html", {"dog": dog, "pictures": pictures, \
+        "profile_picture": profile_picture, "form": form})
 
     def post(self, request, id):
         dog = get_object_or_404(Dog, pk=id)
@@ -278,8 +279,8 @@ class AddDog(View):
     def post(self, request):
         """Create a Dog object.
 
-        Check the data in the form and if valid, create a Dog object and \
-        redirect to the page with PictureForm.
+        Check the data in the form and if valid, create a Dog object and redirect
+        to the page with PictureForm.
         Otherwise, redirect to the same page.
         """
         form = AddDogForm(request.POST)
@@ -310,7 +311,7 @@ class EditDog(View):
     def get(self, request, id):
         """Render AddDogForm in order to update a Dog object.
 
-        If the Dog object is related to the request user with the foreign key \
+        If the Dog object is related to the request user with the foreign key
         or the request user is superuser, render AddDogForm.
         Otherwise, return the error message.
         """
@@ -325,7 +326,7 @@ class EditDog(View):
     def post(self, request, id):
         """Update a Dog object.
 
-        Check the data in the form and if valid, update the Dog object and \
+        Check the data in the form and if valid, update the Dog object and
         redirect to the page with the adoption advertisment.
         Otherwise, redirect to the same page.
         """
@@ -343,7 +344,7 @@ class DeleteDog(View):
     def get(self, request, id):
         """Delete a Dog object.
 
-        If the Dog object is related to the request user with the foreign key \
+        If the Dog object is related to the request user with the foreign key
         or the request user is superuser, delete the Dog object.
         Otherwise, return the error messsage.
         """
@@ -361,7 +362,7 @@ class AddPicture(View):
     def get(self, request, id):
         """Render PictureForm in order to create a Picture object.
 
-        If the  Dog object is related to the request user with the foreign key \
+        If the  Dog object is related to the request user with the foreign key
         or the user is superuser, render PictureForm.
         Otherwise, return the error messsage.
         """
@@ -376,8 +377,8 @@ class AddPicture(View):
     def post(self, request, id):
         """Create a Dog object.
 
-        Check the data in the form and if valid, create a Dog object and \
-        redirect to the page with PictureForm.
+        Check the data in the form and if valid, create a Dog object and redirect
+        to the page with PictureForm.
         Otherwise, redirect to the same page.
         """
         form = PictureForm(request.POST, request.FILES)
@@ -386,7 +387,8 @@ class AddPicture(View):
         if form.is_valid():
             picture = form.cleaned_data['picture']
             if pictures.count() == 8:
-                return render(request, "info.html", {"message": "Możesz dodać maksymalnie 8 zdjęć"})
+                return render(request, "info.html", {"message": "Możesz dodać \
+                maksymalnie 8 zdjęć"})
             else:
                 if not pictures:
                     Picture.objects.create(dog=dog, picture=picture, profile=True)
@@ -400,9 +402,9 @@ class DeletePicture(View):
     def get(self, request, id):
         """Delete a Picture object.
 
-        If the Picture object is related to the Dog object with the foreign key \
-        and the Dog object is related to the request user with the foreign key \
-        or the user is superuser and the Picture object is not the profile picture, \
+        If the Picture object is related to the Dog object with the foreign key
+        and the Dog object is related to the request user with the foreign key
+        or the user is superuser and the Picture object is not the profile picture,
         delete the Picture object.
         Otherwise, return the error messsage.
         """
@@ -426,9 +428,9 @@ class SetProfilePicture(View):
         """Set the profile picture.
 
         Get the Picture object (profile_picture) by the id.
-        If the Dog object, to which the profile_picture is related to with \
-        the foreign key, is related the request user with the foreign key or \
-        the request user is superuser, set the profile field of the Picture \
+        If the Dog object, to which the profile_picture is related to with
+        the foreign key, is related the request user with the foreign key or
+        the request user is superuser, set the profile field of the Picture
         objects related to the Dog object with the foreign key as False.
         Then set the profile field of the profile_picture as True.
         Otherwise, return the error messsage.
@@ -454,7 +456,7 @@ class SearchView(View):
     def post(self, request):
         """Filter the adoption advertisments.
 
-        Check the data in the form and if valid, create the list of Dog objects \
+        Check the data in the form and if valid, create the list of Dog objects
         (dogs_by_categories) and the queryset of Picture objects (pictures).
         Otherwise, redirect to the same page.
         """
@@ -476,7 +478,8 @@ class SearchView(View):
                     dogs.append(dog)
             for cat in categories:
                 for dog in dogs:
-                    if CATEGORIES[int(cat)-1][1] in str(dog.categories) and dog not in dogs_by_categories:
+                    if CATEGORIES[int(cat)-1][1] in str(dog.categories) and \
+                    dog not in dogs_by_categories:
                         dogs_by_categories.append(dog)
             pictures = Picture.objects.filter(profile=True)
             return render(request, "search_result.html", {"dogs": dogs_by_categories,
@@ -490,8 +493,8 @@ class UserDogsView(View):
     def get(self, request):
         """Render the page with links to user`s adoption advertisments.
 
-        If the request user is authenticated, render the page with links to \
-        adoption advertisments added by the user. If the user is superuser, \
+        If the request user is authenticated, render the page with links to
+        adoption advertisments added by the user. If the user is superuser,
         render the page with links to all adoption advertisments.
         Otherwise, return the error message.
         """
@@ -512,7 +515,7 @@ class NewDogsView(View):
     def get(self, request):
         """Render the page with links to new adoption advertisments.
 
-        If the request user is superuser, render the page with links to new \
+        If the request user is superuser, render the page with links to new
         adoption advertisments.
         Otherwise, return the error message.
         """
