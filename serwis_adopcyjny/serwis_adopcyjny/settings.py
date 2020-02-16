@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c_0u+n)72ws!yyw&p-+4uindxw!*h=0(24-8qri3=4x^p1^r88'
+SECRET_KEY = os.getenv("SECRET_KEY") 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,20 +78,20 @@ WSGI_APPLICATION = 'serwis_adopcyjny.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+db_pswd = os.getenv("db_pswd")
+
 DATABASES = {
     'default': {
         'HOST': '127.0.0.1',
         'NAME': 'adopcje_db',
         'ENGINE': 'django.db.backends.postgresql',
         'USER': 'postgres',
-        'PASSWORD': 'adopt2019',
+        'PASSWORD': db_pswd,
         'OPTIONS': {
 
         },
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -112,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
 
