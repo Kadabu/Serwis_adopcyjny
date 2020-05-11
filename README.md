@@ -1,4 +1,4 @@
-The "Adoption service" project is based on the Django framework and the PostgreSQL database management system.
+The "Serwis adopcyjny" project is based on the Django framework and the PostgreSQL database management system.
 The project contains the "adopcje" application, that allows users to create, update and view adoption ads. It is dedicated to dogs coming from a specific shelter (in Radysy) and waiting for adoption in dog hotels all over Poland.
 The project has 3 types of users with different scope of privileges:
 1. users without a user account or not logged in - they can view and search ads, sort the list of ads and create their user accounts;
